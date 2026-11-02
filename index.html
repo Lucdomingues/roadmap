@@ -1,0 +1,2016 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roadmap Backend</title>
+<meta name="description" content="Roadmap interativo para se tornar engenheiro de software fullstack com especialização em backend: fases, checklists, projeto âncora e certificações.">
+<style>
+:root{
+  --bg:#f6f6f3;--surface:#ffffff;--surface-2:#efefea;--text:#1d1e20;--muted:#5b5f66;
+  --border:#e1e1db;--border-strong:#cbcbc3;
+  --accent:#3451d1;--accent-soft:rgba(52,81,209,.09);--accent-ink:#ffffff;
+  --cert:#c8520e;--cert-soft:rgba(200,82,14,.09);
+  --good:#21783a;--good-soft:rgba(33,120,58,.10);
+  --code-bg:#f0f0ea;--side:296px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111214;--surface:#18191c;--surface-2:#202226;--text:#e9eaec;--muted:#a3a7ae;
+    --border:#2b2e33;--border-strong:#3c4047;
+    --accent:#8a9eff;--accent-soft:rgba(138,158,255,.14);--accent-ink:#0c0f1f;
+    --cert:#ff9455;--cert-soft:rgba(255,148,85,.12);
+    --good:#62d37f;--good-soft:rgba(98,211,127,.12);
+    --code-bg:#1e2024;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111214;--surface:#18191c;--surface-2:#202226;--text:#e9eaec;--muted:#a3a7ae;
+  --border:#2b2e33;--border-strong:#3c4047;
+  --accent:#8a9eff;--accent-soft:rgba(138,158,255,.14);--accent-ink:#0c0f1f;
+  --cert:#ff9455;--cert-soft:rgba(255,148,85,.12);
+  --good:#62d37f;--good-soft:rgba(98,211,127,.12);
+  --code-bg:#1e2024;color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--surface);padding:8px 12px;z-index:99}
+.skip:focus{left:8px}
+.muted{color:var(--muted)}
+
+/* ---------- sidebar ---------- */
+#sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:20px 16px 24px;display:flex;flex-direction:column;gap:16px;z-index:30}
+.brand-link{font-weight:700;font-size:17px;color:var(--text);text-decoration:none}
+.brand-sub{font-size:13px;color:var(--muted)}
+.overall{background:var(--surface-2);border-radius:12px;padding:12px}
+.overall-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
+.overall-row strong{font-size:15px;font-variant-numeric:tabular-nums}
+.overall-count{font-size:12px;color:var(--muted);margin-top:6px}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--border-strong);border-radius:10px;padding:0 10px;background:var(--bg)}
+.search svg{flex:none;color:var(--muted)}
+.search input{border:0;background:transparent;color:var(--text);font:inherit;font-size:14px;padding:9px 0;width:100%;outline:none}
+.search:focus-within{border-color:var(--accent)}
+.nav-home{display:block;padding:8px 10px;border-radius:8px;color:var(--text);text-decoration:none;font-size:14px;font-weight:600}
+.nav-group{margin-top:10px}
+.nav-title{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:650;margin:0 10px 4px}
+.nav-item{display:flex;flex-direction:column;gap:3px;padding:7px 10px;border-radius:8px;color:var(--text);text-decoration:none;font-size:14px;line-height:1.35}
+.nav-item:hover,.nav-home:hover{background:var(--surface-2)}
+#nav a[aria-current="page"]{background:var(--accent-soft);font-weight:600}
+.nav-label{display:flex;align-items:center;gap:6px}
+.is-done .nav-label::before{content:"✓";color:var(--good);font-weight:700}
+.is-current .nav-label::after{content:"atual";font-size:10.5px;font-weight:700;background:var(--accent);color:var(--accent-ink);border-radius:99px;padding:0 6px;margin-left:auto}
+.nav-meta{display:flex;align-items:center;gap:8px}
+.mini{flex:1;height:4px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.mini i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.count{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.side-tools{margin-top:auto;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border);padding-top:14px}
+.switch{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+.switch input{accent-color:var(--accent);width:16px;height:16px}
+.tool-row{display:flex;gap:8px}
+.tool-row .btn{flex:1}
+
+/* ---------- topbar (mobile) ---------- */
+.topbar{display:none}
+#scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:25}
+
+/* ---------- main ---------- */
+main{margin-left:var(--side);padding:40px 48px 64px;min-height:100vh;outline:none}
+.view,.section,.pager,footer,.warn{max-width:800px;margin-left:auto;margin-right:auto}
+.warn{background:var(--cert-soft);border:1px solid var(--cert);border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:20px}
+.eyebrow{font-size:13px;font-weight:650;color:var(--accent);margin:0 0 6px}
+h1{font-size:clamp(26px,3.4vw,34px);line-height:1.2;margin:0 0 14px;letter-spacing:-.01em}
+.h2{font-size:22px;margin:44px 0 6px;letter-spacing:-.005em}
+.h3{font-size:16px;margin:28px 0 10px}
+
+/* ---------- buttons, bars, badges ---------- */
+.btn{font:inherit;font-size:14px;line-height:1.3;padding:8px 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:650}
+.btn.active{border-color:var(--accent);background:var(--accent-soft);color:var(--text);font-weight:600}
+.btn.danger{color:var(--cert)}
+.bar{display:block;height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.bar>*{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s}
+.bar.sm{height:5px}
+.overall .bar{background:var(--border)}
+.badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.badge.accent{background:var(--accent);color:var(--accent-ink)}
+.badge.good{background:var(--good-soft);color:var(--good)}
+
+/* ---------- home ---------- */
+.hero .lead{font-size:17px;color:var(--muted);margin:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:28px 0 0}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.stat-num{font-size:28px;font-weight:750;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat-label{font-size:13px;color:var(--muted)}
+.stat .bar{margin-top:6px}
+.continue{display:flex;gap:20px;align-items:center;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:12px;padding:18px 20px;margin-top:16px}
+.continue-body{flex:1;min-width:0}
+.continue h2{font-size:20px;margin:0 0 2px}
+.continue .muted{margin:0 0 10px;font-size:14px}
+.next{font-size:14px;margin:10px 0 0}
+.next span{color:var(--muted)}
+.map{margin-top:14px}
+.stage{display:grid;grid-template-columns:132px 1fr;gap:16px;padding:14px 0;border-top:1px dashed var(--border)}
+.stage:first-child{border-top:0}
+.stage-label strong{display:block;font-size:15px}
+.stage-label span{font-size:13px;color:var(--muted)}
+.anchor-chip{display:inline-block;margin-top:8px;font-size:12px;font-weight:650;padding:2px 9px;border:1px solid var(--border-strong);border-radius:99px;color:var(--text);text-decoration:none;background:var(--surface)}
+.anchor-chip:hover{border-color:var(--accent)}
+.stage-phases{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.pcard{display:flex;flex-direction:column;gap:3px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:var(--text);transition:border-color .15s,box-shadow .15s}
+.pcard:hover{border-color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.pcard.current{border:2px solid var(--accent);padding:11px 13px}
+.pcard.done{border-color:var(--good)}
+.pcard-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:650;min-height:20px}
+.pcard-name{font-weight:650;font-size:15px;line-height:1.3}
+.pcard-dur{font-size:13px;color:var(--muted);margin-bottom:6px}
+.pcard-count{font-size:12px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
+.pcard.done .bar>*{background:var(--good)}
+.band{display:flex;align-items:center;gap:12px;padding:10px 16px;border-radius:12px;text-decoration:none;color:var(--text);margin:8px 0;flex-wrap:wrap}
+.band strong{font-size:15px}
+.band-text{margin-left:auto;font-size:13px;color:var(--muted)}
+.band.gate{background:var(--accent-soft);border:2px solid var(--accent)}
+.band.gate.reached{border-color:var(--good);background:var(--good-soft)}
+.band.cert{background:var(--cert-soft);border:1px solid var(--cert)}
+.band.cert.passed{border-color:var(--good);background:var(--good-soft)}
+.band-icon{flex:none;display:inline-block}
+.band-icon.diamond{width:11px;height:11px;background:var(--accent);transform:rotate(45deg);margin:0 2px}
+.reached .band-icon.diamond{background:var(--good)}
+.band-icon.circle{width:13px;height:13px;border-radius:50%;background:var(--cert)}
+.passed .band-icon.circle{background:var(--good)}
+.parallel{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.exams{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin:12px 0 8px}
+.exam-fields .date-field{flex-direction:column;align-items:flex-start;gap:4px;font-size:13px;color:var(--muted)}
+.exam{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.exam.passed{border-color:var(--good);background:var(--good-soft)}
+.exam.optional{border-style:dashed}
+.exam-head{display:flex;gap:10px;align-items:flex-start}
+.exam-head .band-icon{margin-top:6px}
+.exam-head strong{display:block;font-size:15px;line-height:1.3}
+.exam-head .muted{font-size:13px}
+.exam-fields{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:14px}
+.exam-fields label{display:flex;align-items:center;gap:8px}
+.exam-fields input[type=date]{font:inherit;font-size:14px;padding:5px 8px;border:1px solid var(--border-strong);border-radius:8px;background:var(--bg);color:var(--text)}
+.exam-fields input[type=checkbox]{accent-color:var(--good);width:16px;height:16px}
+.exam-status{font-size:13px;color:var(--muted);margin:0}
+.reading{font-size:14px}
+
+/* ---------- section ---------- */
+.sec-head{margin-bottom:24px}
+.sec-tools{display:flex;flex-direction:column;gap:12px}
+.sec-progress{display:flex;align-items:center;gap:12px}
+.sec-progress .bar{flex:1}
+.sec-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.prose h3{font-size:20px;margin:36px 0 10px;letter-spacing:-.005em}
+.prose h4.sub{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:30px 0 8px;font-weight:700}
+.prose p{margin:0 0 14px}
+.prose ul,.prose ol{padding-left:22px;margin:0 0 18px}
+.prose li{margin:4px 0}
+.why{color:var(--text)}
+.callout{padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface)}
+.callout.objective{background:var(--accent-soft);border-color:transparent;border-left:4px solid var(--accent)}
+.callout.note{background:var(--surface-2);border-color:transparent}
+.callout.cert{background:var(--cert-soft);border-color:transparent;border-left:4px solid var(--cert)}
+.callout.exit{background:var(--good-soft);border-color:var(--good);margin-top:24px}
+.exit-btn{display:flex;margin-top:12px}
+.exit-btn.on{border-color:var(--good);color:var(--good);font-weight:650}
+ul.checklist{list-style:none;padding:0;margin:6px 0 20px;border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden}
+ul.checklist li{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;margin:0;border-top:1px solid var(--border);transition:background .2s}
+ul.checklist li:first-child{border-top:0}
+ul.checklist li:hover{background:var(--surface-2)}
+ul.checklist input.chk{flex:none;width:18px;height:18px;margin:3px 0 0;accent-color:var(--good);cursor:pointer}
+ul.checklist label{flex:1;cursor:pointer}
+ul.checklist li.done label{color:var(--muted)}
+body.hide-done ul.checklist li.done{display:none}
+li.flash,.flash{animation:flash 1.8s ease}
+@keyframes flash{0%,40%{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}100%{background:transparent}}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em;background:var(--code-bg);padding:.12em .38em;border-radius:5px}
+pre{position:relative;background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:16px;overflow:auto;font-size:13.5px;line-height:1.55;margin:0 0 18px}
+pre code{background:none;padding:0;font-size:inherit}
+.copy{position:absolute;top:8px;right:8px;font:inherit;font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);cursor:pointer}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin:10px 0 20px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}
+th{background:var(--surface-2);font-weight:650}
+tr:last-child td{border-bottom:0}
+.notes{margin-top:36px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.notes-label{display:block;font-weight:650;font-size:14px;margin-bottom:8px}
+.notes textarea{width:100%;min-height:96px;resize:vertical;font:inherit;font-size:14px;line-height:1.5;padding:10px 12px;border:1px solid var(--border-strong);border-radius:8px;background:var(--bg);color:var(--text)}
+.notes textarea:focus{outline:none;border-color:var(--accent)}
+.notes-status{font-size:12px;color:var(--good);display:block;min-height:18px;margin-top:4px}
+
+/* ---------- search ---------- */
+.hit{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:8px 0;cursor:pointer;font:inherit;font-size:14px;color:inherit}
+.hit:hover{border-color:var(--accent)}
+.hit-sec{display:block;font-size:12px;color:var(--accent);font-weight:650;margin-bottom:2px}
+mark{background:var(--accent-soft);color:inherit;border-radius:3px;padding:0 2px;box-shadow:inset 0 -2px 0 var(--accent)}
+
+/* ---------- pager, footer ---------- */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:40px}
+.pager-link{display:flex;flex-direction:column;padding:12px 16px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none;font-weight:600;font-size:15px}
+.pager-link:hover{border-color:var(--accent)}
+.pager-link span{font-size:12px;color:var(--muted);font-weight:500}
+.pager-link.next{text-align:right}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px){
+  .topbar{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px}
+  .topbar-title{font-weight:700;flex:1;font-size:15px}
+  #topPct{font-size:14px;font-weight:650;color:var(--accent);font-variant-numeric:tabular-nums}
+  #menuBtn{background:none;border:1px solid var(--border-strong);border-radius:8px;padding:6px 8px;color:var(--text);cursor:pointer;display:flex}
+  #sidebar{transform:translateX(-100%);transition:transform .2s;width:min(320px,86vw);box-shadow:0 0 40px rgba(0,0,0,.2)}
+  body.menu-open #sidebar{transform:none}
+  main{margin-left:0;padding:24px 16px 48px}
+}
+@media (max-width: 640px){
+  .stage{grid-template-columns:1fr;gap:10px}
+  .stage-label{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .stage-label strong{display:inline}
+  .anchor-chip{margin-top:0;margin-left:auto}
+  .stage-phases{grid-template-columns:1fr 1fr}
+  .stage-phases.n1{grid-template-columns:1fr}
+  .continue{flex-direction:column;align-items:stretch}
+  .band-text{margin-left:0;width:100%}
+  .pager{grid-template-columns:1fr}
+  .pager-link.next{text-align:left}
+}
+@media print{
+  #sidebar,.topbar,.pager,.notes,.sec-tools,.exit-btn,.copy{display:none!important}
+  main{margin:0;padding:0}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+<header class="topbar">
+  <button id="menuBtn" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <span class="topbar-title">Roadmap Backend</span>
+  <span id="topPct">0%</span>
+</header>
+
+<aside id="sidebar" aria-label="Navegação do roadmap">
+  <div>
+    <a class="brand-link" href="#/">Roadmap Backend</a>
+    <div class="brand-sub">Fullstack com especialização em backend</div>
+  </div>
+  <div class="overall">
+    <div class="overall-row"><span>Progresso geral</span><strong id="sidePct">0%</strong></div>
+    <span class="bar"><i id="sideBar"></i></span>
+    <div class="overall-count" id="sideCount"></div>
+  </div>
+  <label class="search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="search" type="search" placeholder="Buscar tópico, ferramenta, livro…" autocomplete="off" aria-label="Buscar no roadmap">
+  </label>
+  <nav id="nav" aria-label="Seções"></nav>
+  <div class="side-tools">
+    <label class="switch"><input type="checkbox" id="hideDone"> Ocultar tópicos concluídos</label>
+    <button id="themeBtn" class="btn" type="button">Tema: automático</button>
+    <div class="tool-row">
+      <button id="exportBtn" class="btn" type="button">Exportar</button>
+      <button id="importBtn" class="btn" type="button">Importar</button>
+    </div>
+    <input type="file" id="importFile" accept="application/json,.json" hidden>
+    <button id="resetBtn" class="btn danger" type="button">Zerar progresso</button>
+  </div>
+</aside>
+<div id="scrim" hidden></div>
+
+<main id="main" tabindex="-1">
+  <div id="storageWarn" class="warn" hidden>Este navegador não está salvando o progresso aqui (comum em pré-visualizações e abas anônimas). Publicado no GitHub Pages ele salva normalmente. Use <strong>Exportar</strong> para guardar uma cópia.</div>
+
+  <section id="view-home" class="view" hidden>
+    <header class="hero">
+      <p class="eyebrow">Roadmap de carreira</p>
+      <h1>Engenheiro de Software Fullstack, especialista em Backend</h1>
+      <p class="lead" id="homeLead"></p>
+    </header>
+    <div class="stats">
+      <div class="stat"><span class="stat-num" id="statPct">0%</span><span class="stat-label">do roadmap concluído</span><span class="bar"><i id="statBar"></i></span></div>
+      <div class="stat"><span class="stat-num" id="statItems">0</span><span class="stat-label" id="statItemsLabel">tópicos dominados</span></div>
+      <div class="stat"><span class="stat-num" id="statPhases">0/12</span><span class="stat-label">fases concluídas</span></div>
+      <div class="stat"><span class="stat-num" id="statExams">0/3</span><span class="stat-label">certificações aprovadas</span></div>
+    </div>
+    <div id="continue" class="continue"></div>
+
+    <h2 class="h2">Mapa do roadmap</h2>
+    <p class="muted reading" id="homeReading"></p>
+    <div id="map" class="map"></div>
+    <h3 class="h3">Em paralelo, o tempo todo</h3>
+    <div id="parallel" class="parallel"></div>
+
+    <h2 class="h2">Suas provas</h2>
+    <p class="muted reading">Coloque a data quando agendar: a contagem aparece aqui e no mapa. O plano de cada prova está em <a href="#/certificacoes">Certificações</a>.</p>
+    <div class="exams" data-exams></div>
+  </section>
+
+  <section id="view-search" class="view" hidden></section>
+
+  <div id="sections">
+<article class="section" id="sec-como-usar" data-id="como-usar" hidden><header class="sec-head"><p class="eyebrow">Comece aqui</p><h1>Como usar este roadmap</h1><div class="sec-tools" data-for="como-usar"></div></header><div class="prose"><p>Este roadmap leva você de iniciante a engenheiro backend com visão de produto em cerca de 2 anos, passando por três certificações: AWS Developer, AWS Solutions Architect e CKAD. Você avança por competência comprovada, não por calendário: cada fase tem um critério de saída.</p>
+<h4 class="sub">Premissas</h4>
+<ul>
+<li><strong>Ritmo:</strong> cerca de 15 h por semana (2 h nos dias úteis + 5 h no fim de semana). Com 25 h, corte uns 40% dos prazos; com 8 h, dobre.</li>
+<li><strong>Faculdade:</strong> você cursa ADS. As disciplinas de lógica, banco de dados, redes e sistemas operacionais cobrem parte das Fases 0, 2 e 5. Use a aula como primeiro contato e este roadmap para aprofundar o que lá fica superficial.</li>
+<li><strong>Stack principal:</strong> TypeScript nos dois lados (Node.js no backend, React no front) e PostgreSQL. Motivo: uma linguagem só, maior volume de vagas no Brasil e ecossistema maduro. Os fundamentos daqui transferem para Java, C#, Go ou Python quando você precisar.</li>
+</ul>
+<h4 class="sub">Os 7 princípios</h4>
+<ol>
+<li><strong>Fundamento antes de ferramenta.</strong> Frameworks mudam a cada 3 a 5 anos; HTTP, SQL, estruturas de dados, Linux e design de software valem por décadas. Toda trilha começa pelo que está por baixo.</li>
+<li><strong>Construir mais do que assistir.</strong> Regra 70/20/10: 70% do tempo escrevendo código, 20% estudando (docs, livros, cursos), 10% escrevendo sobre o que aprendeu. Três horas de vídeo sem digitar nada não é estudo.</li>
+<li><strong>Profundidade em camadas.</strong> Só avance quando cumprir o critério de saída sem olhar o tutorial. Não precisa de 100%: com 80% siga em frente, porque você vai revisitar tudo no projeto âncora.</li>
+<li><strong>Uma tecnologia nova por vez.</strong> Em paralelo só correm três coisas: Ciência da Computação (Fase 2), o trilho profissional e o projeto âncora.</li>
+<li><strong>Documente desde o dia 1.</strong> Mantenha um diário de aprendizado (TIL, "today I learned") e um registro de decisões. É o treino do profissional que sabe explicar o porquê, e vira portfólio.</li>
+<li><strong>Fonte primária sempre.</strong> Tutorial ensina um caminho; a documentação oficial ensina o mapa. A partir da Fase 4, leia a doc antes do vídeo.</li>
+<li><strong>Erro é material de estudo.</strong> Travou? Leia a mensagem de erro inteira, reproduza no menor exemplo possível, formule uma hipótese, teste. Só peça ajuda (a uma pessoa ou à IA) depois de 30 a 45 minutos, levando o que já tentou.</li>
+</ol>
+<p><strong>Como cada fase está organizada:</strong> objetivo, por que importa, tópicos em checklist (marque conforme domina), prática, recursos e o critério de saída.</p>
+</div><div class="notes" data-for="como-usar"></div></article>
+<article class="section" id="sec-fase-0" data-id="fase-0" hidden><header class="sec-head"><p class="eyebrow">Fase 0 · 4 a 6 semanas</p><h1>Computador, terminal, Git e internet</h1><div class="sec-tools" data-for="fase-0"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> sentir-se em casa no terminal, versionar tudo com Git e entender o caminho de uma requisição do navegador até o servidor.</p>
+<p class="why"><strong>Por que importa:</strong> quase todo servidor de produção roda Linux, todo time usa Git, e todo bug de integração começa com a pergunta "o que de fato trafegou na rede?". Quem domina isso depura em minutos o que outros levam dias.</p>
+<h4 class="sub">Linux e terminal</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-0-4cd6f156"><input class="chk" data-id="fase-0-4cd6f156" id="c-fase-0-4cd6f156" type="checkbox"/><label for="c-fase-0-4cd6f156"> Navegação e arquivos: <code>pwd</code>, <code>ls</code>, <code>cd</code>, <code>cp</code>, <code>mv</code>, <code>rm</code>, <code>find</code>; caminho absoluto x relativo</label></li>
+<li class="task-list-item enabled" data-item="fase-0-77a57bb7"><input class="chk" data-id="fase-0-77a57bb7" id="c-fase-0-77a57bb7" type="checkbox"/><label for="c-fase-0-77a57bb7"> Ler e buscar: <code>cat</code>, <code>less</code>, <code>head</code>, <code>tail -f</code>, <code>grep</code>; pipes (<code>|</code>) e redirecionamento (<code>&gt;</code>, <code>&gt;&gt;</code>, <code>2&gt;&amp;1</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-0-12d650cf"><input class="chk" data-id="fase-0-12d650cf" id="c-fase-0-12d650cf" type="checkbox"/><label for="c-fase-0-12d650cf"> Permissões (<code>chmod</code>, <code>chown</code>, rwx), usuários e <code>sudo</code></label></li>
+<li class="task-list-item enabled" data-item="fase-0-d4298c2c"><input class="chk" data-id="fase-0-d4298c2c" id="c-fase-0-d4298c2c" type="checkbox"/><label for="c-fase-0-d4298c2c"> Processos: <code>ps</code>, <code>htop</code>, <code>kill</code>, sinais (SIGTERM x SIGKILL), processos em background</label></li>
+<li class="task-list-item enabled" data-item="fase-0-ba2ac634"><input class="chk" data-id="fase-0-ba2ac634" id="c-fase-0-ba2ac634" type="checkbox"/><label for="c-fase-0-ba2ac634"> Variáveis de ambiente, <code>PATH</code>, arquivo <code>.bashrc</code>/<code>.zshrc</code></label></li>
+<li class="task-list-item enabled" data-item="fase-0-d84ff9ce"><input class="chk" data-id="fase-0-d84ff9ce" id="c-fase-0-d84ff9ce" type="checkbox"/><label for="c-fase-0-d84ff9ce"> Gerenciador de pacotes (<code>apt</code>/<code>brew</code>), SSH com chave pública, <code>scp</code></label></li>
+<li class="task-list-item enabled" data-item="fase-0-88feea6c"><input class="chk" data-id="fase-0-88feea6c" id="c-fase-0-88feea6c" type="checkbox"/><label for="c-fase-0-88feea6c"> Shell script básico: variáveis, <code>if</code>, <code>for</code>, códigos de saída (<code>$?</code>)</label></li>
+</ul>
+<h4 class="sub">Git e GitHub</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-0-8e56b971"><input class="chk" data-id="fase-0-8e56b971" id="c-fase-0-8e56b971" type="checkbox"/><label for="c-fase-0-8e56b971"> Modelo mental: working tree, staging, commit, HEAD, branch como ponteiro</label></li>
+<li class="task-list-item enabled" data-item="fase-0-15551a50"><input class="chk" data-id="fase-0-15551a50" id="c-fase-0-15551a50" type="checkbox"/><label for="c-fase-0-15551a50"> Fluxo diário: <code>add</code>, <code>commit</code>, <code>push</code>, <code>pull</code>, <code>fetch</code>, <code>status</code>, <code>log</code>, <code>diff</code></label></li>
+<li class="task-list-item enabled" data-item="fase-0-e072866d"><input class="chk" data-id="fase-0-e072866d" id="c-fase-0-e072866d" type="checkbox"/><label for="c-fase-0-e072866d"> Branches, merge, rebase (e quando não usar), resolução de conflitos</label></li>
+<li class="task-list-item enabled" data-item="fase-0-afd30ce1"><input class="chk" data-id="fase-0-afd30ce1" id="c-fase-0-afd30ce1" type="checkbox"/><label for="c-fase-0-afd30ce1"> Desfazer com segurança: <code>restore</code>, <code>revert</code>, <code>reset</code> (soft, mixed, hard), <code>reflog</code></label></li>
+<li class="task-list-item enabled" data-item="fase-0-69f6a468"><input class="chk" data-id="fase-0-69f6a468" id="c-fase-0-69f6a468" type="checkbox"/><label for="c-fase-0-69f6a468"> Commits pequenos e atômicos, mensagens no padrão Conventional Commits</label></li>
+<li class="task-list-item enabled" data-item="fase-0-1f43a364"><input class="chk" data-id="fase-0-1f43a364" id="c-fase-0-1f43a364" type="checkbox"/><label for="c-fase-0-1f43a364"> GitHub: pull request, code review, issues, <code>.gitignore</code>, README</label></li>
+</ul>
+<h4 class="sub">Como a internet funciona</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-0-8257ac85"><input class="chk" data-id="fase-0-8257ac85" id="c-fase-0-8257ac85" type="checkbox"/><label for="c-fase-0-8257ac85"> Cliente e servidor; IP, porta, DNS (o que acontece ao digitar uma URL)</label></li>
+<li class="task-list-item enabled" data-item="fase-0-252ecc37"><input class="chk" data-id="fase-0-252ecc37" id="c-fase-0-252ecc37" type="checkbox"/><label for="c-fase-0-252ecc37"> TCP x UDP; o que é uma conexão; TLS/HTTPS em alto nível</label></li>
+<li class="task-list-item enabled" data-item="fase-0-0a5351d3"><input class="chk" data-id="fase-0-0a5351d3" id="c-fase-0-0a5351d3" type="checkbox"/><label for="c-fase-0-0a5351d3"> HTTP: métodos, status codes (2xx, 3xx, 4xx, 5xx), headers, corpo, cookies</label></li>
+<li class="task-list-item enabled" data-item="fase-0-62742745"><input class="chk" data-id="fase-0-62742745" id="c-fase-0-62742745" type="checkbox"/><label for="c-fase-0-62742745"> Ferramentas: <code>curl -v</code> e a aba Network do DevTools</label></li>
+</ul>
+<h4 class="sub">Ambiente</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-0-7ac4ff31"><input class="chk" data-id="fase-0-7ac4ff31" id="c-fase-0-7ac4ff31" type="checkbox"/><label for="c-fase-0-7ac4ff31"> VS Code com atalhos, depurador e extensões essenciais (ESLint, Prettier, GitLens)</label></li>
+<li class="task-list-item enabled" data-item="fase-0-191485dd"><input class="chk" data-id="fase-0-191485dd" id="c-fase-0-191485dd" type="checkbox"/><label for="c-fase-0-191485dd"> No Windows, use WSL2: você vai trabalhar em Linux de qualquer jeito</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Faça o curso The Missing Semester (MIT) inteiro.</li>
+<li>Complete o Learn Git Branching, inclusive os níveis de rebase e remotos.</li>
+<li>Escreva um script bash que faz backup de uma pasta com a data no nome e grava um log.</li>
+<li>Chame 3 APIs públicas com <code>curl -v</code> e explique cada linha da resposta.</li>
+<li>A partir de hoje, todo exercício deste roadmap vai para um repositório no GitHub.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://missing.csail.mit.edu/" rel="noopener noreferrer" target="_blank">The Missing Semester of Your CS Education</a> (MIT, gratuito)</li>
+<li><a href="https://linuxcommand.org/tlcl.php" rel="noopener noreferrer" target="_blank">The Linux Command Line</a>, de William Shotts (gratuito)</li>
+<li><a href="https://git-scm.com/book/pt-br/v2" rel="noopener noreferrer" target="_blank">Pro Git em português</a>, de Scott Chacon (gratuito)</li>
+<li><a href="https://learngitbranching.js.org/?locale=pt_BR" rel="noopener noreferrer" target="_blank">Learn Git Branching</a> (interativo, em português)</li>
+<li><a href="https://hpbn.co/" rel="noopener noreferrer" target="_blank">High Performance Browser Networking</a>, de Ilya Grigorik, capítulos 1 a 4 (gratuito)</li>
+</ul>
+<p class="callout exit" data-exit="fase-0"><strong>Critério de saída:</strong> você consegue (1) passar um dia inteiro de estudo sem abrir o gerenciador de arquivos, (2) resolver um conflito de merge e desfazer um commit errado sem pesquisar, e (3) explicar em voz alta, por 5 minutos, tudo o que acontece entre digitar uma URL e a página aparecer.</p>
+</div><div class="notes" data-for="fase-0"></div></article>
+<article class="section" id="sec-fase-1" data-id="fase-1" hidden><header class="sec-head"><p class="eyebrow">Fase 1 · 8 a 10 semanas</p><h1>Trilha JavaScript</h1><div class="sec-tools" data-for="fase-1"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> programar com fluência e entender como a linguagem funciona por dentro, não só a sintaxe.</p>
+<p class="why"><strong>Por que importa:</strong> JavaScript é a base do TypeScript, do Node e do React. Quem entende closures, <code>this</code> e event loop lê qualquer código do ecossistema e depura bugs assíncronos que travam outros devs por dias.</p>
+<h4 class="sub">Nível 1 — Linguagem e lógica</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-1-1b1170b0"><input class="chk" data-id="fase-1-1b1170b0" id="c-fase-1-1b1170b0" type="checkbox"/><label for="c-fase-1-1b1170b0"> Tipos primitivos x objetos; <code>let</code>/<code>const</code>; coerção, <code>===</code> x <code>==</code>, truthy e falsy</label></li>
+<li class="task-list-item enabled" data-item="fase-1-de5c6a57"><input class="chk" data-id="fase-1-de5c6a57" id="c-fase-1-de5c6a57" type="checkbox"/><label for="c-fase-1-de5c6a57"> Condicionais, laços, operadores (incluindo <code>??</code> e <code>?.</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-1-6dbe3eb9"><input class="chk" data-id="fase-1-6dbe3eb9" id="c-fase-1-6dbe3eb9" type="checkbox"/><label for="c-fase-1-6dbe3eb9"> Funções: declaração, expressão, arrow; parâmetros default, rest e spread</label></li>
+<li class="task-list-item enabled" data-item="fase-1-b8584d38"><input class="chk" data-id="fase-1-b8584d38" id="c-fase-1-b8584d38" type="checkbox"/><label for="c-fase-1-b8584d38"> Arrays: <code>map</code>, <code>filter</code>, <code>reduce</code>, <code>find</code>, <code>some</code>, <code>every</code>, <code>sort</code> com comparador</label></li>
+<li class="task-list-item enabled" data-item="fase-1-ccb6f29b"><input class="chk" data-id="fase-1-ccb6f29b" id="c-fase-1-ccb6f29b" type="checkbox"/><label for="c-fase-1-ccb6f29b"> Objetos: desestruturação, spread, <code>Object.keys</code>/<code>entries</code>/<code>fromEntries</code></label></li>
+<li class="task-list-item enabled" data-item="fase-1-9b9bb63a"><input class="chk" data-id="fase-1-9b9bb63a" id="c-fase-1-9b9bb63a" type="checkbox"/><label for="c-fase-1-9b9bb63a"> Strings, template literals, <code>Date</code> e <code>Intl</code> (datas e moeda em pt-BR)</label></li>
+<li class="task-list-item enabled" data-item="fase-1-159df7e4"><input class="chk" data-id="fase-1-159df7e4" id="c-fase-1-159df7e4" type="checkbox"/><label for="c-fase-1-159df7e4"> Módulos ES (<code>import</code>/<code>export</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-1-544c501c"><input class="chk" data-id="fase-1-544c501c" id="c-fase-1-544c501c" type="checkbox"/><label for="c-fase-1-544c501c"> Erros: <code>throw</code>, <code>try</code>/<code>catch</code>/<code>finally</code>, classes de erro customizadas</label></li>
+</ul>
+<h4 class="sub">Nível 2 — Como o JS realmente funciona</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-1-3709a0de"><input class="chk" data-id="fase-1-3709a0de" id="c-fase-1-3709a0de" type="checkbox"/><label for="c-fase-1-3709a0de"> Escopo léxico, hoisting, temporal dead zone</label></li>
+<li class="task-list-item enabled" data-item="fase-1-4c59ad24"><input class="chk" data-id="fase-1-4c59ad24" id="c-fase-1-4c59ad24" type="checkbox"/><label for="c-fase-1-4c59ad24"> Closures e seus usos reais: factory, memoização, encapsulamento</label></li>
+<li class="task-list-item enabled" data-item="fase-1-7ec5f243"><input class="chk" data-id="fase-1-7ec5f243" id="c-fase-1-7ec5f243" type="checkbox"/><label for="c-fase-1-7ec5f243"> <code>this</code>: as 4 regras de binding; <code>call</code>, <code>apply</code>, <code>bind</code>; arrow functions e <code>this</code></label></li>
+<li class="task-list-item enabled" data-item="fase-1-3d11c4f2"><input class="chk" data-id="fase-1-3d11c4f2" id="c-fase-1-3d11c4f2" type="checkbox"/><label for="c-fase-1-3d11c4f2"> Protótipos e herança prototípica; <code>class</code> como açúcar sintático</label></li>
+<li class="task-list-item enabled" data-item="fase-1-0c05a827"><input class="chk" data-id="fase-1-0c05a827" id="c-fase-1-0c05a827" type="checkbox"/><label for="c-fase-1-0c05a827"> Valor x referência, mutabilidade, cópia rasa x profunda (<code>structuredClone</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-1-c17cd152"><input class="chk" data-id="fase-1-c17cd152" id="c-fase-1-c17cd152" type="checkbox"/><label for="c-fase-1-c17cd152"> Event loop: call stack, fila de tasks, fila de microtasks</label></li>
+<li class="task-list-item enabled" data-item="fase-1-fe73654d"><input class="chk" data-id="fase-1-fe73654d" id="c-fase-1-fe73654d" type="checkbox"/><label for="c-fase-1-fe73654d"> Callbacks, Promises, <code>async</code>/<code>await</code>; <code>Promise.all</code>, <code>allSettled</code>, <code>race</code>, <code>any</code>; erros em código assíncrono</label></li>
+<li class="task-list-item enabled" data-item="fase-1-7535666d"><input class="chk" data-id="fase-1-7535666d" id="c-fase-1-7535666d" type="checkbox"/><label for="c-fase-1-7535666d"> Iterators, generators, <code>Symbol.iterator</code></label></li>
+<li class="task-list-item enabled" data-item="fase-1-2daa78a6"><input class="chk" data-id="fase-1-2daa78a6" id="c-fase-1-2daa78a6" type="checkbox"/><label for="c-fase-1-2daa78a6"> <code>Map</code>, <code>Set</code>, <code>WeakMap</code> e quando usar cada um</label></li>
+<li class="task-list-item enabled" data-item="fase-1-ce5ae10d"><input class="chk" data-id="fase-1-ce5ae10d" id="c-fase-1-ce5ae10d" type="checkbox"/><label for="c-fase-1-ce5ae10d"> Garbage collection e vazamento de memória em alto nível</label></li>
+</ul>
+<h4 class="sub">Nível 3 — Uso profissional</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-1-5d7733fd"><input class="chk" data-id="fase-1-5d7733fd" id="c-fase-1-5d7733fd" type="checkbox"/><label for="c-fase-1-5d7733fd"> Programação funcional sem dogma: funções puras, imutabilidade, composição</label></li>
+<li class="task-list-item enabled" data-item="fase-1-ced11e8d"><input class="chk" data-id="fase-1-ced11e8d" id="c-fase-1-ced11e8d" type="checkbox"/><label for="c-fase-1-ced11e8d"> Orientação a objetos em JS: composição em vez de herança</label></li>
+<li class="task-list-item enabled" data-item="fase-1-dee7fec8"><input class="chk" data-id="fase-1-dee7fec8" id="c-fase-1-dee7fec8" type="checkbox"/><label for="c-fase-1-dee7fec8"> <code>fetch</code>, JSON, <code>AbortController</code> e timeouts</label></li>
+<li class="task-list-item enabled" data-item="fase-1-5aef94a3"><input class="chk" data-id="fase-1-5aef94a3" id="c-fase-1-5aef94a3" type="checkbox"/><label for="c-fase-1-5aef94a3"> Expressões regulares básicas</label></li>
+<li class="task-list-item enabled" data-item="fase-1-009ab479"><input class="chk" data-id="fase-1-009ab479" id="c-fase-1-009ab479" type="checkbox"/><label for="c-fase-1-009ab479"> npm: <code>package.json</code>, semver, lockfile, scripts</label></li>
+<li class="task-list-item enabled" data-item="fase-1-d0b8949c"><input class="chk" data-id="fase-1-d0b8949c" id="c-fase-1-d0b8949c" type="checkbox"/><label for="c-fase-1-d0b8949c"> Debug com breakpoints (VS Code e DevTools), não só <code>console.log</code></label></li>
+<li class="task-list-item enabled" data-item="fase-1-920a2a15"><input class="chk" data-id="fase-1-920a2a15" id="c-fase-1-920a2a15" type="checkbox"/><label for="c-fase-1-920a2a15"> Primeiro contato com testes unitários (Vitest)</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Resolva 50 a 80 exercícios da <a href="https://exercism.org/tracks/javascript" rel="noopener noreferrer" target="_blank">trilha JavaScript do Exercism</a>, que tem mentoria gratuita.</li>
+<li>Implemente do zero: <code>map</code>/<code>filter</code>/<code>reduce</code>, <code>debounce</code>, <code>throttle</code>, <code>Promise.all</code>, um EventEmitter e um <code>deepClone</code>.</li>
+<li>Projeto CLI: gerenciador de tarefas no terminal que salva em JSON, em Node puro, sem bibliotecas.</li>
+<li>Projeto: consumidor de uma API pública (ex.: IBGE ou clima) com tratamento de erro, timeout e nova tentativa (retry).</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://javascript.info/" rel="noopener noreferrer" target="_blank">javascript.info</a> — a referência principal desta fase</li>
+<li><a href="https://eloquentjavascript.net/" rel="noopener noreferrer" target="_blank">Eloquent JavaScript</a>, de Marijn Haverbeke (gratuito)</li>
+<li><a href="https://github.com/getify/You-Dont-Know-JS" rel="noopener noreferrer" target="_blank">You Don't Know JS Yet</a>, de Kyle Simpson: livros Get Started e Scope &amp; Closures (gratuito)</li>
+<li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" rel="noopener noreferrer" target="_blank">MDN Web Docs em português</a> — consulta</li>
+<li>Palestra "What the heck is the event loop anyway?", de Philip Roberts (JSConf EU), no YouTube</li>
+<li>Base de lógica em português, se precisar: Curso em Vídeo (Gustavo Guanabara)</li>
+</ul>
+<p class="callout exit" data-exit="fase-1"><strong>Critério de saída:</strong> você explica sem consulta closures, <code>this</code>, protótipos e event loop com exemplos próprios; prevê a ordem de saída de um código que mistura <code>setTimeout</code>, Promise e <code>await</code>; e implementa <code>Promise.all</code> do zero com tratamento de erro.</p>
+</div><div class="notes" data-for="fase-1"></div></article>
+<article class="section" id="sec-fase-2" data-id="fase-2" hidden><header class="sec-head"><p class="eyebrow">Fase 2 · trilho contínuo, 3 a 4 h por semana por 6 meses</p><h1>Ciência da Computação essencial</h1><div class="sec-tools" data-for="fase-2"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> ter o vocabulário e o raciocínio que separam quem "faz funcionar" de quem entende por que funciona e quando vai quebrar.</p>
+<p class="why"><strong>Por que importa no backend:</strong> um índice de banco é uma B-tree. Um cache é um hash map com política LRU. Um rate limiter é uma janela deslizante. Um bug de estoque negativo é uma race condition. Sem essa base, esses problemas parecem mágica; com ela, viram decisões explicáveis.</p>
+<h4 class="sub">Algoritmos e estruturas de dados</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-2-b4b55b08"><input class="chk" data-id="fase-2-b4b55b08" id="c-fase-2-b4b55b08" type="checkbox"/><label for="c-fase-2-b4b55b08"> Big-O de tempo e espaço; reconhecer O(1), O(log n), O(n), O(n log n), O(n²) olhando o código</label></li>
+<li class="task-list-item enabled" data-item="fase-2-32ecafd6"><input class="chk" data-id="fase-2-32ecafd6" id="c-fase-2-32ecafd6" type="checkbox"/><label for="c-fase-2-32ecafd6"> Arrays, listas ligadas, pilhas e filas</label></li>
+<li class="task-list-item enabled" data-item="fase-2-3729a606"><input class="chk" data-id="fase-2-3729a606" id="c-fase-2-3729a606" type="checkbox"/><label for="c-fase-2-3729a606"> Hash tables: como funcionam, colisões, por que a busca é O(1) em média</label></li>
+<li class="task-list-item enabled" data-item="fase-2-3bd6dff0"><input class="chk" data-id="fase-2-3bd6dff0" id="c-fase-2-3bd6dff0" type="checkbox"/><label for="c-fase-2-3bd6dff0"> Árvores: binária de busca, heap, noção de B-tree; tries</label></li>
+<li class="task-list-item enabled" data-item="fase-2-b391c083"><input class="chk" data-id="fase-2-b391c083" id="c-fase-2-b391c083" type="checkbox"/><label for="c-fase-2-b391c083"> Grafos: representação, BFS, DFS</label></li>
+<li class="task-list-item enabled" data-item="fase-2-37a0c960"><input class="chk" data-id="fase-2-37a0c960" id="c-fase-2-37a0c960" type="checkbox"/><label for="c-fase-2-37a0c960"> Busca binária, recursão, merge sort e quicksort (entender, não decorar)</label></li>
+<li class="task-list-item enabled" data-item="fase-2-c5d7b830"><input class="chk" data-id="fase-2-c5d7b830" id="c-fase-2-c5d7b830" type="checkbox"/><label for="c-fase-2-c5d7b830"> Padrões: two pointers, sliding window, programação dinâmica básica</label></li>
+</ul>
+<h4 class="sub">Sistemas operacionais e concorrência</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-2-ad9ec115"><input class="chk" data-id="fase-2-ad9ec115" id="c-fase-2-ad9ec115" type="checkbox"/><label for="c-fase-2-ad9ec115"> Processo x thread; memória stack x heap; sistema de arquivos</label></li>
+<li class="task-list-item enabled" data-item="fase-2-8d098052"><input class="chk" data-id="fase-2-8d098052" id="c-fase-2-8d098052" type="checkbox"/><label for="c-fase-2-8d098052"> I/O bloqueante x não bloqueante (a base do modelo do Node)</label></li>
+<li class="task-list-item enabled" data-item="fase-2-8ac394b4"><input class="chk" data-id="fase-2-8ac394b4" id="c-fase-2-8ac394b4" type="checkbox"/><label for="c-fase-2-8ac394b4"> Concorrência x paralelismo; race condition, deadlock, locks, operações atômicas</label></li>
+</ul>
+<h4 class="sub">Redes (aprofundando a Fase 0)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-2-e831e442"><input class="chk" data-id="fase-2-e831e442" id="c-fase-2-e831e442" type="checkbox"/><label for="c-fase-2-e831e442"> Modelo TCP/IP em camadas; handshake TCP; latência x largura de banda</label></li>
+<li class="task-list-item enabled" data-item="fase-2-1382cfa7"><input class="chk" data-id="fase-2-1382cfa7" id="c-fase-2-1382cfa7" type="checkbox"/><label for="c-fase-2-1382cfa7"> Handshake TLS e certificados</label></li>
+<li class="task-list-item enabled" data-item="fase-2-40e59d70"><input class="chk" data-id="fase-2-40e59d70" id="c-fase-2-40e59d70" type="checkbox"/><label for="c-fase-2-40e59d70"> HTTP/1.1 x HTTP/2 x HTTP/3; WebSocket; Server-Sent Events</label></li>
+</ul>
+<h4 class="sub">Representação de dados</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-2-750c6651"><input class="chk" data-id="fase-2-750c6651" id="c-fase-2-750c6651" type="checkbox"/><label for="c-fase-2-750c6651"> Binário, hexadecimal, encoding (ASCII, UTF-8)</label></li>
+<li class="task-list-item enabled" data-item="fase-2-c2ca241f"><input class="chk" data-id="fase-2-c2ca241f" id="c-fase-2-c2ca241f" type="checkbox"/><label for="c-fase-2-c2ca241f"> Ponto flutuante: por que <code>0.1 + 0.2 !== 0.3</code> e por que dinheiro se guarda em centavos inteiros</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>2 a 3 problemas por semana do <a href="https://neetcode.io/roadmap" rel="noopener noreferrer" target="_blank">NeetCode 150</a>, começando pelos fáceis de arrays e hashing.</li>
+<li>Implemente em JavaScript: uma hash table, um cache LRU e uma fila de prioridade com heap.</li>
+<li>Simule uma race condition: dois processos comprando o último item do estoque ao mesmo tempo. Depois corrija.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://cs50.harvard.edu/x/" rel="noopener noreferrer" target="_blank">CS50 de Harvard</a> (gratuito, com legendas)</li>
+<li>Entendendo Algoritmos, de Aditya Bhargava (Novatec, em português) — o melhor primeiro livro do tema</li>
+<li><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/" rel="noopener noreferrer" target="_blank">Operating Systems: Three Easy Pieces</a> (gratuito)</li>
+<li>Redes de Computadores e a Internet, de Kurose e Ross — provavelmente o livro da sua disciplina de redes</li>
+<li><a href="https://teachyourselfcs.com/" rel="noopener noreferrer" target="_blank">Teach Yourself Computer Science</a> — o mapa completo para quando quiser ir além</li>
+</ul>
+<p class="callout note"><strong>Dosagem certa:</strong> problemas estilo LeetCode pesam muito em entrevistas de big techs e vagas internacionais, menos na maioria das empresas brasileiras. O raciocínio, porém, pesa sempre. Não pare o roadmap por causa disso: mantenha o ritmo semanal.</p>
+<p class="callout exit" data-exit="fase-2"><strong>Critério de saída:</strong> você resolve problemas médios de array, hash e árvore em 30 a 40 minutos explicando a complexidade; explica por que um índice acelera uma consulta; e descreve uma race condition de backend com a correção.</p>
+</div><div class="notes" data-for="fase-2"></div></article>
+<article class="section" id="sec-fase-3" data-id="fase-3" hidden><header class="sec-head"><p class="eyebrow">Fase 3 · 5 a 6 semanas</p><h1>Web e Frontend fundamentos</h1><div class="sec-tools" data-for="fase-3"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> construir interfaces acessíveis e responsivas sem framework e entender o navegador como plataforma.</p>
+<p class="why"><strong>Por que importa:</strong> como especialista em backend, você precisa entender quem consome sua API: o que o navegador faz com CORS, cookies e cache, e por que um JSON de 3 MB trava a tela. E React é só JavaScript manipulando o DOM: quem domina a base aprende o framework em semanas.</p>
+<h4 class="sub">HTML</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-3-21904554"><input class="chk" data-id="fase-3-21904554" id="c-fase-3-21904554" type="checkbox"/><label for="c-fase-3-21904554"> Estrutura semântica: <code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>article</code>, <code>footer</code>; hierarquia de títulos</label></li>
+<li class="task-list-item enabled" data-item="fase-3-6b978b96"><input class="chk" data-id="fase-3-6b978b96" id="c-fase-3-6b978b96" type="checkbox"/><label for="c-fase-3-6b978b96"> Formulários: tipos de input, validação nativa, <code>label</code>, e como um form vira uma requisição HTTP</label></li>
+<li class="task-list-item enabled" data-item="fase-3-80ca5b28"><input class="chk" data-id="fase-3-80ca5b28" id="c-fase-3-80ca5b28" type="checkbox"/><label for="c-fase-3-80ca5b28"> Acessibilidade: <code>alt</code>, navegação por teclado, contraste, ARIA só quando o HTML não resolve</label></li>
+<li class="task-list-item enabled" data-item="fase-3-944ae50e"><input class="chk" data-id="fase-3-944ae50e" id="c-fase-3-944ae50e" type="checkbox"/><label for="c-fase-3-944ae50e"> Meta tags e SEO básico</label></li>
+</ul>
+<h4 class="sub">CSS</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-3-63942b39"><input class="chk" data-id="fase-3-63942b39" id="c-fase-3-63942b39" type="checkbox"/><label for="c-fase-3-63942b39"> Box model, especificidade, cascata e herança</label></li>
+<li class="task-list-item enabled" data-item="fase-3-f7a2c036"><input class="chk" data-id="fase-3-f7a2c036" id="c-fase-3-f7a2c036" type="checkbox"/><label for="c-fase-3-f7a2c036"> Flexbox e Grid, de verdade</label></li>
+<li class="task-list-item enabled" data-item="fase-3-6e32babf"><input class="chk" data-id="fase-3-6e32babf" id="c-fase-3-6e32babf" type="checkbox"/><label for="c-fase-3-6e32babf"> Responsividade: mobile first, media queries, unidades relativas (<code>rem</code>, <code>%</code>, <code>vw</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-3-deef80bf"><input class="chk" data-id="fase-3-deef80bf" id="c-fase-3-deef80bf" type="checkbox"/><label for="c-fase-3-deef80bf"> Posicionamento, <code>z-index</code>, variáveis CSS</label></li>
+<li class="task-list-item enabled" data-item="fase-3-a5b02ce1"><input class="chk" data-id="fase-3-a5b02ce1" id="c-fase-3-a5b02ce1" type="checkbox"/><label for="c-fase-3-a5b02ce1"> Tailwind só depois de dominar CSS puro</label></li>
+</ul>
+<h4 class="sub">O navegador como plataforma</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-3-da21909d"><input class="chk" data-id="fase-3-da21909d" id="c-fase-3-da21909d" type="checkbox"/><label for="c-fase-3-da21909d"> DOM: selecionar, criar e alterar elementos; eventos, bubbling, delegação</label></li>
+<li class="task-list-item enabled" data-item="fase-3-4f8eb3ce"><input class="chk" data-id="fase-3-4f8eb3ce" id="c-fase-3-4f8eb3ce" type="checkbox"/><label for="c-fase-3-4f8eb3ce"> Como o navegador renderiza (parse, layout, paint) e o que bloqueia a renderização</label></li>
+<li class="task-list-item enabled" data-item="fase-3-3f565448"><input class="chk" data-id="fase-3-3f565448" id="c-fase-3-3f565448" type="checkbox"/><label for="c-fase-3-3f565448"> Armazenamento: cookies (<code>HttpOnly</code>, <code>Secure</code>, <code>SameSite</code>), <code>localStorage</code>, <code>sessionStorage</code> — e o que nunca guardar neles</label></li>
+<li class="task-list-item enabled" data-item="fase-3-c7c701e5"><input class="chk" data-id="fase-3-c7c701e5" id="c-fase-3-c7c701e5" type="checkbox"/><label for="c-fase-3-c7c701e5"> Same-origin policy e CORS, o erro mais visto por quem é fullstack</label></li>
+<li class="task-list-item enabled" data-item="fase-3-f7c62f0c"><input class="chk" data-id="fase-3-f7c62f0c" id="c-fase-3-f7c62f0c" type="checkbox"/><label for="c-fase-3-f7c62f0c"> Cache HTTP no navegador (<code>Cache-Control</code>, <code>ETag</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-3-4d2915fa"><input class="chk" data-id="fase-3-4d2915fa" id="c-fase-3-4d2915fa" type="checkbox"/><label for="c-fase-3-4d2915fa"> Core Web Vitals (LCP, INP, CLS) em alto nível</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Recrie 3 páginas reais (landing page, tela de login, painel) em HTML e CSS puros, responsivas.</li>
+<li>Faça 5 desafios do <a href="https://www.frontendmentor.io/" rel="noopener noreferrer" target="_blank">Frontend Mentor</a> de nível iniciante e júnior.</li>
+<li>App em JavaScript puro: lista de tarefas com filtro, consumindo uma API pública, com estados de carregando, erro e vazio.</li>
+<li>Rode o Lighthouse e corrija até passar de 90 em acessibilidade.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://developer.mozilla.org/pt-BR/docs/Learn" rel="noopener noreferrer" target="_blank">MDN — Aprendendo desenvolvimento web</a></li>
+<li><a href="https://web.dev/learn" rel="noopener noreferrer" target="_blank">web.dev Learn</a>: cursos de HTML, CSS e acessibilidade (gratuito)</li>
+<li><a href="https://www.theodinproject.com/" rel="noopener noreferrer" target="_blank">The Odin Project</a>, trilha Foundations (gratuito)</li>
+<li>Flexbox Froggy e Grid Garden, jogos para fixar layout</li>
+</ul>
+<p class="callout exit" data-exit="fase-3"><strong>Critério de saída:</strong> você transforma um design em página responsiva e acessível sem framework; explica um erro de CORS e como resolver no servidor; e entrega um app em JavaScript puro com <code>fetch</code> e todos os estados de interface.</p>
+</div><div class="notes" data-for="fase-3"></div></article>
+<article class="section" id="sec-fase-4" data-id="fase-4" hidden><header class="sec-head"><p class="eyebrow">Fase 4 · 4 semanas</p><h1>Trilha TypeScript</h1><div class="sec-tools" data-for="fase-4"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> usar o sistema de tipos para modelar o domínio e barrar bugs antes de o código rodar.</p>
+<p class="why"><strong>Por que importa:</strong> TypeScript virou padrão nas vagas de Node e React. Tipos são documentação que não fica desatualizada, e contratos tipados entre camadas evitam boa parte dos bugs de integração.</p>
+<p class="callout note"><strong>Contexto 2026:</strong> o TypeScript 7.0 saiu em agosto de 2026 com compilador nativo reescrito em Go, builds 8 a 12 vezes mais rápidas e <code>strict</code> ligado por padrão (<a href="https://infoq.com/news/2026/08/typescript-7-released/" rel="noopener noreferrer" target="_blank">InfoQ</a>). Aprenda direto no modo strict; é o que você vai encontrar nos projetos.</p>
+<h4 class="sub">Nível 1 — Fundamentos</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-4-8f57a46a"><input class="chk" data-id="fase-4-8f57a46a" id="c-fase-4-8f57a46a" type="checkbox"/><label for="c-fase-4-8f57a46a"> Tipos básicos e inferência; anotar só onde agrega</label></li>
+<li class="task-list-item enabled" data-item="fase-4-5e728ec0"><input class="chk" data-id="fase-4-5e728ec0" id="c-fase-4-5e728ec0" type="checkbox"/><label for="c-fase-4-5e728ec0"> <code>type</code> x <code>interface</code>; union, intersection, literal types</label></li>
+<li class="task-list-item enabled" data-item="fase-4-80fe9a9b"><input class="chk" data-id="fase-4-80fe9a9b" id="c-fase-4-80fe9a9b" type="checkbox"/><label for="c-fase-4-80fe9a9b"> Narrowing: <code>typeof</code>, <code>in</code>, <code>instanceof</code>, discriminated unions</label></li>
+<li class="task-list-item enabled" data-item="fase-4-b43c225d"><input class="chk" data-id="fase-4-b43c225d" id="c-fase-4-b43c225d" type="checkbox"/><label for="c-fase-4-b43c225d"> Funções tipadas, parâmetros opcionais</label></li>
+<li class="task-list-item enabled" data-item="fase-4-6bef08d5"><input class="chk" data-id="fase-4-6bef08d5" id="c-fase-4-6bef08d5" type="checkbox"/><label for="c-fase-4-6bef08d5"> <code>unknown</code> x <code>any</code> x <code>never</code>, e por que <code>any</code> é dívida técnica</label></li>
+<li class="task-list-item enabled" data-item="fase-4-6883cbc4"><input class="chk" data-id="fase-4-6883cbc4" id="c-fase-4-6883cbc4" type="checkbox"/><label for="c-fase-4-6883cbc4"> <code>tsconfig</code>: <code>strict</code>, <code>target</code>, <code>module</code>, <code>moduleResolution</code></label></li>
+</ul>
+<h4 class="sub">Nível 2 — Modelagem de domínio</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-4-b8413798"><input class="chk" data-id="fase-4-b8413798" id="c-fase-4-b8413798" type="checkbox"/><label for="c-fase-4-b8413798"> Generics em funções e classes, com restrições (<code>extends</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-4-db0d52a5"><input class="chk" data-id="fase-4-db0d52a5" id="c-fase-4-db0d52a5" type="checkbox"/><label for="c-fase-4-db0d52a5"> Utility types: <code>Partial</code>, <code>Pick</code>, <code>Omit</code>, <code>Record</code>, <code>ReturnType</code>, <code>Awaited</code></label></li>
+<li class="task-list-item enabled" data-item="fase-4-ea691905"><input class="chk" data-id="fase-4-ea691905" id="c-fase-4-ea691905" type="checkbox"/><label for="c-fase-4-ea691905"> Estados com discriminated unions (ex.: <code>Result&lt;T, E&gt;</code>, status de um pedido)</label></li>
+<li class="task-list-item enabled" data-item="fase-4-e84acc38"><input class="chk" data-id="fase-4-e84acc38" id="c-fase-4-e84acc38" type="checkbox"/><label for="c-fase-4-e84acc38"> Branded types para não confundir <code>UserId</code> com <code>OrderId</code>; tornar estados inválidos impossíveis de representar</label></li>
+<li class="task-list-item enabled" data-item="fase-4-29eaed81"><input class="chk" data-id="fase-4-29eaed81" id="c-fase-4-29eaed81" type="checkbox"/><label for="c-fase-4-29eaed81"> Validação na fronteira: tipos somem em runtime, então dados externos passam por Zod, que valida e gera o tipo</label></li>
+</ul>
+<h4 class="sub">Nível 3 — Avançado, na medida</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-4-bb26a330"><input class="chk" data-id="fase-4-bb26a330" id="c-fase-4-bb26a330" type="checkbox"/><label for="c-fase-4-bb26a330"> <code>keyof</code>, <code>typeof</code>, indexed access, mapped types, conditional types, <code>infer</code>, template literal types</label></li>
+<li class="task-list-item enabled" data-item="fase-4-ef7ffeef"><input class="chk" data-id="fase-4-ef7ffeef" id="c-fase-4-ef7ffeef" type="checkbox"/><label for="c-fase-4-ef7ffeef"> Arquivos de declaração (<code>.d.ts</code>) e pacotes <code>@types</code></label></li>
+<li class="task-list-item enabled" data-item="fase-4-91dd68db"><input class="chk" data-id="fase-4-91dd68db" id="c-fase-4-91dd68db" type="checkbox"/><label for="c-fase-4-91dd68db"> Saber parar: tipo ilegível é custo de manutenção</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Migre o CLI de tarefas da Fase 1 para TypeScript em modo strict.</li>
+<li>Modele só com tipos o domínio de um sistema de agendamento (estados pendente, confirmado, cancelado) antes de escrever qualquer lógica.</li>
+<li>Resolva os desafios fáceis e alguns médios do <a href="https://github.com/type-challenges/type-challenges" rel="noopener noreferrer" target="_blank">Type Challenges</a>.</li>
+<li>Escreva uma função <code>fetchJson&lt;T&gt;</code> que valida a resposta com Zod antes de devolver.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://www.typescriptlang.org/docs/handbook/intro.html" rel="noopener noreferrer" target="_blank">TypeScript Handbook</a> oficial — a fonte primária</li>
+<li>Effective TypeScript, de Dan Vanderkam (2ª edição)</li>
+<li><a href="https://www.totaltypescript.com/" rel="noopener noreferrer" target="_blank">Total TypeScript</a>, de Matt Pocock — tutoriais gratuitos</li>
+</ul>
+<p class="callout exit" data-exit="fase-4"><strong>Critério de saída:</strong> você escreve código strict sem <code>any</code>; modela estados com discriminated unions; e explica a diferença entre checagem em tempo de compilação e validação em runtime.</p>
+</div><div class="notes" data-for="fase-4"></div></article>
+<article class="section" id="sec-fase-5" data-id="fase-5" hidden><header class="sec-head"><p class="eyebrow">Fase 5 · 6 semanas</p><h1>Trilha Bancos de dados e SQL</h1><div class="sec-tools" data-for="fase-5"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> modelar dados corretamente e escrever SQL que performa, entendendo o que o banco faz por baixo.</p>
+<p class="why"><strong>Por que importa:</strong> o banco guarda o ativo mais valioso da empresa e concentra a maioria dos gargalos de performance. ORMs vêm e vão; SQL e modelagem ficam. É aqui que um backend especialista se diferencia mais rápido.</p>
+<h4 class="sub">Modelagem</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-5-4cf2a9c4"><input class="chk" data-id="fase-5-4cf2a9c4" id="c-fase-5-4cf2a9c4" type="checkbox"/><label for="c-fase-5-4cf2a9c4"> Modelo entidade-relacionamento; cardinalidade 1:1, 1:N, N:N</label></li>
+<li class="task-list-item enabled" data-item="fase-5-cfee8ec7"><input class="chk" data-id="fase-5-cfee8ec7" id="c-fase-5-cfee8ec7" type="checkbox"/><label for="c-fase-5-cfee8ec7"> Chaves primárias (sequencial x UUID), estrangeiras e constraints (<code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-5-373dad44"><input class="chk" data-id="fase-5-373dad44" id="c-fase-5-373dad44" type="checkbox"/><label for="c-fase-5-373dad44"> Normalização até a 3FN, e desnormalização consciente quando a leitura justifica</label></li>
+<li class="task-list-item enabled" data-item="fase-5-80c4135c"><input class="chk" data-id="fase-5-80c4135c" id="c-fase-5-80c4135c" type="checkbox"/><label for="c-fase-5-80c4135c"> Tipos certos: dinheiro em <code>numeric</code> ou centavos inteiros, datas em <code>timestamptz</code>, enum x tabela de domínio</label></li>
+</ul>
+<h4 class="sub">SQL</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-5-e129190b"><input class="chk" data-id="fase-5-e129190b" id="c-fase-5-e129190b" type="checkbox"/><label for="c-fase-5-e129190b"> <code>SELECT</code>, <code>WHERE</code>, <code>ORDER BY</code>, <code>LIMIT</code>; <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> (sempre com <code>WHERE</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-5-24abf8d0"><input class="chk" data-id="fase-5-24abf8d0" id="c-fase-5-24abf8d0" type="checkbox"/><label for="c-fase-5-24abf8d0"> JOINs (inner, left, e o que acontece com <code>NULL</code>), <code>GROUP BY</code>, <code>HAVING</code>, agregações</label></li>
+<li class="task-list-item enabled" data-item="fase-5-c122f4e1"><input class="chk" data-id="fase-5-c122f4e1" id="c-fase-5-c122f4e1" type="checkbox"/><label for="c-fase-5-c122f4e1"> Subqueries, CTEs (<code>WITH</code>), window functions (<code>ROW_NUMBER</code>, <code>SUM OVER</code>, <code>LAG</code>)</label></li>
+<li class="task-list-item enabled" data-item="fase-5-1a6f7aa2"><input class="chk" data-id="fase-5-1a6f7aa2" id="c-fase-5-1a6f7aa2" type="checkbox"/><label for="c-fase-5-1a6f7aa2"> Upsert (<code>ON CONFLICT</code>) e <code>RETURNING</code></label></li>
+<li class="task-list-item enabled" data-item="fase-5-37fa7e24"><input class="chk" data-id="fase-5-37fa7e24" id="c-fase-5-37fa7e24" type="checkbox"/><label for="c-fase-5-37fa7e24"> <code>JSONB</code> no PostgreSQL e quando ele faz sentido</label></li>
+</ul>
+<h4 class="sub">Como o banco funciona por dentro</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-5-0025b402"><input class="chk" data-id="fase-5-0025b402" id="c-fase-5-0025b402" type="checkbox"/><label for="c-fase-5-0025b402"> Índices: B-tree, índice composto e ordem das colunas, índice parcial, quando o índice é ignorado</label></li>
+<li class="task-list-item enabled" data-item="fase-5-c08b026e"><input class="chk" data-id="fase-5-c08b026e" id="c-fase-5-c08b026e" type="checkbox"/><label for="c-fase-5-c08b026e"> <code>EXPLAIN ANALYZE</code>: ler o plano (seq scan x index scan, custo, linhas estimadas x reais)</label></li>
+<li class="task-list-item enabled" data-item="fase-5-7eef6c20"><input class="chk" data-id="fase-5-7eef6c20" id="c-fase-5-7eef6c20" type="checkbox"/><label for="c-fase-5-7eef6c20"> Transações e ACID; níveis de isolamento e as anomalias que cada um permite</label></li>
+<li class="task-list-item enabled" data-item="fase-5-ff4b00b0"><input class="chk" data-id="fase-5-ff4b00b0" id="c-fase-5-ff4b00b0" type="checkbox"/><label for="c-fase-5-ff4b00b0"> Locks, <code>SELECT ... FOR UPDATE</code>, deadlocks; MVCC em alto nível</label></li>
+<li class="task-list-item enabled" data-item="fase-5-3fae46b3"><input class="chk" data-id="fase-5-3fae46b3" id="c-fase-5-3fae46b3" type="checkbox"/><label for="c-fase-5-3fae46b3"> O problema N+1 e como detectá-lo</label></li>
+<li class="task-list-item enabled" data-item="fase-5-54da3892"><input class="chk" data-id="fase-5-54da3892" id="c-fase-5-54da3892" type="checkbox"/><label for="c-fase-5-54da3892"> Migrations versionadas; mudanças sem downtime (padrão expand and contract)</label></li>
+<li class="task-list-item enabled" data-item="fase-5-c67de83c"><input class="chk" data-id="fase-5-c67de83c" id="c-fase-5-c67de83c" type="checkbox"/><label for="c-fase-5-c67de83c"> Pool de conexões, backup e restore</label></li>
+</ul>
+<h4 class="sub">Panorama NoSQL (conhecer o trade-off, não dominar)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-5-5935b986"><input class="chk" data-id="fase-5-5935b986" id="c-fase-5-5935b986" type="checkbox"/><label for="c-fase-5-5935b986"> Redis: chave-valor em memória para cache, sessão, rate limit e filas simples</label></li>
+<li class="task-list-item enabled" data-item="fase-5-dabacb1d"><input class="chk" data-id="fase-5-dabacb1d" id="c-fase-5-dabacb1d" type="checkbox"/><label for="c-fase-5-dabacb1d"> MongoDB: documentos, quando ajuda e quando vira armadilha</label></li>
+<li class="task-list-item enabled" data-item="fase-5-564968a1"><input class="chk" data-id="fase-5-564968a1" id="c-fase-5-564968a1" type="checkbox"/><label for="c-fase-5-564968a1"> Teorema CAP e consistência eventual em alto nível</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Modele o banco do projeto âncora no papel, depois em SQL, com migrations.</li>
+<li>Gere 1 milhão de linhas com <code>generate_series</code>, meça uma consulta com <code>EXPLAIN ANALYZE</code>, crie o índice certo e anote o antes e depois. Esse é seu primeiro registro de impacto.</li>
+<li>Resolva o <a href="https://sqlbolt.com/" rel="noopener noreferrer" target="_blank">SQLBolt</a> e o <a href="https://pgexercises.com/" rel="noopener noreferrer" target="_blank">PostgreSQL Exercises</a>.</li>
+<li>Abra duas sessões do <code>psql</code> e simule duas pessoas reservando o último horário da agenda. Resolva com transação e lock, ou com constraint.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://use-the-index-luke.com/" rel="noopener noreferrer" target="_blank">Use The Index, Luke!</a>, de Markus Winand (gratuito) — o melhor material sobre índices</li>
+<li><a href="https://www.postgresql.org/docs/current/" rel="noopener noreferrer" target="_blank">Documentação do PostgreSQL</a>: Tutorial, Indexes e Concurrency Control</li>
+<li>Designing Data-Intensive Applications, de Kleppmann e Riccomini, 2ª edição (O'Reilly, março de 2026): capítulos de modelos de dados, armazenamento e transações</li>
+</ul>
+<p class="callout exit" data-exit="fase-5"><strong>Critério de saída:</strong> você modela um domínio de 8 a 10 tabelas justificando cada escolha; escreve consultas com JOIN, agregação e window function sem consulta; lê um <code>EXPLAIN</code> e cria o índice certo; e explica um nível de isolamento com a anomalia que ele evita.</p>
+</div><div class="notes" data-for="fase-5"></div></article>
+<article class="section" id="sec-fase-6" data-id="fase-6" hidden><header class="sec-head"><p class="eyebrow">Fase 6 · 10 a 12 semanas</p><h1>Trilha Node.js e Backend core</h1><div class="sec-tools" data-for="fase-6"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> construir APIs seguras, testadas e bem estruturadas, e entender o runtime que as executa.</p>
+<p class="why"><strong>Por que importa:</strong> esta é a barra vertical do seu T. É a fase mais longa e a que mais vai aparecer em entrevista e no dia a dia.</p>
+<p class="callout note"><strong>Contexto 2026:</strong> use sempre a linha LTS ativa (<a href="https://nodejs.org/en/about/previous-releases" rel="noopener noreferrer" target="_blank">nodejs.org</a>). O Node 26 (abril de 2026) foi o último no modelo antigo; a partir do Node 27, em 2027, sai uma versão major por ano e todas viram LTS (<a href="https://infoq.com/news/2026/06/nodejs-release-changes" rel="noopener noreferrer" target="_blank">InfoQ</a>).</p>
+<h4 class="sub">Nível 1 — O runtime</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-6-73a453b5"><input class="chk" data-id="fase-6-73a453b5" id="c-fase-6-73a453b5" type="checkbox"/><label for="c-fase-6-73a453b5"> Arquitetura: V8 + libuv; fases do event loop do Node; thread pool</label></li>
+<li class="task-list-item enabled" data-item="fase-6-5a53f084"><input class="chk" data-id="fase-6-5a53f084" id="c-fase-6-5a53f084" type="checkbox"/><label for="c-fase-6-5a53f084"> Por que Node é forte em I/O e fraco em CPU pesada; <code>worker_threads</code></label></li>
+<li class="task-list-item enabled" data-item="fase-6-e9ce4578"><input class="chk" data-id="fase-6-e9ce4578" id="c-fase-6-e9ce4578" type="checkbox"/><label for="c-fase-6-e9ce4578"> ESM x CommonJS</label></li>
+<li class="task-list-item enabled" data-item="fase-6-f9dddd2d"><input class="chk" data-id="fase-6-f9dddd2d" id="c-fase-6-f9dddd2d" type="checkbox"/><label for="c-fase-6-f9dddd2d"> Módulos nativos: <code>fs/promises</code>, <code>path</code>, <code>events</code>, <code>stream</code>, <code>crypto</code>, <code>http</code></label></li>
+<li class="task-list-item enabled" data-item="fase-6-9df5bdb0"><input class="chk" data-id="fase-6-9df5bdb0" id="c-fase-6-9df5bdb0" type="checkbox"/><label for="c-fase-6-9df5bdb0"> Streams e backpressure: processar um arquivo de 2 GB sem estourar a memória</label></li>
+<li class="task-list-item enabled" data-item="fase-6-42c1550b"><input class="chk" data-id="fase-6-42c1550b" id="c-fase-6-42c1550b" type="checkbox"/><label for="c-fase-6-42c1550b"> <code>process</code>, variáveis de ambiente, sinais e graceful shutdown</label></li>
+<li class="task-list-item enabled" data-item="fase-6-741e000c"><input class="chk" data-id="fase-6-741e000c" id="c-fase-6-741e000c" type="checkbox"/><label for="c-fase-6-741e000c"> Recursos nativos atuais: <code>node:test</code>, watch mode, <code>--env-file</code>, <code>fetch</code> nativo, execução direta de <code>.ts</code> (type stripping)</label></li>
+</ul>
+<h4 class="sub">Nível 2 — HTTP e APIs</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-6-c41762db"><input class="chk" data-id="fase-6-c41762db" id="c-fase-6-c41762db" type="checkbox"/><label for="c-fase-6-c41762db"> Servidor só com o módulo <code>http</code>: rotear, ler o corpo, devolver JSON com o status certo</label></li>
+<li class="task-list-item enabled" data-item="fase-6-07702ec7"><input class="chk" data-id="fase-6-07702ec7" id="c-fase-6-07702ec7" type="checkbox"/><label for="c-fase-6-07702ec7"> Depois um framework (Fastify ou Express 5), sabendo o que ele faz por você: rotas, middlewares, parsing, hooks</label></li>
+<li class="task-list-item enabled" data-item="fase-6-e33ace39"><input class="chk" data-id="fase-6-e33ace39" id="c-fase-6-e33ace39" type="checkbox"/><label for="c-fase-6-e33ace39"> REST bem feito: recursos, verbos, idempotência, paginação (offset x cursor), filtros, versionamento</label></li>
+<li class="task-list-item enabled" data-item="fase-6-91e43bd9"><input class="chk" data-id="fase-6-91e43bd9" id="c-fase-6-91e43bd9" type="checkbox"/><label for="c-fase-6-91e43bd9"> Formato de erro consistente (RFC 9457, Problem Details)</label></li>
+<li class="task-list-item enabled" data-item="fase-6-c01a140f"><input class="chk" data-id="fase-6-c01a140f" id="c-fase-6-c01a140f" type="checkbox"/><label for="c-fase-6-c01a140f"> Validação de entrada em toda fronteira (Zod ou JSON Schema)</label></li>
+<li class="task-list-item enabled" data-item="fase-6-0f41b165"><input class="chk" data-id="fase-6-0f41b165" id="c-fase-6-0f41b165" type="checkbox"/><label for="c-fase-6-0f41b165"> Documentação com OpenAPI</label></li>
+<li class="task-list-item enabled" data-item="fase-6-b6fd9d1d"><input class="chk" data-id="fase-6-b6fd9d1d" id="c-fase-6-b6fd9d1d" type="checkbox"/><label for="c-fase-6-b6fd9d1d"> Acesso a dados: SQL puro com <code>pg</code> primeiro; depois Drizzle, Prisma ou Kysely, sabendo qual SQL eles geram</label></li>
+<li class="task-list-item enabled" data-item="fase-6-0700102a"><input class="chk" data-id="fase-6-0700102a" id="c-fase-6-0700102a" type="checkbox"/><label for="c-fase-6-0700102a"> Configuração por ambiente e segredos fora do código</label></li>
+<li class="task-list-item enabled" data-item="fase-6-46f875e7"><input class="chk" data-id="fase-6-46f875e7" id="c-fase-6-46f875e7" type="checkbox"/><label for="c-fase-6-46f875e7"> Logs estruturados (pino) com ID de requisição</label></li>
+</ul>
+<h4 class="sub">Nível 3 — Autenticação, autorização e segurança</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-6-c22974ae"><input class="chk" data-id="fase-6-c22974ae" id="c-fase-6-c22974ae" type="checkbox"/><label for="c-fase-6-c22974ae"> Hash de senha com argon2 ou bcrypt (nunca criptografia reversível)</label></li>
+<li class="task-list-item enabled" data-item="fase-6-5f966237"><input class="chk" data-id="fase-6-5f966237" id="c-fase-6-5f966237" type="checkbox"/><label for="c-fase-6-5f966237"> Sessão com cookie x JWT: onde guardar, expiração, refresh token, revogação</label></li>
+<li class="task-list-item enabled" data-item="fase-6-d8caf89d"><input class="chk" data-id="fase-6-d8caf89d" id="c-fase-6-d8caf89d" type="checkbox"/><label for="c-fase-6-d8caf89d"> OAuth 2.0 e OpenID Connect (login com Google): fluxo authorization code com PKCE</label></li>
+<li class="task-list-item enabled" data-item="fase-6-0dce1062"><input class="chk" data-id="fase-6-0dce1062" id="c-fase-6-0dce1062" type="checkbox"/><label for="c-fase-6-0dce1062"> Autorização: papéis (RBAC) e checagem por recurso ("este usuário pode ver este agendamento?")</label></li>
+<li class="task-list-item enabled" data-item="fase-6-a488ef5a"><input class="chk" data-id="fase-6-a488ef5a" id="c-fase-6-a488ef5a" type="checkbox"/><label for="c-fase-6-a488ef5a"> OWASP API Security Top 10: injeção, IDOR/BOLA, mass assignment, falta de rate limit</label></li>
+<li class="task-list-item enabled" data-item="fase-6-e1c9ddb5"><input class="chk" data-id="fase-6-e1c9ddb5" id="c-fase-6-e1c9ddb5" type="checkbox"/><label for="c-fase-6-e1c9ddb5"> CORS, headers de segurança, HTTPS, proteção contra força bruta</label></li>
+</ul>
+<h4 class="sub">Nível 4 — Integrações</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-6-fecef916"><input class="chk" data-id="fase-6-fecef916" id="c-fase-6-fecef916" type="checkbox"/><label for="c-fase-6-fecef916"> Consumir APIs de terceiros com timeout, retry com backoff exponencial e jitter, circuit breaker</label></li>
+<li class="task-list-item enabled" data-item="fase-6-a5f92262"><input class="chk" data-id="fase-6-a5f92262" id="c-fase-6-a5f92262" type="checkbox"/><label for="c-fase-6-a5f92262"> Webhooks: validar assinatura (HMAC), responder rápido, processar depois, garantir idempotência</label></li>
+<li class="task-list-item enabled" data-item="fase-6-d8e200c0"><input class="chk" data-id="fase-6-d8e200c0" id="c-fase-6-d8e200c0" type="checkbox"/><label for="c-fase-6-d8e200c0"> Jobs em background e filas (BullMQ sobre Redis)</label></li>
+<li class="task-list-item enabled" data-item="fase-6-908257cb"><input class="chk" data-id="fase-6-908257cb" id="c-fase-6-908257cb" type="checkbox"/><label for="c-fase-6-908257cb"> Upload de arquivos direto para storage com URL pré-assinada</label></li>
+<li class="task-list-item enabled" data-item="fase-6-6294c63e"><input class="chk" data-id="fase-6-6294c63e" id="c-fase-6-6294c63e" type="checkbox"/><label for="c-fase-6-6294c63e"> Outros estilos em alto nível: GraphQL, gRPC, WebSocket</label></li>
+</ul>
+<p class="callout note"><strong>Aproveite onde você já está:</strong> o Nível 4 é o dia a dia de uma operação de RevOps (CRMs, WhatsApp, formulários, webhooks). Uma automação ou integração real no trabalho vale mais que três projetos de tutorial, porque gera métrica de impacto de verdade.</p>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Servidor HTTP do zero, sem framework, com 4 rotas CRUD e persistência em arquivo. Depois reescreva em Fastify e anote o que o framework resolveu.</li>
+<li>Encurtador de URL com PostgreSQL, validação, rate limit, contagem de cliques e OpenAPI.</li>
+<li>Backend do projeto âncora v1: cadastro, login, CRUD de agendamentos com regras de negócio e autorização por dono.</li>
+<li>Receptor de webhook com validação HMAC e idempotência (simule o webhook de um CRM).</li>
+<li>Processe um CSV de 1 milhão de linhas com streams e meça o uso de memória.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://nodejs.org/en/learn" rel="noopener noreferrer" target="_blank">Documentação oficial do Node.js</a> e a referência da API</li>
+<li>Node.js Design Patterns, de Mario Casciaro e Luciano Mammino (edição mais recente)</li>
+<li><a href="https://fullstackopen.com/en/" rel="noopener noreferrer" target="_blank">Full Stack Open</a> (Universidade de Helsinque, gratuito): partes de Node, testes e autenticação</li>
+<li><a href="https://thecopenhagenbook.com/" rel="noopener noreferrer" target="_blank">The Copenhagen Book</a> — guia gratuito de autenticação</li>
+<li><a href="https://owasp.org/API-Security/" rel="noopener noreferrer" target="_blank">OWASP API Security Top 10</a></li>
+<li><a href="https://opensource.zalando.com/restful-api-guidelines/" rel="noopener noreferrer" target="_blank">Zalando RESTful API Guidelines</a> — referência de design de API</li>
+</ul>
+<p class="callout exit" data-exit="fase-6"><strong>Critério de saída:</strong> você constrói do zero uma API com autenticação, autorização por recurso, validação, erros padronizados, paginação, logs e documentação; explica sessão x JWT com trade-offs; e mostra como sua API resiste a IDOR e força bruta.</p>
+</div><div class="notes" data-for="fase-6"></div></article>
+<article class="section" id="sec-fase-7" data-id="fase-7" hidden><header class="sec-head"><p class="eyebrow">Fase 7 · 6 semanas</p><h1>Trilha React: a barra horizontal do T</h1><div class="sec-tools" data-for="fase-7"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> entregar sozinho a interface de uma feature que consome sua própria API, com estado bem gerenciado.</p>
+<p class="why"><strong>Por que importa:</strong> o especialista em backend que monta uma tela decente entrega features de ponta a ponta. E quem já sofreu do lado do front desenha APIs melhores: paginação que a tela consegue usar, erros que dá para mostrar, payloads do tamanho certo.</p>
+<p><strong>O que não é meta:</strong> animações complexas, design system do zero, otimização extrema de renderização. Isso é a barra vertical de outra pessoa.</p>
+<h4 class="sub">Tópicos</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-7-8f4fe3fb"><input class="chk" data-id="fase-7-8f4fe3fb" id="c-fase-7-8f4fe3fb" type="checkbox"/><label for="c-fase-7-8f4fe3fb"> Modelo mental: a interface é função do estado; componentes, props, composição</label></li>
+<li class="task-list-item enabled" data-item="fase-7-46582f20"><input class="chk" data-id="fase-7-46582f20" id="c-fase-7-46582f20" type="checkbox"/><label for="c-fase-7-46582f20"> JSX, renderização condicional, listas e <code>key</code></label></li>
+<li class="task-list-item enabled" data-item="fase-7-17bb3b73"><input class="chk" data-id="fase-7-17bb3b73" id="c-fase-7-17bb3b73" type="checkbox"/><label for="c-fase-7-17bb3b73"> Estado com <code>useState</code> e <code>useReducer</code>; estado derivado (não duplicar)</label></li>
+<li class="task-list-item enabled" data-item="fase-7-50c16364"><input class="chk" data-id="fase-7-50c16364" id="c-fase-7-50c16364" type="checkbox"/><label for="c-fase-7-50c16364"> <code>useEffect</code> e, principalmente, quando não usá-lo</label></li>
+<li class="task-list-item enabled" data-item="fase-7-d8c027f6"><input class="chk" data-id="fase-7-d8c027f6" id="c-fase-7-d8c027f6" type="checkbox"/><label for="c-fase-7-d8c027f6"> Formulários controlados, com o mesmo schema Zod do backend</label></li>
+<li class="task-list-item enabled" data-item="fase-7-4cc909b5"><input class="chk" data-id="fase-7-4cc909b5" id="c-fase-7-4cc909b5" type="checkbox"/><label for="c-fase-7-4cc909b5"> Estado de servidor com TanStack Query: cache, carregamento, erro, revalidação, mutations</label></li>
+<li class="task-list-item enabled" data-item="fase-7-ca4edb71"><input class="chk" data-id="fase-7-ca4edb71" id="c-fase-7-ca4edb71" type="checkbox"/><label for="c-fase-7-ca4edb71"> Roteamento e rotas protegidas; login com cookie <code>HttpOnly</code></label></li>
+<li class="task-list-item enabled" data-item="fase-7-c0df5a05"><input class="chk" data-id="fase-7-c0df5a05" id="c-fase-7-c0df5a05" type="checkbox"/><label for="c-fase-7-c0df5a05"> Vite e React DevTools</label></li>
+<li class="task-list-item enabled" data-item="fase-7-caa5d274"><input class="chk" data-id="fase-7-caa5d274" id="c-fase-7-caa5d274" type="checkbox"/><label for="c-fase-7-caa5d274"> Testes com Testing Library: testar comportamento, não implementação</label></li>
+<li class="task-list-item enabled" data-item="fase-7-d5e4be5c"><input class="chk" data-id="fase-7-d5e4be5c" id="c-fase-7-d5e4be5c" type="checkbox"/><label for="c-fase-7-d5e4be5c"> Panorama de frameworks fullstack (Next.js) e Server Components: o que resolvem (SSR, SEO) e o que custam</label></li>
+<li class="task-list-item enabled" data-item="fase-7-d0674ec3"><input class="chk" data-id="fase-7-d0674ec3" id="c-fase-7-d0674ec3" type="checkbox"/><label for="c-fase-7-d0674ec3"> Contrato tipado entre front e back: tipos gerados do OpenAPI ou compartilhados em monorepo</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Frontend do projeto âncora v1: login, lista e criação de agendamentos, com estados de carregando, erro e vazio.</li>
+<li>Gere os tipos do front a partir do OpenAPI da sua API.</li>
+<li>Um painel com filtros e paginação por cursor consumindo sua API.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://react.dev/learn" rel="noopener noreferrer" target="_blank">react.dev</a>, documentação oficial; leia com atenção "Thinking in React" e "You Might Not Need an Effect"</li>
+<li><a href="https://tanstack.com/query/latest" rel="noopener noreferrer" target="_blank">Documentação do TanStack Query</a></li>
+<li>Full Stack Open, partes de React</li>
+</ul>
+<p class="callout exit" data-exit="fase-7"><strong>Critério de saída:</strong> você constrói sozinho o front de uma feature completa consumindo sua API; explica por que separar estado de servidor de estado de interface; e não tem <code>useEffect</code> desnecessário no código.</p>
+</div><div class="notes" data-for="fase-7"></div></article>
+<article class="section" id="sec-fase-8" data-id="fase-8" hidden><header class="sec-head"><p class="eyebrow">Fase 8 · 6 semanas de foco, depois contínuo</p><h1>Engenharia de software: testes, design e arquitetura</h1><div class="sec-tools" data-for="fase-8"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> escrever código que outras pessoas conseguem ler, mudar e confiar, e defender cada decisão de design.</p>
+<p class="why"><strong>Por que importa:</strong> código é lido muito mais vezes do que escrito. A diferença entre júnior e pleno está mais aqui do que em saber mais frameworks.</p>
+<h4 class="sub">Testes</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-8-40ba32af"><input class="chk" data-id="fase-8-40ba32af" id="c-fase-8-40ba32af" type="checkbox"/><label for="c-fase-8-40ba32af"> Tipos de teste: unitário, integração, ponta a ponta; o que vale a pena testar</label></li>
+<li class="task-list-item enabled" data-item="fase-8-569001de"><input class="chk" data-id="fase-8-569001de" id="c-fase-8-569001de" type="checkbox"/><label for="c-fase-8-569001de"> Vitest para unidade; integração da API contra um PostgreSQL real em contêiner (Testcontainers)</label></li>
+<li class="task-list-item enabled" data-item="fase-8-f51876f5"><input class="chk" data-id="fase-8-f51876f5" id="c-fase-8-f51876f5" type="checkbox"/><label for="c-fase-8-f51876f5"> Mocks, stubs e fakes, e o risco de mockar demais</label></li>
+<li class="task-list-item enabled" data-item="fase-8-bb819148"><input class="chk" data-id="fase-8-bb819148" id="c-fase-8-bb819148" type="checkbox"/><label for="c-fase-8-bb819148"> TDD como ferramenta de design (pratique em katas)</label></li>
+<li class="task-list-item enabled" data-item="fase-8-d16b073c"><input class="chk" data-id="fase-8-d16b073c" id="c-fase-8-d16b073c" type="checkbox"/><label for="c-fase-8-d16b073c"> Cobertura como sinal, nunca como meta</label></li>
+<li class="task-list-item enabled" data-item="fase-8-209033a9"><input class="chk" data-id="fase-8-209033a9" id="c-fase-8-209033a9" type="checkbox"/><label for="c-fase-8-209033a9"> Playwright para os fluxos críticos de ponta a ponta</label></li>
+</ul>
+<h4 class="sub">Design de código</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-8-f1dd7b6b"><input class="chk" data-id="fase-8-f1dd7b6b" id="c-fase-8-f1dd7b6b" type="checkbox"/><label for="c-fase-8-f1dd7b6b"> Nomes, funções pequenas, coesão e acoplamento</label></li>
+<li class="task-list-item enabled" data-item="fase-8-ba6dedbf"><input class="chk" data-id="fase-8-ba6dedbf" id="c-fase-8-ba6dedbf" type="checkbox"/><label for="c-fase-8-ba6dedbf"> SOLID com senso crítico; YAGNI; KISS; quando duplicar é melhor que abstrair</label></li>
+<li class="task-list-item enabled" data-item="fase-8-27e31feb"><input class="chk" data-id="fase-8-27e31feb" id="c-fase-8-27e31feb" type="checkbox"/><label for="c-fase-8-27e31feb"> Composição e injeção de dependência sem framework</label></li>
+<li class="task-list-item enabled" data-item="fase-8-f2f2f87f"><input class="chk" data-id="fase-8-f2f2f87f" id="c-fase-8-f2f2f87f" type="checkbox"/><label for="c-fase-8-f2f2f87f"> Tratamento de erro como parte do design</label></li>
+<li class="task-list-item enabled" data-item="fase-8-b3c63e6e"><input class="chk" data-id="fase-8-b3c63e6e" id="c-fase-8-b3c63e6e" type="checkbox"/><label for="c-fase-8-b3c63e6e"> Refatoração segura em passos pequenos, protegida por testes</label></li>
+<li class="task-list-item enabled" data-item="fase-8-31734b05"><input class="chk" data-id="fase-8-31734b05" id="c-fase-8-31734b05" type="checkbox"/><label for="c-fase-8-31734b05"> Padrões mais úteis no backend: Strategy, Adapter, Factory, Repository, Observer, Middleware</label></li>
+</ul>
+<h4 class="sub">Arquitetura de aplicação</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-8-3ed571f1"><input class="chk" data-id="fase-8-3ed571f1" id="c-fase-8-3ed571f1" type="checkbox"/><label for="c-fase-8-3ed571f1"> Camadas (rota, serviço, repositório); regra de negócio isolada de framework e banco</label></li>
+<li class="task-list-item enabled" data-item="fase-8-36171709"><input class="chk" data-id="fase-8-36171709" id="c-fase-8-36171709" type="checkbox"/><label for="c-fase-8-36171709"> Arquitetura hexagonal e Clean Architecture: o que resolvem e quando viram exagero</label></li>
+<li class="task-list-item enabled" data-item="fase-8-cd9df094"><input class="chk" data-id="fase-8-cd9df094" id="c-fase-8-cd9df094" type="checkbox"/><label for="c-fase-8-cd9df094"> Monólito modular antes de microsserviços</label></li>
+<li class="task-list-item enabled" data-item="fase-8-9476f896"><input class="chk" data-id="fase-8-9476f896" id="c-fase-8-9476f896" type="checkbox"/><label for="c-fase-8-9476f896"> DDD estratégico em alto nível: linguagem ubíqua, bounded contexts</label></li>
+<li class="task-list-item enabled" data-item="fase-8-c828f260"><input class="chk" data-id="fase-8-c828f260" id="c-fase-8-c828f260" type="checkbox"/><label for="c-fase-8-c828f260"> <a href="https://12factor.net/pt_br/" rel="noopener noreferrer" target="_blank">The Twelve-Factor App</a></label></li>
+</ul>
+<h4 class="sub">Colaboração</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-8-02510248"><input class="chk" data-id="fase-8-02510248" id="c-fase-8-02510248" type="checkbox"/><label for="c-fase-8-02510248"> Code review: revisar bem e receber revisão bem</label></li>
+<li class="task-list-item enabled" data-item="fase-8-0ac10a4d"><input class="chk" data-id="fase-8-0ac10a4d" id="c-fase-8-0ac10a4d" type="checkbox"/><label for="c-fase-8-0ac10a4d"> Trunk-based development e feature flags</label></li>
+<li class="task-list-item enabled" data-item="fase-8-2f0f1f59"><input class="chk" data-id="fase-8-2f0f1f59" id="c-fase-8-2f0f1f59" type="checkbox"/><label for="c-fase-8-2f0f1f59"> Automação local: ESLint, Prettier, hooks de pre-commit, changelog</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>No projeto âncora: testes unitários das regras de negócio e testes de integração da API com banco em contêiner. Meta: refatorar sem medo.</li>
+<li>Refatore o backend v1 separando domínio, aplicação e infraestrutura, e escreva um ADR explicando por quê.</li>
+<li>Um kata por semana (comece pelo Gilded Rose Refactoring Kata).</li>
+<li>Leia 2 pull requests de projetos open source por mês, incluindo a discussão.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li>A Philosophy of Software Design, de John Ousterhout — o livro mais importante desta fase</li>
+<li>Refatoração, de Martin Fowler (2ª edição, exemplos em JavaScript)</li>
+<li>O Programador Pragmático, de Hunt e Thomas (edição de 20 anos)</li>
+<li>Código Limpo, de Robert C. Martin — leia com senso crítico, parte dos conselhos envelheceu</li>
+<li><a href="https://github.com/goldbergyoni/nodebestpractices" rel="noopener noreferrer" target="_blank">Node.js Best Practices</a> e <a href="https://github.com/goldbergyoni/javascript-testing-best-practices" rel="noopener noreferrer" target="_blank">JavaScript Testing Best Practices</a>, de Yoni Goldberg (gratuitos)</li>
+<li><a href="https://refactoring.guru/pt-br/design-patterns" rel="noopener noreferrer" target="_blank">Refactoring.Guru</a> — padrões de projeto em português</li>
+</ul>
+<p class="callout exit" data-exit="fase-8"><strong>Critério de saída:</strong> você tem um projeto com testes que dão coragem de refatorar; explica com exemplos do seu código por que separou camadas (e onde preferiu não separar); e faz um code review construtivo.</p>
+</div><div class="notes" data-for="fase-8"></div></article>
+<article class="section" id="sec-fase-9" data-id="fase-9" hidden><header class="sec-head"><p class="eyebrow">Fase 9 · 8 a 10 semanas</p><h1>Entrega: Docker, CI/CD, Cloud e observabilidade</h1><div class="sec-tools" data-for="fase-9"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> levar o projeto âncora para produção de forma reproduzível, automatizada e observável.</p>
+<p class="why"><strong>Por que importa:</strong> "funciona na minha máquina" não gera valor para ninguém. E é em produção que você ganha os números (latência, taxa de erro, custo) que viram registro de impacto.</p>
+<h4 class="sub">Docker</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-9-627516c2"><input class="chk" data-id="fase-9-627516c2" id="c-fase-9-627516c2" type="checkbox"/><label for="c-fase-9-627516c2"> Imagem x contêiner; camadas e cache de build</label></li>
+<li class="task-list-item enabled" data-item="fase-9-07502dbf"><input class="chk" data-id="fase-9-07502dbf" id="c-fase-9-07502dbf" type="checkbox"/><label for="c-fase-9-07502dbf"> Dockerfile para Node: multi-stage, imagem enxuta, usuário não-root, <code>.dockerignore</code></label></li>
+<li class="task-list-item enabled" data-item="fase-9-9a7b3028"><input class="chk" data-id="fase-9-9a7b3028" id="c-fase-9-9a7b3028" type="checkbox"/><label for="c-fase-9-9a7b3028"> Docker Compose com API, PostgreSQL e Redis para desenvolvimento local</label></li>
+<li class="task-list-item enabled" data-item="fase-9-4c8075ff"><input class="chk" data-id="fase-9-4c8075ff" id="c-fase-9-4c8075ff" type="checkbox"/><label for="c-fase-9-4c8075ff"> Volumes, redes, variáveis de ambiente, healthcheck</label></li>
+</ul>
+<h4 class="sub">CI/CD</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-9-081466d3"><input class="chk" data-id="fase-9-081466d3" id="c-fase-9-081466d3" type="checkbox"/><label for="c-fase-9-081466d3"> GitHub Actions: lint, checagem de tipos e testes (com PostgreSQL de serviço) a cada pull request</label></li>
+<li class="task-list-item enabled" data-item="fase-9-2f2cd8d0"><input class="chk" data-id="fase-9-2f2cd8d0" id="c-fase-9-2f2cd8d0" type="checkbox"/><label for="c-fase-9-2f2cd8d0"> Build e publicação da imagem; deploy automático no merge para a <code>main</code></label></li>
+<li class="task-list-item enabled" data-item="fase-9-01667d7d"><input class="chk" data-id="fase-9-01667d7d" id="c-fase-9-01667d7d" type="checkbox"/><label for="c-fase-9-01667d7d"> Migrations no deploy, rollback, e as estratégias rolling, blue-green e canary em alto nível</label></li>
+<li class="task-list-item enabled" data-item="fase-9-5a452098"><input class="chk" data-id="fase-9-5a452098" id="c-fase-9-5a452098" type="checkbox"/><label for="c-fase-9-5a452098"> Segredos no CI; atualização e auditoria de dependências</label></li>
+</ul>
+<h4 class="sub">Cloud (AWS como referência; os conceitos valem para GCP e Azure)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-9-c10c4be0"><input class="chk" data-id="fase-9-c10c4be0" id="c-fase-9-c10c4be0" type="checkbox"/><label for="c-fase-9-c10c4be0"> Modelo de responsabilidade compartilhada; regiões e zonas</label></li>
+<li class="task-list-item enabled" data-item="fase-9-1c4b33a0"><input class="chk" data-id="fase-9-1c4b33a0" id="c-fase-9-1c4b33a0" type="checkbox"/><label for="c-fase-9-1c4b33a0"> IAM e menor privilégio — o tópico mais importante da cloud</label></li>
+<li class="task-list-item enabled" data-item="fase-9-4597c043"><input class="chk" data-id="fase-9-4597c043" id="c-fase-9-4597c043" type="checkbox"/><label for="c-fase-9-4597c043"> Computação: máquina virtual (EC2), contêiner gerenciado (ECS Fargate), serverless (Lambda) e os trade-offs entre eles</label></li>
+<li class="task-list-item enabled" data-item="fase-9-f2e70fba"><input class="chk" data-id="fase-9-f2e70fba" id="c-fase-9-f2e70fba" type="checkbox"/><label for="c-fase-9-f2e70fba"> Armazenamento (S3) e banco gerenciado (RDS PostgreSQL)</label></li>
+<li class="task-list-item enabled" data-item="fase-9-2a9606c7"><input class="chk" data-id="fase-9-2a9606c7" id="c-fase-9-2a9606c7" type="checkbox"/><label for="c-fase-9-2a9606c7"> Rede: VPC, subnets públicas e privadas, security groups, load balancer, DNS, certificados HTTPS</label></li>
+<li class="task-list-item enabled" data-item="fase-9-c206c060"><input class="chk" data-id="fase-9-c206c060" id="c-fase-9-c206c060" type="checkbox"/><label for="c-fase-9-c206c060"> Custos: alerta de faturamento configurado antes de criar qualquer recurso</label></li>
+<li class="task-list-item enabled" data-item="fase-9-c537322b"><input class="chk" data-id="fase-9-c537322b" id="c-fase-9-c537322b" type="checkbox"/><label for="c-fase-9-c537322b"> Infraestrutura como código (Terraform/OpenTofu ou AWS CDK)</label></li>
+<li class="task-list-item enabled" data-item="fase-9-6a6abda1"><input class="chk" data-id="fase-9-6a6abda1" id="c-fase-9-6a6abda1" type="checkbox"/><label for="c-fase-9-6a6abda1"> Plataformas simples (Render, Railway, Fly.io) e o trade-off entre controle e simplicidade</label></li>
+</ul>
+<h4 class="sub">Serviços AWS para desenvolvedores (base da prova AWS Developer – Associate)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-9-db425fc7"><input class="chk" data-id="fase-9-db425fc7" id="c-fase-9-db425fc7" type="checkbox"/><label for="c-fase-9-db425fc7"> SDK da AWS para JavaScript v3 e AWS CLI; credenciais, perfis e papéis temporários (STS)</label></li>
+<li class="task-list-item enabled" data-item="fase-9-6cf2b78c"><input class="chk" data-id="fase-9-6cf2b78c" id="c-fase-9-6cf2b78c" type="checkbox"/><label for="c-fase-9-6cf2b78c"> Serverless: Lambda (eventos, concorrência, cold start), API Gateway, Step Functions</label></li>
+<li class="task-list-item enabled" data-item="fase-9-e8a580de"><input class="chk" data-id="fase-9-e8a580de" id="c-fase-9-e8a580de" type="checkbox"/><label for="c-fase-9-e8a580de"> DynamoDB: chaves de partição e ordenação, índices secundários, capacidade, query x scan, streams</label></li>
+<li class="task-list-item enabled" data-item="fase-9-0933ab46"><input class="chk" data-id="fase-9-0933ab46" id="c-fase-9-0933ab46" type="checkbox"/><label for="c-fase-9-0933ab46"> Mensageria: SQS (padrão x FIFO, visibilidade, dead letter queue), SNS, EventBridge</label></li>
+<li class="task-list-item enabled" data-item="fase-9-e319455a"><input class="chk" data-id="fase-9-e319455a" id="c-fase-9-e319455a" type="checkbox"/><label for="c-fase-9-e319455a"> Identidade e segredos: Cognito, KMS, Secrets Manager, Parameter Store</label></li>
+<li class="task-list-item enabled" data-item="fase-9-2c17816e"><input class="chk" data-id="fase-9-2c17816e" id="c-fase-9-2c17816e" type="checkbox"/><label for="c-fase-9-2c17816e"> Cache com ElastiCache</label></li>
+<li class="task-list-item enabled" data-item="fase-9-da537b40"><input class="chk" data-id="fase-9-da537b40" id="c-fase-9-da537b40" type="checkbox"/><label for="c-fase-9-da537b40"> Deploy como código: CloudFormation, SAM e CDK; CodePipeline, CodeBuild, CodeDeploy</label></li>
+<li class="task-list-item enabled" data-item="fase-9-2c7a3eb2"><input class="chk" data-id="fase-9-2c7a3eb2" id="c-fase-9-2c7a3eb2" type="checkbox"/><label for="c-fase-9-2c7a3eb2"> Observabilidade na AWS: CloudWatch (logs, métricas, alarmes), X-Ray, CloudTrail</label></li>
+<li class="task-list-item enabled" data-item="fase-9-674cb392"><input class="chk" data-id="fase-9-674cb392" id="c-fase-9-674cb392" type="checkbox"/><label for="c-fase-9-674cb392"> Contêineres: ECR e ECS com Fargate; noção de EKS</label></li>
+<li class="task-list-item enabled" data-item="fase-9-787122be"><input class="chk" data-id="fase-9-787122be" id="c-fase-9-787122be" type="checkbox"/><label for="c-fase-9-787122be"> Amazon Bedrock e segurança de aplicações de IA (novidade da DVA-C03)</label></li>
+</ul>
+<h4 class="sub">Observabilidade</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-9-2c376965"><input class="chk" data-id="fase-9-2c376965" id="c-fase-9-2c376965" type="checkbox"/><label for="c-fase-9-2c376965"> Os três pilares: logs estruturados centralizados, métricas, tracing distribuído</label></li>
+<li class="task-list-item enabled" data-item="fase-9-0ffad46c"><input class="chk" data-id="fase-9-0ffad46c" id="c-fase-9-0ffad46c" type="checkbox"/><label for="c-fase-9-0ffad46c"> OpenTelemetry para instrumentar a API</label></li>
+<li class="task-list-item enabled" data-item="fase-9-7903d6fd"><input class="chk" data-id="fase-9-7903d6fd" id="c-fase-9-7903d6fd" type="checkbox"/><label for="c-fase-9-7903d6fd"> Métricas RED (taxa, erros, duração) e latência p50, p95, p99</label></li>
+<li class="task-list-item enabled" data-item="fase-9-16a64fd1"><input class="chk" data-id="fase-9-16a64fd1" id="c-fase-9-16a64fd1" type="checkbox"/><label for="c-fase-9-16a64fd1"> Health checks, alertas que importam, SLI e SLO em alto nível</label></li>
+</ul>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Projeto âncora v2: Dockerfile multi-stage, Compose local, pipeline que testa cada PR e faz deploy na <code>main</code>.</li>
+<li>Primeiro deploy numa plataforma simples; depois o mesmo app na AWS (contêiner, RDS, S3 para anexos), com alerta de custo antes de tudo.</li>
+<li>Instrumente com OpenTelemetry e monte um painel com p95 de latência e taxa de erro. Anote os números.</li>
+<li>Escreva um runbook: "a API caiu; o que eu olho primeiro?"</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://docs.docker.com/get-started/" rel="noopener noreferrer" target="_blank">Docker — Get started</a> e <a href="https://docs.github.com/pt/actions" rel="noopener noreferrer" target="_blank">documentação do GitHub Actions</a></li>
+<li><a href="https://skillbuilder.aws/" rel="noopener noreferrer" target="_blank">AWS Skill Builder</a> (cursos gratuitos) + nível gratuito da AWS. A prova AWS Developer – Associate fecha esta fase (veja a Trilha de certificações)</li>
+<li><a href="https://opentelemetry.io/docs/languages/js/" rel="noopener noreferrer" target="_blank">Documentação do OpenTelemetry</a></li>
+<li>Accelerate, de Forsgren, Humble e Kim — de onde vêm as métricas DORA de entrega</li>
+<li>Full Cycle (conteúdo brasileiro) para Docker e arquitetura</li>
+</ul>
+<p class="callout exit" data-exit="fase-9"><strong>Critério de saída:</strong> um commit na <code>main</code> chega à produção sem você tocar em nada; você explica cada linha do Dockerfile e cada permissão IAM que criou; e sabe dizer o p95 da sua API e o custo mensal da infraestrutura.</p>
+</div><div class="notes" data-for="fase-9"></div></article>
+<article class="section" id="sec-fase-10" data-id="fase-10" hidden><header class="sec-head"><p class="eyebrow">Fase 10 · 6 a 12 meses, em boa parte já trabalhando</p><h1>Especialização Backend</h1><div class="sec-tools" data-for="fase-10"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> projetar sistemas que aguentam escala, falhas e mudança, e decidir sempre com trade-offs explícitos.</p>
+<p class="why"><strong>Por que importa:</strong> é o que separa o pleno do sênior. Ninguém domina isso só estudando; a fase rende de verdade quando você já tem sistemas reais para observar.</p>
+<p class="callout cert"><strong>Certificação nesta fase:</strong> AWS Solutions Architect – Associate, por volta do mês 19. Os blocos de system design, sistemas distribuídos e segurança abaixo cobrem a maior parte da prova; o que falta (redes a fundo, armazenamento, recuperação de desastres, Well-Architected) está na Trilha de certificações.</p>
+<h4 class="sub">System design</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-10-ad080bb0"><input class="chk" data-id="fase-10-ad080bb0" id="c-fase-10-ad080bb0" type="checkbox"/><label for="c-fase-10-ad080bb0"> Requisitos funcionais x não funcionais; estimativas de ordem de grandeza</label></li>
+<li class="task-list-item enabled" data-item="fase-10-04a277e5"><input class="chk" data-id="fase-10-04a277e5" id="c-fase-10-04a277e5" type="checkbox"/><label for="c-fase-10-04a277e5"> Escala vertical x horizontal; aplicação stateless; load balancing</label></li>
+<li class="task-list-item enabled" data-item="fase-10-81d71c18"><input class="chk" data-id="fase-10-81d71c18" id="c-fase-10-81d71c18" type="checkbox"/><label for="c-fase-10-81d71c18"> Cache: onde (CDN, aplicação, banco), estratégias (cache-aside, write-through), invalidação, TTL, cache stampede</label></li>
+<li class="task-list-item enabled" data-item="fase-10-431d9f69"><input class="chk" data-id="fase-10-431d9f69" id="c-fase-10-431d9f69" type="checkbox"/><label for="c-fase-10-431d9f69"> Banco em escala: réplicas de leitura, particionamento, sharding</label></li>
+<li class="task-list-item enabled" data-item="fase-10-db3705fa"><input class="chk" data-id="fase-10-db3705fa" id="c-fase-10-db3705fa" type="checkbox"/><label for="c-fase-10-db3705fa"> Rate limiting (token bucket, sliding window) e backpressure</label></li>
+</ul>
+<h4 class="sub">Sistemas distribuídos e mensageria</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-10-49e53c4f"><input class="chk" data-id="fase-10-49e53c4f" id="c-fase-10-49e53c4f" type="checkbox"/><label for="c-fase-10-49e53c4f"> Síncrono x assíncrono: quando uma fila resolve e quando complica</label></li>
+<li class="task-list-item enabled" data-item="fase-10-6d624cf6"><input class="chk" data-id="fase-10-6d624cf6" id="c-fase-10-6d624cf6" type="checkbox"/><label for="c-fase-10-6d624cf6"> RabbitMQ x Kafka x SQS: modelos e trade-offs</label></li>
+<li class="task-list-item enabled" data-item="fase-10-fd4d4d4b"><input class="chk" data-id="fase-10-fd4d4d4b" id="c-fase-10-fd4d4d4b" type="checkbox"/><label for="c-fase-10-fd4d4d4b"> Garantias de entrega: at-most-once, at-least-once e "exactly-once" efetivo com idempotência</label></li>
+<li class="task-list-item enabled" data-item="fase-10-8fb4f262"><input class="chk" data-id="fase-10-8fb4f262" id="c-fase-10-8fb4f262" type="checkbox"/><label for="c-fase-10-8fb4f262"> Outbox pattern, sagas, consistência eventual</label></li>
+<li class="task-list-item enabled" data-item="fase-10-a5f7a956"><input class="chk" data-id="fase-10-a5f7a956" id="c-fase-10-a5f7a956" type="checkbox"/><label for="c-fase-10-a5f7a956"> Falhas parciais: timeout, retry, circuit breaker, bulkhead, dead letter queue</label></li>
+<li class="task-list-item enabled" data-item="fase-10-983b0aa9"><input class="chk" data-id="fase-10-983b0aa9" id="c-fase-10-983b0aa9" type="checkbox"/><label for="c-fase-10-983b0aa9"> Microsserviços: quando compensam o custo, e quando o monólito modular vence</label></li>
+<li class="task-list-item enabled" data-item="fase-10-371e4423"><input class="chk" data-id="fase-10-371e4423" id="c-fase-10-371e4423" type="checkbox"/><label for="c-fase-10-371e4423"> Replicação e consenso em alto nível (líder e seguidores, quórum)</label></li>
+</ul>
+<h4 class="sub">Performance</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-10-dd7ad20d"><input class="chk" data-id="fase-10-dd7ad20d" id="c-fase-10-dd7ad20d" type="checkbox"/><label for="c-fase-10-dd7ad20d"> Medir antes de otimizar: profiling de CPU e memória no Node, flame graphs</label></li>
+<li class="task-list-item enabled" data-item="fase-10-78a561a0"><input class="chk" data-id="fase-10-78a561a0" id="c-fase-10-78a561a0" type="checkbox"/><label for="c-fase-10-78a561a0"> Teste de carga com k6 e leitura dos resultados</label></li>
+<li class="task-list-item enabled" data-item="fase-10-188e5869"><input class="chk" data-id="fase-10-188e5869" id="c-fase-10-188e5869" type="checkbox"/><label for="c-fase-10-188e5869"> Otimização de consultas, processamento em lote, compressão</label></li>
+</ul>
+<h4 class="sub">Segurança e conformidade</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-10-ca0cb90c"><input class="chk" data-id="fase-10-ca0cb90c" id="c-fase-10-ca0cb90c" type="checkbox"/><label for="c-fase-10-ca0cb90c"> Modelagem de ameaças simples (STRIDE)</label></li>
+<li class="task-list-item enabled" data-item="fase-10-6930198d"><input class="chk" data-id="fase-10-6930198d" id="c-fase-10-6930198d" type="checkbox"/><label for="c-fase-10-6930198d"> Gestão e rotação de segredos; criptografia em trânsito e em repouso</label></li>
+<li class="task-list-item enabled" data-item="fase-10-e3636828"><input class="chk" data-id="fase-10-e3636828" id="c-fase-10-e3636828" type="checkbox"/><label for="c-fase-10-e3636828"> Cadeia de suprimentos: dependências, lockfile, auditoria</label></li>
+<li class="task-list-item enabled" data-item="fase-10-86e30fef"><input class="chk" data-id="fase-10-86e30fef" id="c-fase-10-86e30fef" type="checkbox"/><label for="c-fase-10-86e30fef"> LGPD na prática: minimização de dados pessoais, consentimento, direito de exclusão</label></li>
+</ul>
+<h4 class="sub">Confiabilidade</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-10-9a8570fc"><input class="chk" data-id="fase-10-9a8570fc" id="c-fase-10-9a8570fc" type="checkbox"/><label for="c-fase-10-9a8570fc"> SLO, error budget e post-mortem sem culpados</label></li>
+<li class="task-list-item enabled" data-item="fase-10-e4b9211f"><input class="chk" data-id="fase-10-e4b9211f" id="c-fase-10-e4b9211f" type="checkbox"/><label for="c-fase-10-e4b9211f"> Deploys graduais e migrações sem downtime em tabelas grandes</label></li>
+</ul>
+<p><strong>Segunda linguagem (opcional, depois de cerca de 1 ano trabalhando):</strong> uma linguagem com outro modelo de concorrência consolida os fundamentos. Escolha pelo mercado que você quer: Java ou C# em bancos e grandes corporações; Go em fintechs e infraestrutura.</p>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Projeto âncora v3: lembretes por e-mail ou WhatsApp via fila, com retry, dead letter queue e idempotência; cache das consultas mais lidas; teste de carga com k6 antes e depois, registrado.</li>
+<li>Um problema de system design por semana (encurtador de URL, chat, feed, pagamentos, rate limiter), desenhado e escrito.</li>
+<li>Construa versões simples de um rate limiter, uma fila de jobs e um banco chave-valor (desafios do <a href="https://codecrafters.io/" rel="noopener noreferrer" target="_blank">CodeCrafters</a>, como "Build your own Redis").</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li>Designing Data-Intensive Applications, de Kleppmann e Riccomini (2ª edição, 2026) — o livro da especialização, leia inteiro</li>
+<li>System Design Interview, volumes 1 e 2, de Alex Xu</li>
+<li>Release It!, de Michael Nygard — padrões de estabilidade</li>
+<li><a href="https://sre.google/books/" rel="noopener noreferrer" target="_blank">Site Reliability Engineering</a>, do Google (gratuito)</li>
+<li>Blogs de engenharia: Stripe, Cloudflare, Discord e os brasileiros Nubank, iFood e Mercado Livre</li>
+</ul>
+<p class="callout exit" data-exit="fase-10"><strong>Critério de saída:</strong> você conduz uma conversa de system design de 45 minutos explicando trade-offs; já operou em produção algo com fila e cache; e tem pelo menos 3 casos de impacto mensurável documentados.</p>
+</div><div class="notes" data-for="fase-10"></div></article>
+<article class="section" id="sec-fase-11" data-id="fase-11" hidden><header class="sec-head"><p class="eyebrow">Fase 11 · 8 a 10 semanas</p><h1>Kubernetes e orquestração: preparação para o CKAD</h1><div class="sec-tools" data-for="fase-11"></div></header><div class="prose"><p class="callout objective"><strong>Objetivo:</strong> implantar, configurar, observar e depurar aplicações no Kubernetes pela linha de comando, com a velocidade que a prova exige.</p>
+<p class="why"><strong>Por que importa:</strong> o Docker roda um contêiner; o Kubernetes roda centenas, reinicia o que cai, escala com a demanda e troca versões sem derrubar o sistema. Quem entende isso projeta a aplicação para esse ambiente: sem estado local, com health checks, configuração externa e graceful shutdown, tudo o que você já praticou nas Fases 6 e 9.</p>
+<p class="callout note"><strong>Pré-requisitos:</strong> terminal fluente (Fase 0), porque a prova é 100% prática na linha de comando; Docker e redes (Fase 9); editar YAML rápido no vim ou nano.</p>
+<h4 class="sub">Projeto e build (20% da prova)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-11-cfe9bcca"><input class="chk" data-id="fase-11-cfe9bcca" id="c-fase-11-cfe9bcca" type="checkbox"/><label for="c-fase-11-cfe9bcca"> Arquitetura em alto nível: control plane, API server, etcd, nodes, kubelet</label></li>
+<li class="task-list-item enabled" data-item="fase-11-7c71b6cb"><input class="chk" data-id="fase-11-7c71b6cb" id="c-fase-11-7c71b6cb" type="checkbox"/><label for="c-fase-11-7c71b6cb"> Imagens: build, tags, registries</label></li>
+<li class="task-list-item enabled" data-item="fase-11-2e974dec"><input class="chk" data-id="fase-11-2e974dec" id="c-fase-11-2e974dec" type="checkbox"/><label for="c-fase-11-2e974dec"> Pods, pods com vários contêineres (sidecar, init containers), Jobs e CronJobs</label></li>
+<li class="task-list-item enabled" data-item="fase-11-1371346b"><input class="chk" data-id="fase-11-1371346b" id="c-fase-11-1371346b" type="checkbox"/><label for="c-fase-11-1371346b"> Volumes: <code>emptyDir</code> e PersistentVolumeClaim</label></li>
+</ul>
+<h4 class="sub">Deploy (20%)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-11-8b372340"><input class="chk" data-id="fase-11-8b372340" id="c-fase-11-8b372340" type="checkbox"/><label for="c-fase-11-8b372340"> Deployments, rolling update e rollback</label></li>
+<li class="task-list-item enabled" data-item="fase-11-63a1a2c6"><input class="chk" data-id="fase-11-63a1a2c6" id="c-fase-11-63a1a2c6" type="checkbox"/><label for="c-fase-11-63a1a2c6"> Blue-green e canary usando labels e Services</label></li>
+<li class="task-list-item enabled" data-item="fase-11-57845370"><input class="chk" data-id="fase-11-57845370" id="c-fase-11-57845370" type="checkbox"/><label for="c-fase-11-57845370"> Helm (instalar e customizar charts) e Kustomize</label></li>
+</ul>
+<h4 class="sub">Observabilidade e manutenção (15%)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-11-314a093a"><input class="chk" data-id="fase-11-314a093a" id="c-fase-11-314a093a" type="checkbox"/><label for="c-fase-11-314a093a"> Probes: liveness, readiness, startup</label></li>
+<li class="task-list-item enabled" data-item="fase-11-c908f816"><input class="chk" data-id="fase-11-c908f816" id="c-fase-11-c908f816" type="checkbox"/><label for="c-fase-11-c908f816"> <code>kubectl logs</code>, <code>describe</code>, <code>get events</code>, <code>exec</code>, <code>top</code></label></li>
+<li class="task-list-item enabled" data-item="fase-11-c1b2f6ed"><input class="chk" data-id="fase-11-c1b2f6ed" id="c-fase-11-c1b2f6ed" type="checkbox"/><label for="c-fase-11-c1b2f6ed"> Diagnosticar <code>CrashLoopBackOff</code>, <code>ImagePullBackOff</code> e pods em <code>Pending</code></label></li>
+<li class="task-list-item enabled" data-item="fase-11-63c010c4"><input class="chk" data-id="fase-11-63c010c4" id="c-fase-11-63c010c4" type="checkbox"/><label for="c-fase-11-63c010c4"> APIs depreciadas e versões de recursos</label></li>
+</ul>
+<h4 class="sub">Ambiente, configuração e segurança (25%, o maior peso)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-11-2a32a9be"><input class="chk" data-id="fase-11-2a32a9be" id="c-fase-11-2a32a9be" type="checkbox"/><label for="c-fase-11-2a32a9be"> ConfigMaps e Secrets</label></li>
+<li class="task-list-item enabled" data-item="fase-11-b3d5bd48"><input class="chk" data-id="fase-11-b3d5bd48" id="c-fase-11-b3d5bd48" type="checkbox"/><label for="c-fase-11-b3d5bd48"> Requests, limits, ResourceQuota, LimitRange</label></li>
+<li class="task-list-item enabled" data-item="fase-11-e3d5ccf3"><input class="chk" data-id="fase-11-e3d5ccf3" id="c-fase-11-e3d5ccf3" type="checkbox"/><label for="c-fase-11-e3d5ccf3"> ServiceAccounts, RBAC básico, SecurityContext</label></li>
+<li class="task-list-item enabled" data-item="fase-11-175eff5f"><input class="chk" data-id="fase-11-175eff5f" id="c-fase-11-175eff5f" type="checkbox"/><label for="c-fase-11-175eff5f"> Namespaces; CRDs e Operators como conceito</label></li>
+</ul>
+<h4 class="sub">Serviços e rede (20%)</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="fase-11-381c5265"><input class="chk" data-id="fase-11-381c5265" id="c-fase-11-381c5265" type="checkbox"/><label for="c-fase-11-381c5265"> Services (ClusterIP, NodePort, LoadBalancer) e DNS interno</label></li>
+<li class="task-list-item enabled" data-item="fase-11-223354c3"><input class="chk" data-id="fase-11-223354c3" id="c-fase-11-223354c3" type="checkbox"/><label for="c-fase-11-223354c3"> Ingress (e noção de Gateway API)</label></li>
+<li class="task-list-item enabled" data-item="fase-11-6d82902e"><input class="chk" data-id="fase-11-6d82902e" id="c-fase-11-6d82902e" type="checkbox"/><label for="c-fase-11-6d82902e"> NetworkPolicies</label></li>
+</ul>
+<p><strong>Além da prova, para o trabalho:</strong> HorizontalPodAutoscaler, EKS na AWS (liga com as provas AWS) e GitOps com Argo CD em alto nível.</p>
+<h4 class="sub">Pratique</h4>
+<ul>
+<li>Cluster local com kind ou minikube.</li>
+<li>Projeto âncora v4: Deployment, Service, Ingress, ConfigMap, Secret, probes e autoscaling, empacotados num Helm chart. Prove que um rolling update não derruba nenhuma requisição.</li>
+<li>Treine velocidade: <code>alias k=kubectl</code>, gerar YAML com <code>kubectl create ... --dry-run=client -o yaml</code>, consultar campos com <code>kubectl explain</code> e achar exemplos rápido em kubernetes.io, a única documentação permitida na prova.</li>
+<li>A inscrição dá direito a 2 sessões do simulador killer.sh, de 36 h cada (<a href="https://training.linuxfoundation.org/blog/linux-foundation-kubernetes-certifications-now-include-exam-simulator/" rel="noopener noreferrer" target="_blank">Linux Foundation</a>). Use a primeira 3 semanas antes da prova e a segunda na última semana.</li>
+</ul>
+<h4 class="sub">Recursos</h4>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/" rel="noopener noreferrer" target="_blank">Documentação do Kubernetes</a>, seções Concepts e Tasks</li>
+<li>Kubernetes: Up and Running, de Burns, Beda, Hightower e Villalba</li>
+<li>Curso CKAD da KodeKloud, com laboratórios no navegador</li>
+<li><a href="https://killercoda.com/" rel="noopener noreferrer" target="_blank">Killercoda</a> (cenários gratuitos) e <a href="https://github.com/dgkanatsios/CKAD-exercises" rel="noopener noreferrer" target="_blank">CKAD exercises</a> no GitHub</li>
+</ul>
+<p class="callout exit" data-exit="fase-11"><strong>Critério de saída:</strong> você passa de 66% num simulado killer.sh dentro de 2 horas, e faz o deploy do projeto âncora com rolling update sem downtime explicando cada manifest.</p>
+</div><div class="notes" data-for="fase-11"></div></article>
+<article class="section" id="sec-certificacoes" data-id="certificacoes" hidden><header class="sec-head"><p class="eyebrow">Carreira</p><h1>Trilha de certificações</h1><div class="sec-tools" data-for="certificacoes"></div></header><div class="prose"><p>A ordem recomendada é AWS Developer por volta do mês 16, AWS Solutions Architect por volta do mês 19 e CKAD por volta do mês 24. Cada prova fecha uma fase que você já vai ter estudado, então a preparação específica fica em 4 a 6 semanas. A Azure é opcional, e mudou: o AZ-204 foi aposentado em 31 de julho de 2026 e o sucessor é o AI-200, com foco em IA e Python.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Certificação</th>
+<th>Prova</th>
+<th>Formato</th>
+<th>Preço</th>
+<th>Validade</th>
+<th>Quando</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://aws.amazon.com/blogs/training-and-certification/september-2026-new-offerings/" rel="noopener noreferrer" target="_blank">AWS Certified Developer – Associate</a></td>
+<td>DVA-C03 (substitui a DVA-C02 a partir de 1º/12/2026)</td>
+<td>65 questões de múltipla escolha em 130 min; aprovação com 720 de 1.000</td>
+<td>US$ 150</td>
+<td>3 anos</td>
+<td>Fim da Fase 9, mês 16</td>
+</tr>
+<tr>
+<td><a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" rel="noopener noreferrer" target="_blank">AWS Certified Solutions Architect – Associate</a></td>
+<td>SAA-C03</td>
+<td>65 questões em 130 min; aprovação com 720 de 1.000</td>
+<td>US$ 150</td>
+<td>3 anos</td>
+<td>Meio da Fase 10, mês 19</td>
+</tr>
+<tr>
+<td><a href="https://www.cncf.io/certification/CKAd/" rel="noopener noreferrer" target="_blank">CKAD — Certified Kubernetes Application Developer</a></td>
+<td>CKAD</td>
+<td>Prática na linha de comando, 15 a 20 tarefas em 2 h; aprovação com 66%</td>
+<td>US$ 445, com 1 nova tentativa inclusa</td>
+<td>2 anos</td>
+<td>Fim da Fase 11, mês 24</td>
+</tr>
+<tr>
+<td><a href="https://learn.microsoft.com/credentials/certifications/resources/study-guides/ai-200" rel="noopener noreferrer" target="_blank">Azure AI Cloud Developer Associate</a> (sucessora da Azure Developer Associate)</td>
+<td>AI-200</td>
+<td>Aprovação com 700 de 1.000</td>
+<td>Varia por país</td>
+<td>1 ano, renovação online gratuita</td>
+<td>Opcional, depois da DVA</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="certificacoes--aws-developer-associate-dva-c03">AWS Developer – Associate (DVA-C03)</h3>
+<p><strong>O que prova:</strong> você desenvolve, protege, publica e depura aplicações usando serviços da AWS por SDK, CLI e CI/CD. É a certificação mais alinhada a um backend.</p>
+<p><strong>Domínios da prova e onde estão no roadmap</strong> (<a href="https://tutorialsdojo.com/whats-new-with-the-aws-certified-developer-associate-dva-c03/" rel="noopener noreferrer" target="_blank">Tutorials Dojo</a>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Domínio</th>
+<th>Peso</th>
+<th>Onde você estuda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Desenvolvimento com serviços AWS</td>
+<td>30%</td>
+<td>Fase 6 + bloco "Serviços AWS para desenvolvedores" da Fase 9</td>
+</tr>
+<tr>
+<td>Segurança</td>
+<td>26%</td>
+<td>Fase 6 (Nível 3) + IAM, KMS, Secrets Manager e Cognito na Fase 9</td>
+</tr>
+<tr>
+<td>Testes e deploy</td>
+<td>22%</td>
+<td>Fase 8 (testes) + SAM, CloudFormation, CDK e CodePipeline na Fase 9</td>
+</tr>
+<tr>
+<td>Troubleshooting e otimização</td>
+<td>22%</td>
+<td>Observabilidade da Fase 9 (CloudWatch, X-Ray) + cache e DynamoDB</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Novidades da DVA-C03:</strong> Amazon Bedrock, segurança de aplicações de IA (injeção de prompt, permissões de agentes, dados sensíveis fora dos logs) e contêineres (ECR, ECS, EKS, Fargate).</p>
+<h4 class="sub">Preparação em 6 semanas, logo após a Fase 9</h4>
+<ol>
+<li>Semanas 1 e 2: um curso completo da prova, fazendo cada laboratório na sua conta.</li>
+<li>Semanas 3 e 4: versão serverless de um módulo do projeto âncora (API Gateway, Lambda, DynamoDB, SQS e Cognito), publicada com SAM ou CDK.</li>
+<li>Semana 5: simulados completos, cronometrados.</li>
+<li>Semana 6: revisar cada erro dos simulados até entender o porquê, e fazer a prova. Só agende quando passar de 80% em simulados de forma consistente.</li>
+</ol>
+<p><strong>Recursos:</strong> o guia oficial da prova (lista exata de serviços), o <a href="https://skillbuilder.aws/" rel="noopener noreferrer" target="_blank">AWS Skill Builder</a> com o plano de preparação oficial, um curso completo (Stephane Maarek ou Adrian Cantrill) e os simulados da Tutorials Dojo.</p>
+<h3 id="certificacoes--aws-solutions-architect-associate-saa-c03">AWS Solutions Architect – Associate (SAA-C03)</h3>
+<p><strong>O que prova:</strong> você desenha um sistema inteiro equilibrando segurança, resiliência, performance e custo. É a prova dos trade-offs, e por isso combina com a Fase 10.</p>
+<p><strong>Domínios da prova e onde estão no roadmap</strong> (<a href="https://docs.aws.amazon.com/pdfs/aws-certification/latest/solutions-architect-associate-03/solutions-architect-associate-03.pdf" rel="noopener noreferrer" target="_blank">guia oficial</a>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Domínio</th>
+<th>Peso</th>
+<th>Onde você estuda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arquiteturas seguras</td>
+<td>30%</td>
+<td>IAM e VPC da Fase 9 + segurança da Fase 10</td>
+</tr>
+<tr>
+<td>Arquiteturas resilientes</td>
+<td>26%</td>
+<td>Filas, desacoplamento e multi-AZ da Fase 10</td>
+</tr>
+<tr>
+<td>Arquiteturas de alta performance</td>
+<td>24%</td>
+<td>Bancos (Fase 5), cache e CDN (Fase 10)</td>
+</tr>
+<tr>
+<td>Arquiteturas com custo otimizado</td>
+<td>20%</td>
+<td>Custos da Fase 9 + Spot, Savings Plans e classes do S3</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>O que estudar além do roadmap:</strong> redes a fundo (subnets, NAT gateway x VPC endpoints, Transit Gateway, VPN e Direct Connect em alto nível); armazenamento (EBS, EFS, FSx, classes do S3 e Glacier); estratégias de recuperação de desastres (backup e restore, pilot light, warm standby, multi-site); e o AWS Well-Architected Framework.</p>
+<p><strong>Preparação em 6 semanas, durante a Fase 10:</strong> boa parte dos serviços se repete da DVA. Semanas 1 a 3 de curso e Well-Architected; semana 4 desenhando três arquiteturas do projeto âncora (multi-AZ, recuperação de desastres, redução de custo), cada uma com ADR; semanas 5 e 6 de simulados e revisão de erros.</p>
+<h3 id="certificacoes--ckad">CKAD</h3>
+<p>O plano completo está na Fase 11. Agende a prova quando passar de 66% no primeiro simulado killer.sh com folga de tempo; a inscrição dá 12 meses para marcar a data, então dá para comprar numa promoção e fazer depois.</p>
+<h3 id="certificacoes--azure-o-az-204-virou-ai-200">Azure: o AZ-204 virou AI-200</h3>
+<p>O AZ-204 foi aposentado em 31 de julho de 2026 (<a href="https://learn.microsoft.com/answers/a/12779227" rel="noopener noreferrer" target="_blank">Microsoft Q&amp;A</a>). A sucessora é a prova AI-200 (Developing AI Cloud Solutions on Azure), que dá o título Azure AI Cloud Developer Associate. Segundo o <a href="https://learn.microsoft.com/credentials/certifications/resources/study-guides/ai-200" rel="noopener noreferrer" target="_blank">guia de estudo oficial</a>, ela cobre:</p>
+<ul>
+<li>Contêineres: Container Apps, AKS, App Service, escala por eventos com KEDA (20 a 25%)</li>
+<li>Dados para IA: Cosmos DB com busca vetorial, PostgreSQL com pgvector, Redis (25 a 30%)</li>
+<li>Integração: Service Bus, Event Grid, Functions (20 a 25%)</li>
+<li>Segurança e monitoramento: Key Vault, App Configuration, OpenTelemetry, consultas KQL (20 a 25%)</li>
+</ul>
+<p><strong>Recomendação:</strong> faça só se mirar bancos, seguradoras ou multinacionais com stack Microsoft, ou se a vaga pedir. O guia cita Python como linguagem, então reserve 2 a 3 semanas para Python básico (com sua base de JavaScript é rápido). O melhor momento é depois da DVA e da Fase 11: os conceitos de cloud, contêineres e mensageria transferem quase inteiros.</p>
+<h3 id="certificacoes--regras-para-a-certifica-o-valer-a-pena">Regras para a certificação valer a pena</h3>
+<ul>
+<li><strong>Certificação abre a porta, projeto prova a competência.</strong> Pareie cada prova com um entregável no projeto âncora: DVA com o módulo serverless, SAA com os ADRs de arquitetura, CKAD com o deploy no Kubernetes.</li>
+<li><strong>Nunca use dumps</strong> (perguntas vazadas): violam os termos das provas, podem levar à revogação e não ensinam nada.</li>
+<li><strong>Agende ao começar a preparação,</strong> com cerca de 6 semanas de antecedência. A data marcada cria compromisso.</li>
+<li><strong>Laboratório com teto de gasto:</strong> alerta no AWS Budgets antes de criar qualquer recurso, e destrua tudo ao terminar (infraestrutura como código facilita).</li>
+<li><strong>Orçamento das três provas principais:</strong> US$ 745 (150 + 150 + 445), fora cursos, simulados e IOF do cartão. Pergunte se a empresa paga: muitas custeiam prova e curso.</li>
+<li><strong>Renovação:</strong> AWS a cada 3 anos (refazendo a prova ou passando na Professional), CKAD a cada 2 anos, Microsoft todo ano com avaliação online gratuita.</li>
+<li><strong>Depois do pleno:</strong> a evolução natural é a AWS Solutions Architect – Professional ou a CKA (administração de Kubernetes).</li>
+</ul>
+</div><div class="notes" data-for="certificacoes"></div></article>
+<article class="section" id="sec-profissional" data-id="profissional" hidden><header class="sec-head"><p class="eyebrow">Trilho paralelo · do dia 1 em diante</p><h1>O profissional estratégico</h1><div class="sec-tools" data-for="profissional"></div></header><div class="prose"><p>Habilidade técnica te coloca na sala; explicar o porquê, medir o impacto e torná-lo visível é o que faz você ser ouvido, promovido e disputado. Este trilho corre junto com todas as fases, e cada prática abaixo já se aplica ao projeto âncora.</p>
+<h3 id="profissional--1-pensar-em-trade-offs">1. Pensar em trade-offs</h3>
+<p>Antes de toda escolha técnica, responda:</p>
+<ol>
+<li>Qual problema exato estou resolvendo, e quanto custa não resolver?</li>
+<li>Quais são pelo menos duas alternativas, incluindo "não fazer nada" e "a solução mais simples"?</li>
+<li>O que cada uma ganha e perde em complexidade, custo, performance, prazo, conhecimento do time e reversibilidade?</li>
+<li>A decisão é fácil de desfazer? Se sim, decida rápido. Se não, invista tempo.</li>
+<li>Qual número vai mostrar se deu certo?</li>
+</ol>
+<p><strong>Frase-modelo:</strong> "Escolhi X em vez de Y porque, no nosso contexto (restrição), X entrega (ganho) ao custo de (perda), que aceitamos porque (razão). Revisitamos se (gatilho)."</p>
+<h3 id="profissional--2-adrs-registrar-decis-es">2. ADRs: registrar decisões</h3>
+<p>Guarde em <code>docs/adr/</code> no repositório, um arquivo curto por decisão. Em entrevista, seus ADRs viram suas melhores respostas. Exemplo:</p>
+<pre><code class="language-markdown"># ADR 003 — PostgreSQL em vez de MongoDB para agendamentos
+Status: aceita
+
+## Contexto
+Agendamentos se relacionam com cliente, profissional e serviço,
+e dois clientes não podem reservar o mesmo horário ao mesmo tempo.
+
+## Decisão
+PostgreSQL, com exclusion constraint impedindo horários sobrepostos.
+
+## Alternativas consideradas
+- MongoDB: esquema flexível, mas impedir conflito concorrente exigiria lógica extra.
+- Checar conflito só no código: simples, mas falha com duas requisições simultâneas.
+
+## Consequências
++ A integridade é garantida pelo banco, não pela disciplina do time.
+- Toda mudança de esquema exige migration.
+
+Revisitar se: o volume de escrita exigir particionamento.
+</code></pre>
+<h3 id="profissional--3-pull-requests-que-contam-uma-hist-ria">3. Pull requests que contam uma história</h3>
+<p>Um PR bem escrito é revisado mais rápido e vira prova do seu raciocínio. Estrutura:</p>
+<pre><code class="language-markdown">## Problema
+O que dói, para quem, e como medi (o "antes").
+
+## Solução
+O que mudou, em 2 ou 3 frases.
+
+## Por que assim
+Alternativas consideradas e por que foram descartadas.
+
+## Impacto
+Número antes → depois, e como foi medido.
+
+## Como testar
+Passos para quem revisa.
+
+## Riscos e rollback
+O que pode dar errado e como desfazer.
+</code></pre>
+<h3 id="profissional--4-traduzir-c-digo-em-valor-de-neg-cio">4. Traduzir código em valor de negócio</h3>
+<p>A cadeia é sempre: ação técnica, depois métrica técnica, depois métrica de negócio. Exemplos do tipo de frase que você vai construir:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Ação técnica</th>
+<th>Métrica técnica</th>
+<th>Métrica de negócio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Índice e paginação por cursor</td>
+<td>p95 da listagem</td>
+<td>Menos abandono de tela e menos chamados de suporte</td>
+</tr>
+<tr>
+<td>Retry com idempotência no webhook do CRM</td>
+<td>Leads perdidos ou duplicados por semana</td>
+<td>Comercial não perde oportunidade; funil confiável</td>
+</tr>
+<tr>
+<td>Pipeline de CI/CD</td>
+<td>Tempo do merge até produção</td>
+<td>Correções chegam ao cliente no mesmo dia</td>
+</tr>
+<tr>
+<td>Ajuste de tamanho da infraestrutura</td>
+<td>Uso médio de CPU e memória</td>
+<td>Custo mensal de cloud</td>
+</tr>
+<tr>
+<td>Testes nos fluxos de cobrança</td>
+<td>Bugs em produção por mês</td>
+<td>Menos estornos, mais segurança para lançar</td>
+</tr>
+</tbody>
+</table></div>
+<p>As métricas que quase toda empresa acompanha: receita, custo, conversão, retenção, prazo de entrega e risco. Pergunte ao seu líder qual número importa neste trimestre. Você já vive em RevOps, com funil, conversão e receita no vocabulário, e essa vantagem é rara entre devs.</p>
+<p class="callout note"><strong>Regra de ouro:</strong> meça o "antes" antes de mexer. Sem linha de base, não existe história de impacto.</p>
+<h3 id="profissional--5-registro-de-impacto-brag-document">5. Registro de impacto (brag document)</h3>
+<p>Um documento só seu, atualizado toda sexta em 10 minutos. Alimenta avaliação de desempenho, pedido de promoção, currículo e entrevistas. Inspiração: <a href="https://jvns.ca/blog/brag-documents/" rel="noopener noreferrer" target="_blank">Get your work recognized: write a brag document</a>, de Julia Evans. Cada entrada:</p>
+<pre><code class="language-markdown">### Mês/ano — Nome da entrega
+- Problema: o que doía e para quem
+- O que fiz: ação e decisão principal (link do ADR)
+- Resultado: número antes → depois
+- Evidência: link do PR, painel ou mensagem de quem se beneficiou
+- O que aprendi
+</code></pre>
+<h3 id="profissional--6-comunica-o">6. Comunicação</h3>
+<ul>
+<li><strong>Comece pela conclusão:</strong> a primeira frase de qualquer mensagem diz o que você precisa ou o que aconteceu.</li>
+<li><strong>Contexto suficiente</strong> para quem não estava na reunião entender sozinho.</li>
+<li><strong>Estimativas em faixas</strong>, com as incertezas ditas em voz alta; avise cedo quando for atrasar.</li>
+<li><strong>"Não sei, descubro até amanhã às 14h"</strong> passa mais confiança do que um chute.</li>
+<li><strong>Para não técnicos:</strong> impacto e analogia, sem jargão.</li>
+<li><strong>Mostrar funcionando</strong> vale mais que descrever.</li>
+</ul>
+<h3 id="profissional--7-se-vender-sem-parecer-vendedor">7. Se vender sem parecer vendedor</h3>
+<ul>
+<li><strong>GitHub:</strong> 2 ou 3 projetos fixados com README de produto: problema, demo, diagrama de arquitetura, links para os ADRs, como rodar e os números. Um projeto profundo vale mais que dez clones de tutorial.</li>
+<li><strong>LinkedIn:</strong> título com a especialidade ("Desenvolvedor Backend · Node.js, TypeScript, PostgreSQL") e um post a cada duas semanas com o aprendizado mais interessante do período.</li>
+<li><strong>Artigos:</strong> escreva sobre problemas que resolveu ("Como a consulta de agenda caiu de segundos para milissegundos").</li>
+<li><strong>Currículo:</strong> cada linha no formato "fiz X, medido por Y, resultando em Z".</li>
+<li><strong>Entrevistas comportamentais:</strong> método STAR (situação, tarefa, ação, resultado), com histórias tiradas do registro de impacto.</li>
+<li><strong>Comunidade:</strong> meetups, eventos (como o TDC) e contribuições pequenas em open source.</li>
+</ul>
+<h3 id="profissional--8-ingl-s-t-cnico">8. Inglês técnico</h3>
+<p>Documentação, livros, issues e as vagas mais bem pagas (inclusive remotas para fora) estão em inglês. Meta: ler documentação sem tradutor em 6 meses e participar de reuniões em 18 a 24 meses. Prática: escreva commits, PRs e ADRs do projeto âncora em inglês e reserve uma conversa por semana.</p>
+</div><div class="notes" data-for="profissional"></div></article>
+<article class="section" id="sec-ancora" data-id="ancora" hidden><header class="sec-head"><p class="eyebrow">Carreira</p><h1>Projeto âncora: o portfólio que cresce com você</h1><div class="sec-tools" data-for="ancora"></div></header><div class="prose"><p>Em vez de quinze projetos de tutorial, construa um sistema real que evolui a cada fase: um <strong>sistema de agendamento</strong> (para clínicas, salões ou mentorias). Ele vira seu portfólio, sua fonte de histórias de impacto e seu laboratório para toda tecnologia nova.</p>
+<p><strong>Por que agendamento:</strong> tem regra de negócio de verdade (conflito de horário, cancelamento, fuso), concorrência (dois clientes, um horário), integrações (e-mail, WhatsApp, calendário, pagamento) e qualquer recrutador entende em 10 segundos.</p>
+<p><strong>Alternativa ligada ao seu trabalho:</strong> um hub de leads que recebe formulários e webhooks, deduplica, enriquece, distribui para vendedores e sincroniza com o CRM. Mesmo nível de desafio técnico, conexão direta com RevOps.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Depois da fase</th>
+<th>O que entra</th>
+<th>O que você registra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v0</td>
+<td>1 e 4</td>
+<td>CLI em TypeScript com o domínio modelado em tipos</td>
+<td>Regras de negócio cobertas por testes</td>
+</tr>
+<tr>
+<td>v1</td>
+<td>5, 6 e 7</td>
+<td>API REST com PostgreSQL, autenticação, autorização e OpenAPI; front em React</td>
+<td>ADRs de banco, autenticação e paginação</td>
+</tr>
+<tr>
+<td>v1.1</td>
+<td>8</td>
+<td>Testes de integração e refatoração em camadas</td>
+<td>Fluxos críticos testados; o antes e depois da refatoração</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>9</td>
+<td>Docker, CI/CD, deploy na AWS, observabilidade e um módulo serverless (API Gateway, Lambda, DynamoDB, SQS)</td>
+<td>Tempo do commit à produção, p95, custo mensal; prática para a DVA</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>10</td>
+<td>Lembretes via fila, cache, rate limit, teste de carga; ADRs de arquitetura multi-AZ e recuperação de desastres</td>
+<td>Vazão e p95 antes e depois, medidos com k6; prática para a SAA</td>
+</tr>
+<tr>
+<td>v4</td>
+<td>11</td>
+<td>Deploy no Kubernetes: manifests, Helm chart, probes e autoscaling</td>
+<td>Rolling update sem downtime; prática para o CKAD</td>
+</tr>
+<tr>
+<td>v5</td>
+<td>Contínuo</td>
+<td>Uma feature de produto: relatórios, multi-empresa ou pagamentos</td>
+<td>Qual problema de usuário ela resolveu</td>
+</tr>
+</tbody>
+</table></div>
+<h4 class="sub">Regras do projeto</h4>
+<ul>
+<li>README de produto desde a v0, atualizado a cada versão.</li>
+<li>Toda decisão relevante ganha um ADR.</li>
+<li>Todo PR, mesmo trabalhando sozinho, segue o template do trilho profissional.</li>
+<li>Issues do GitHub como backlog e um milestone por versão.</li>
+<li>Coloque alguém real para usar (um salão, um consultório, um professor particular). Feedback e métricas reais valem ouro em entrevista.</li>
+</ul>
+<p><strong>Projetos de apoio (descartáveis, para fixar conceitos):</strong> CLI de tarefas (Fase 1), app em JavaScript puro (Fase 3), encurtador de URL e receptor de webhook (Fase 6), banco chave-valor simplificado (Fase 10).</p>
+</div><div class="notes" data-for="ancora"></div></article>
+<article class="section" id="sec-protocolo" data-id="protocolo" hidden><header class="sec-head"><p class="eyebrow">Carreira</p><h1>Protocolo para aprender qualquer tecnologia nova</h1><div class="sec-tools" data-for="protocolo"></div></header><div class="prose"><p>É aqui que a base inabalável aparece: quem domina fundamentos aprende uma tecnologia nova em dias, porque só precisa encaixar o novo no que já conhece. Use estes 7 passos, em cerca de 1 a 2 semanas por tecnologia.</p>
+<ol>
+<li><strong>Por que isso existe?</strong> Qual problema resolve, o que havia antes e o que faz melhor. Exemplo: o Kafka existe porque filas tradicionais apagam a mensagem depois de entregue, e muitos sistemas precisam que vários consumidores releiam o histórico.</li>
+<li><strong>Modelo mental.</strong> Desenhe a arquitetura numa página: componentes, fluxo de dados, onde fica o estado. Ancore no que já sabe ("Redis é um hash map em memória acessado pela rede").</li>
+<li><strong>Hello world oficial.</strong> O tutorial da documentação oficial, não um vídeo qualquer.</li>
+<li><strong>Projeto pequeno e real.</strong> Refaça uma feature do projeto âncora com a tecnologia nova: o problema você já conhece, só a ferramenta muda.</li>
+<li><strong>Conceitos e limitações.</strong> Leia a seção de conceitos da doc, as pegadinhas conhecidas, as issues mais comentadas no GitHub e, se existir, o "quando não usar".</li>
+<li><strong>Compare com a alternativa.</strong> Monte uma tabela de trade-offs contra o que você já usa.</li>
+<li><strong>Ensine.</strong> Um post, um ADR ou uma explicação de 5 minutos para alguém. Se não sair simples, volte ao passo 2.</li>
+</ol>
+<p><strong>Sinais de que aprendeu:</strong> você prevê o comportamento antes de rodar, sabe dizer quando não usar, e lê issues e código-fonte da ferramenta sem medo.</p>
+<p><strong>Antídoto contra hype:</strong> antes de adotar algo, pergunte "que problema meu isso resolve que a ferramenta atual não resolve?". Tecnologia madura e sem graça costuma ser a escolha certa.</p>
+</div><div class="notes" data-for="protocolo"></div></article>
+<article class="section" id="sec-ia" data-id="ia" hidden><header class="sec-head"><p class="eyebrow">Carreira</p><h1>IA no aprendizado e no trabalho</h1><div class="sec-tools" data-for="ia"></div></header><div class="prose"><p>Em 2026, programar com IA é expectativa do mercado; o diferencial é ter fundamento para julgar o que ela produz. Quem não sabe avaliar o código gerado vira refém dele, e é exatamente esse o profissional que a base deste roadmap evita.</p>
+<h4 class="sub">Enquanto aprende (Fases 0 a 5)</h4>
+<ul>
+<li>Use a IA como tutor, não como autor: peça explicações, analogias, exercícios novos e "me faça perguntas para testar se entendi".</li>
+<li>Tente sozinho por 30 minutos; depois peça uma dica, não a resposta.</li>
+<li>Nunca cole código que você não consegue explicar linha por linha.</li>
+<li>Desligue o autocompletar de IA nos exercícios de fundamentos (Fases 1, 2 e 5). Ligue nos projetos.</li>
+</ul>
+<h4 class="sub">Enquanto constrói (Fase 6 em diante)</h4>
+<ul>
+<li>Delegue o repetitivo (boilerplate, primeiros testes, scripts) e revise como se fosse o PR de um júnior.</li>
+<li>Use para explorar trade-offs antes de decidir: "quais as desvantagens desta abordagem no meu contexto?".</li>
+<li>Peça revisão do seu código: segurança, casos de borda, nomes.</li>
+<li>Verifique sempre: rode, teste, confira na doc oficial. A IA erra com confiança, principalmente em versões de bibliotecas.</li>
+<li>Nunca cole segredos, dados de clientes ou dados pessoais (LGPD) em ferramentas que a empresa não aprovou.</li>
+</ul>
+<p><strong>Construir com IA também é backend:</strong> chamar APIs de modelos, streaming de respostas, busca semântica com pgvector, tool calling, avaliação de qualidade e controle de custo por requisição. Vale como especialização extra depois da Fase 9, e já cai nas provas DVA-C03 (Amazon Bedrock) e AI-200 da Microsoft.</p>
+</div><div class="notes" data-for="ia"></div></article>
+<article class="section" id="sec-marcos" data-id="marcos" hidden><header class="sec-head"><p class="eyebrow">Carreira</p><h1>Marcos de carreira: júnior, pleno, sênior</h1><div class="sec-tools" data-for="marcos"></div></header><div class="prose"><p>Você fica empregável como júnior depois da Fase 7 com o projeto âncora v1 no ar, em 10 a 12 meses. Pleno e sênior se medem por autonomia e impacto, não por anos: repetir o mesmo ano cinco vezes não faz ninguém sênior.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Júnior</th>
+<th>Pleno</th>
+<th>Sênior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Técnico</td>
+<td>Entrega features com orientação: API, banco e tela</td>
+<td>Entrega features complexas sozinho; testa, faz deploy e monitora</td>
+<td>Desenha sistemas; antecipa problemas de escala, segurança e custo</td>
+</tr>
+<tr>
+<td>Autonomia</td>
+<td>Precisa de tarefas bem definidas</td>
+<td>Quebra problemas em tarefas</td>
+<td>Define o problema e o caminho para o time</td>
+</tr>
+<tr>
+<td>Escopo</td>
+<td>A própria tarefa</td>
+<td>A feature ou o serviço</td>
+<td>Vários times e decisões de longo prazo</td>
+</tr>
+<tr>
+<td>Comunicação</td>
+<td>Pede ajuda bem e documenta o que faz</td>
+<td>Escreve ADRs, explica trade-offs, revisa código</td>
+<td>Influencia sem autoridade, mentora, traduz técnica em negócio</td>
+</tr>
+<tr>
+<td>Impacto</td>
+<td>Cumpre o combinado</td>
+<td>Move métricas do produto</td>
+<td>Muda o rumo de times e métricas da empresa</td>
+</tr>
+<tr>
+<td>Certificações</td>
+<td>Nenhuma é exigida; o projeto pesa mais</td>
+<td>AWS Developer e Solutions Architect – Associate; CKAD</td>
+<td>Uma Professional (como a AWS Solutions Architect – Professional) ou a CKA, se o trabalho pedir</td>
+</tr>
+<tr>
+<td>Fases do roadmap</td>
+<td>0 a 7</td>
+<td>8 a 11</td>
+<td>10 e 11 + anos de produção real</td>
+</tr>
+</tbody>
+</table></div>
+<h4 class="sub">Pronto para se candidatar a júnior</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="marcos-91b9a741"><input class="chk" data-id="marcos-91b9a741" id="c-marcos-91b9a741" type="checkbox"/><label for="c-marcos-91b9a741"> Projeto âncora v1 no ar com README, ADRs e demo</label></li>
+<li class="task-list-item enabled" data-item="marcos-8f6fc463"><input class="chk" data-id="marcos-8f6fc463" id="c-marcos-8f6fc463" type="checkbox"/><label for="c-marcos-8f6fc463"> Explica HTTP, event loop, índices e autenticação sem consulta</label></li>
+<li class="task-list-item enabled" data-item="marcos-769c5ffa"><input class="chk" data-id="marcos-769c5ffa" id="c-marcos-769c5ffa" type="checkbox"/><label for="c-marcos-769c5ffa"> Resolve problemas fáceis e médios de algoritmos em 30 a 40 minutos</label></li>
+<li class="task-list-item enabled" data-item="marcos-13b6593e"><input class="chk" data-id="marcos-13b6593e" id="c-marcos-13b6593e" type="checkbox"/><label for="c-marcos-13b6593e"> GitHub com commits consistentes nos últimos 6 meses</label></li>
+<li class="task-list-item enabled" data-item="marcos-6dff63d9"><input class="chk" data-id="marcos-6dff63d9" id="c-marcos-6dff63d9" type="checkbox"/><label for="c-marcos-6dff63d9"> Currículo e LinkedIn no formato "fiz X, medido por Y, resultando em Z"</label></li>
+<li class="task-list-item enabled" data-item="marcos-7f6093af"><input class="chk" data-id="marcos-7f6093af" id="c-marcos-7f6093af" type="checkbox"/><label for="c-marcos-7f6093af"> 3 histórias no método STAR prontas para contar</label></li>
+</ul>
+<p><strong>A rota mais curta pode ser interna:</strong> você já está numa empresa que vive de integração e automação. Resolver problemas técnicos reais aí, com impacto registrado, costuma abrir a primeira vaga de dev mais rápido do que dezenas de candidaturas frias.</p>
+</div><div class="notes" data-for="marcos"></div></article>
+<article class="section" id="sec-30-dias" data-id="30-dias" hidden><header class="sec-head"><p class="eyebrow">Execução</p><h1>Primeiros 30 dias e rotina semanal</h1><div class="sec-tools" data-for="30-dias"></div></header><div class="prose"><p>Comece na próxima segunda pela Fase 0 e mantenha uma rotina fixa: constância vence intensidade. A rotina abaixo soma 15 h por semana.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Dia</th>
+<th>Tempo</th>
+<th>Foco</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Segunda a quinta</td>
+<td>2 h por dia</td>
+<td>Fase atual: 1h30 de estudo e prática, 30 min de revisão e TIL</td>
+</tr>
+<tr>
+<td>Sexta</td>
+<td>1 h</td>
+<td>Registro de impacto, ADRs, plano da semana seguinte e 1 problema de algoritmo</td>
+</tr>
+<tr>
+<td>Sábado</td>
+<td>4 h</td>
+<td>Projeto âncora, num bloco longo de construção</td>
+</tr>
+<tr>
+<td>Domingo</td>
+<td>2 h</td>
+<td>Ciência da Computação (Fase 2) e leitura de livro; o resto do dia é descanso</td>
+</tr>
+</tbody>
+</table></div>
+<h4 class="sub">Semana 1 — Ambiente</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="30-dias-b69239c8"><input class="chk" data-id="30-dias-b69239c8" id="c-30-dias-b69239c8" type="checkbox"/><label for="c-30-dias-b69239c8"> Instalar Linux ou WSL2, VS Code e Git</label></li>
+<li class="task-list-item enabled" data-item="30-dias-5d542b9d"><input class="chk" data-id="30-dias-5d542b9d" id="c-30-dias-5d542b9d" type="checkbox"/><label for="c-30-dias-5d542b9d"> Criar a conta do GitHub com foto e bio, e o repositório <code>estudos</code> com um arquivo <code>TIL.md</code></label></li>
+<li class="task-list-item enabled" data-item="30-dias-a09e5d3b"><input class="chk" data-id="30-dias-a09e5d3b" id="c-30-dias-a09e5d3b" type="checkbox"/><label for="c-30-dias-a09e5d3b"> The Missing Semester: aulas de shell e de scripts</label></li>
+</ul>
+<h4 class="sub">Semana 2 — Git</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="30-dias-ca8e3083"><input class="chk" data-id="30-dias-ca8e3083" id="c-30-dias-ca8e3083" type="checkbox"/><label for="c-30-dias-ca8e3083"> Learn Git Branching completo</label></li>
+<li class="task-list-item enabled" data-item="30-dias-48f55068"><input class="chk" data-id="30-dias-48f55068" id="c-30-dias-48f55068" type="checkbox"/><label for="c-30-dias-48f55068"> Pro Git, capítulos 1 a 3</label></li>
+<li class="task-list-item enabled" data-item="30-dias-fe07b926"><input class="chk" data-id="30-dias-fe07b926" id="c-30-dias-fe07b926" type="checkbox"/><label for="c-30-dias-fe07b926"> Script bash de backup com log, versionado no GitHub</label></li>
+</ul>
+<h4 class="sub">Semana 3 — Internet e HTTP</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="30-dias-0f8340bf"><input class="chk" data-id="30-dias-0f8340bf" id="c-30-dias-0f8340bf" type="checkbox"/><label for="c-30-dias-0f8340bf"> <code>curl -v</code> em 3 APIs públicas e explicação de cada linha no TIL</label></li>
+<li class="task-list-item enabled" data-item="30-dias-25278284"><input class="chk" data-id="30-dias-25278284" id="c-30-dias-25278284" type="checkbox"/><label for="c-30-dias-25278284"> Aba Network do DevTools num site que você usa todo dia</label></li>
+<li class="task-list-item enabled" data-item="30-dias-3b3752d5"><input class="chk" data-id="30-dias-3b3752d5" id="c-30-dias-3b3752d5" type="checkbox"/><label for="c-30-dias-3b3752d5"> Explicar em voz alta, por 5 minutos, o que acontece ao digitar uma URL</label></li>
+</ul>
+<h4 class="sub">Semana 4 — Entrada na Fase 1</h4>
+<ul class="checklist">
+<li class="task-list-item enabled" data-item="30-dias-685ea949"><input class="chk" data-id="30-dias-685ea949" id="c-30-dias-685ea949" type="checkbox"/><label for="c-30-dias-685ea949"> javascript.info, Parte 1, até o capítulo de funções</label></li>
+<li class="task-list-item enabled" data-item="30-dias-9f54c53b"><input class="chk" data-id="30-dias-9f54c53b" id="c-30-dias-9f54c53b" type="checkbox"/><label for="c-30-dias-9f54c53b"> Primeiros 10 exercícios do Exercism</label></li>
+<li class="task-list-item enabled" data-item="30-dias-f8b168a0"><input class="chk" data-id="30-dias-f8b168a0" id="c-30-dias-f8b168a0" type="checkbox"/><label for="c-30-dias-f8b168a0"> Primeiro problema de algoritmo fácil</label></li>
+<li class="task-list-item enabled" data-item="30-dias-c9e01133"><input class="chk" data-id="30-dias-c9e01133" id="c-30-dias-c9e01133" type="checkbox"/><label for="c-30-dias-c9e01133"> Revisão do mês</label></li>
+</ul>
+<p><strong>Revisão mensal (30 min, último domingo do mês):</strong> o que concluí, quais critérios de saída atingi, o que travou e o que muda no ritmo. Marque as caixas deste documento: ele é seu painel de progresso.</p>
+</div><div class="notes" data-for="30-dias"></div></article>
+<article class="section" id="sec-biblioteca" data-id="biblioteca" hidden><header class="sec-head"><p class="eyebrow">Execução</p><h1>Biblioteca essencial</h1><div class="sec-tools" data-for="biblioteca"></div></header><div class="prose"><p>Os livros abaixo estão na ordem em que fazem sentido no roadmap. Não compre todos de uma vez: compre o próximo quando chegar na fase dele.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Livro</th>
+<th>Autor</th>
+<th>Fase</th>
+<th>Por que ler</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eloquent JavaScript (gratuito)</td>
+<td>Marijn Haverbeke</td>
+<td>1</td>
+<td>Base sólida de JS com exercícios</td>
+</tr>
+<tr>
+<td>You Don't Know JS Yet (gratuito)</td>
+<td>Kyle Simpson</td>
+<td>1</td>
+<td>Como o JS funciona por dentro</td>
+</tr>
+<tr>
+<td>Entendendo Algoritmos</td>
+<td>Aditya Bhargava</td>
+<td>2</td>
+<td>Algoritmos sem sofrimento, em português</td>
+</tr>
+<tr>
+<td>Effective TypeScript</td>
+<td>Dan Vanderkam</td>
+<td>4</td>
+<td>Uso idiomático do sistema de tipos</td>
+</tr>
+<tr>
+<td>O Programador Pragmático</td>
+<td>David Thomas e Andrew Hunt</td>
+<td>6</td>
+<td>Mentalidade profissional</td>
+</tr>
+<tr>
+<td>Node.js Design Patterns</td>
+<td>Mario Casciaro e Luciano Mammino</td>
+<td>6</td>
+<td>Node em profundidade, de streams a escalabilidade</td>
+</tr>
+<tr>
+<td>A Philosophy of Software Design</td>
+<td>John Ousterhout</td>
+<td>8</td>
+<td>Como reduzir complexidade no design</td>
+</tr>
+<tr>
+<td>Refatoração</td>
+<td>Martin Fowler</td>
+<td>8</td>
+<td>Melhorar código existente com segurança</td>
+</tr>
+<tr>
+<td>Accelerate</td>
+<td>Forsgren, Humble e Kim</td>
+<td>9</td>
+<td>Por que entrega contínua importa, com dados</td>
+</tr>
+<tr>
+<td>Designing Data-Intensive Applications (2ª ed.)</td>
+<td>Martin Kleppmann e Chris Riccomini</td>
+<td>5 e 10</td>
+<td>O livro de referência de dados e sistemas distribuídos</td>
+</tr>
+<tr>
+<td>Release It!</td>
+<td>Michael Nygard</td>
+<td>10</td>
+<td>Sistemas que sobrevivem à produção</td>
+</tr>
+<tr>
+<td>System Design Interview, vol. 1 e 2</td>
+<td>Alex Xu</td>
+<td>10</td>
+<td>Prática de system design</td>
+</tr>
+<tr>
+<td>The Staff Engineer's Path</td>
+<td>Tanya Reilly</td>
+<td>Depois do pleno</td>
+<td>A carreira técnica além do sênior</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Currículos gratuitos completos:</strong> <a href="https://www.theodinproject.com/" rel="noopener noreferrer" target="_blank">The Odin Project</a>, <a href="https://fullstackopen.com/en/" rel="noopener noreferrer" target="_blank">Full Stack Open</a>, <a href="https://cs50.harvard.edu/x/" rel="noopener noreferrer" target="_blank">CS50</a>, <a href="https://missing.csail.mit.edu/" rel="noopener noreferrer" target="_blank">The Missing Semester</a>, <a href="https://teachyourselfcs.com/" rel="noopener noreferrer" target="_blank">Teach Yourself CS</a>. Use os roadmaps de <a href="https://roadmap.sh/backend" rel="noopener noreferrer" target="_blank">backend</a>, <a href="https://roadmap.sh/nodejs" rel="noopener noreferrer" target="_blank">Node.js</a> e <a href="https://roadmap.sh/typescript" rel="noopener noreferrer" target="_blank">TypeScript</a> do roadmap.sh como checklist complementar.</p>
+<p><strong>Prática:</strong> <a href="https://exercism.org/" rel="noopener noreferrer" target="_blank">Exercism</a>, <a href="https://neetcode.io/" rel="noopener noreferrer" target="_blank">NeetCode</a>, <a href="https://sqlbolt.com/" rel="noopener noreferrer" target="_blank">SQLBolt</a>, <a href="https://pgexercises.com/" rel="noopener noreferrer" target="_blank">PostgreSQL Exercises</a>, <a href="https://www.frontendmentor.io/" rel="noopener noreferrer" target="_blank">Frontend Mentor</a>, <a href="https://github.com/type-challenges/type-challenges" rel="noopener noreferrer" target="_blank">Type Challenges</a>, <a href="https://codecrafters.io/" rel="noopener noreferrer" target="_blank">CodeCrafters</a>.</p>
+<p><strong>Conteúdo brasileiro:</strong> Curso em Vídeo (lógica e base), Rocketseat (conteúdo gratuito de JS, Node e React), Full Cycle (arquitetura, Docker, microsserviços) e o acervo do canal Akitando, de Fabio Akita (fundamentos e carreira).</p>
+<p><strong>Fontes das informações de versão:</strong> <a href="https://infoq.com/news/2026/08/typescript-7-released/" rel="noopener noreferrer" target="_blank">TypeScript 7 lançado (InfoQ, ago/2026)</a> · <a href="https://infoq.com/news/2026/06/nodejs-release-changes" rel="noopener noreferrer" target="_blank">Mudanças no calendário de releases do Node.js (InfoQ, jun/2026)</a> · <a href="https://www.readings.com.au/product/9781098119065/designing-data-intensive-applications--martin-kleppmann-chris-riccomini--2026--9781098119065" rel="noopener noreferrer" target="_blank">Designing Data-Intensive Applications, 2ª edição, março de 2026 (Readings)</a></p>
+<p><strong>Fontes das certificações (consultadas em 2 de novembro de 2026; confira a página oficial antes de agendar, porque as provas mudam de versão):</strong> <a href="https://aws.amazon.com/blogs/training-and-certification/september-2026-new-offerings/" rel="noopener noreferrer" target="_blank">AWS — novidades de setembro de 2026, DVA-C03</a> · <a href="https://tutorialsdojo.com/whats-new-with-the-aws-certified-developer-associate-dva-c03/" rel="noopener noreferrer" target="_blank">Tutorials Dojo — o que muda na DVA-C03</a> · <a href="https://docs.aws.amazon.com/pdfs/aws-certification/latest/developer-associate-02/developer-associate-02.pdf" rel="noopener noreferrer" target="_blank">Guia da prova DVA-C02</a> · <a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" rel="noopener noreferrer" target="_blank">AWS — Solutions Architect Associate</a> · <a href="https://docs.aws.amazon.com/pdfs/aws-certification/latest/solutions-architect-associate-03/solutions-architect-associate-03.pdf" rel="noopener noreferrer" target="_blank">Guia da prova SAA-C03</a> · <a href="https://www.cncf.io/certification/CKAd/" rel="noopener noreferrer" target="_blank">CNCF — CKAD</a> · <a href="https://training.linuxfoundation.org/blog/linux-foundation-kubernetes-certifications-now-include-exam-simulator/" rel="noopener noreferrer" target="_blank">Linux Foundation — simulador killer.sh incluso</a> · <a href="https://institute.sfeir.com/en/kubernetes-training/faq-certification-ckad/" rel="noopener noreferrer" target="_blank">SFEIR Institute — FAQ do CKAD (validade e nota mínima)</a> · <a href="https://learn.microsoft.com/credentials/certifications/resources/study-guides/ai-200" rel="noopener noreferrer" target="_blank">Microsoft Learn — guia de estudo AI-200</a> · <a href="https://learn.microsoft.com/answers/a/12779227" rel="noopener noreferrer" target="_blank">Microsoft Q&amp;A — aposentadoria do AZ-204</a> · <a href="https://dev.to/lovelacecoding/bye-az-204-hello-ai-200-what-you-need-to-know-about-the-new-azure-developer-certification-2lo" rel="noopener noreferrer" target="_blank">DEV — do AZ-204 ao AI-200</a></p>
+</div><div class="notes" data-for="biblioteca"></div></article>
+  </div>
+
+  <nav class="pager" id="pager" aria-label="Seção anterior e próxima"></nav>
+  <footer>Roadmap atualizado em 2 de novembro de 2026. Seu progresso fica salvo só neste navegador; use Exportar para levar para outro computador.</footer>
+</main>
+
+<script id="meta" type="application/json">{"sections": [{"id": "como-usar", "group": "Comece aqui", "nav": "Como usar", "short": "Como usar", "h1": "Como usar este roadmap", "duration": "", "phase": null}, {"id": "fase-0", "group": "Fases", "nav": "Fase 0 · Terminal, Git e internet", "short": "Terminal, Git e internet", "h1": "Computador, terminal, Git e internet", "duration": "4 a 6 semanas", "phase": 0}, {"id": "fase-1", "group": "Fases", "nav": "Fase 1 · JavaScript", "short": "JavaScript", "h1": "Trilha JavaScript", "duration": "8 a 10 semanas", "phase": 1}, {"id": "fase-2", "group": "Fases", "nav": "Fase 2 · Ciência da Computação", "short": "Ciência da Computação", "h1": "Ciência da Computação essencial", "duration": "trilho contínuo, 3 a 4 h por semana por 6 meses", "phase": 2}, {"id": "fase-3", "group": "Fases", "nav": "Fase 3 · Web e Frontend", "short": "Web e Frontend", "h1": "Web e Frontend fundamentos", "duration": "5 a 6 semanas", "phase": 3}, {"id": "fase-4", "group": "Fases", "nav": "Fase 4 · TypeScript", "short": "TypeScript", "h1": "Trilha TypeScript", "duration": "4 semanas", "phase": 4}, {"id": "fase-5", "group": "Fases", "nav": "Fase 5 · Bancos de dados e SQL", "short": "Bancos de dados e SQL", "h1": "Trilha Bancos de dados e SQL", "duration": "6 semanas", "phase": 5}, {"id": "fase-6", "group": "Fases", "nav": "Fase 6 · Node.js e Backend", "short": "Node.js e Backend", "h1": "Trilha Node.js e Backend core", "duration": "10 a 12 semanas", "phase": 6}, {"id": "fase-7", "group": "Fases", "nav": "Fase 7 · React", "short": "React", "h1": "Trilha React: a barra horizontal do T", "duration": "6 semanas", "phase": 7}, {"id": "fase-8", "group": "Fases", "nav": "Fase 8 · Engenharia de software", "short": "Engenharia de software", "h1": "Engenharia de software: testes, design e arquitetura", "duration": "6 semanas de foco, depois contínuo", "phase": 8}, {"id": "fase-9", "group": "Fases", "nav": "Fase 9 · Docker, CI/CD e Cloud", "short": "Docker, CI/CD e Cloud", "h1": "Entrega: Docker, CI/CD, Cloud e observabilidade", "duration": "8 a 10 semanas", "phase": 9}, {"id": "fase-10", "group": "Fases", "nav": "Fase 10 · Especialização Backend", "short": "Especialização Backend", "h1": "Especialização Backend", "duration": "6 a 12 meses, em boa parte já trabalhando", "phase": 10}, {"id": "fase-11", "group": "Fases", "nav": "Fase 11 · Kubernetes (CKAD)", "short": "Kubernetes (CKAD)", "h1": "Kubernetes e orquestração: preparação para o CKAD", "duration": "8 a 10 semanas", "phase": 11}, {"id": "certificacoes", "group": "Carreira", "nav": "Certificações", "short": "Certificações", "h1": "Trilha de certificações", "duration": "", "phase": null}, {"id": "profissional", "group": "Carreira", "nav": "Profissional estratégico", "short": "Profissional estratégico", "h1": "O profissional estratégico", "duration": "", "phase": null}, {"id": "ancora", "group": "Carreira", "nav": "Projeto âncora", "short": "Projeto âncora", "h1": "Projeto âncora: o portfólio que cresce com você", "duration": "", "phase": null}, {"id": "protocolo", "group": "Carreira", "nav": "Aprender qualquer tecnologia", "short": "Aprender qualquer tecnologia", "h1": "Protocolo para aprender qualquer tecnologia nova", "duration": "", "phase": null}, {"id": "ia", "group": "Carreira", "nav": "IA no estudo e no trabalho", "short": "IA no estudo e no trabalho", "h1": "IA no aprendizado e no trabalho", "duration": "", "phase": null}, {"id": "marcos", "group": "Carreira", "nav": "Marcos de carreira", "short": "Marcos de carreira", "h1": "Marcos de carreira: júnior, pleno, sênior", "duration": "", "phase": null}, {"id": "30-dias", "group": "Execução", "nav": "Primeiros 30 dias", "short": "Primeiros 30 dias", "h1": "Primeiros 30 dias e rotina semanal", "duration": "", "phase": null}, {"id": "biblioteca", "group": "Execução", "nav": "Biblioteca e fontes", "short": "Biblioteca e fontes", "h1": "Biblioteca essencial", "duration": "", "phase": null}], "home": {"lead": "São 12 fases em 6 etapas, com 3 certificações no caminho: júnior empregável em 10 a 12 meses, AWS Developer por volta do mês 16, AWS Solutions Architect por volta do mês 19 e CKAD por volta do mês 24, no ritmo de 15 h por semana.", "reading": "Leia de cima para baixo: uma etapa só começa quando a anterior cumpre os critérios de saída, e cada prova fecha a fase que acabou de ser estudada. Ciência da Computação e o trilho profissional correm ao lado, e o projeto âncora ganha uma versão por etapa."}}</script>
+<script>
+(function () {
+  'use strict';
+  var META = JSON.parse(document.getElementById('meta').textContent);
+  var SECS = META.sections;
+  var BY_ID = {};
+  SECS.forEach(function (s) { BY_ID[s.id] = s; });
+  var KEY = 'roadmap-backend-progresso-v1';
+  var ORDER = ['fase-0', 'fase-1', 'fase-3', 'fase-4', 'fase-5', 'fase-6', 'fase-7', 'fase-8', 'fase-9', 'fase-10', 'fase-11'];
+  var PHASES = SECS.filter(function (s) { return s.phase !== null; }).map(function (s) { return s.id; });
+  var DUR = {
+    'fase-0': '4 a 6 semanas', 'fase-1': '8 a 10 semanas', 'fase-2': 'contínuo, 3 a 4 h por semana',
+    'fase-3': '5 a 6 semanas', 'fase-4': '4 semanas', 'fase-5': '6 semanas', 'fase-6': '10 a 12 semanas',
+    'fase-7': '6 semanas', 'fase-8': '6 semanas', 'fase-9': '8 a 10 semanas', 'fase-10': '6 a 12 meses',
+    'fase-11': '8 a 10 semanas'
+  };
+  var STAGES = [
+    { name: 'Base', months: 'meses 0 a 3', phases: ['fase-0', 'fase-1'] },
+    { name: 'Web e dados', months: 'meses 3 a 7', phases: ['fase-3', 'fase-4', 'fase-5'], ancora: 'v0' },
+    { name: 'Backend', months: 'meses 7 a 11', phases: ['fase-6', 'fase-7'], ancora: 'v1',
+      after: [{ type: 'gate', name: 'Júnior empregável', text: 'critérios das Fases 0 a 7 + projeto âncora v1 no ar',
+        req: ['fase-0', 'fase-1', 'fase-3', 'fase-4', 'fase-5', 'fase-6', 'fase-7'] }] },
+    { name: 'Profissional', months: 'meses 11 a 15', phases: ['fase-8', 'fase-9'], ancora: 'v2',
+      after: [{ type: 'cert', id: 'dva', name: 'AWS Developer – Associate', text: 'DVA-C03 · por volta do mês 16' }] },
+    { name: 'Especialização', months: 'meses 16 a 21', phases: ['fase-10'], ancora: 'v3',
+      after: [{ type: 'cert', id: 'saa', name: 'AWS Solutions Architect – Associate', text: 'SAA-C03 · por volta do mês 19' }] },
+    { name: 'Orquestração', months: 'meses 21 a 24', phases: ['fase-11'], ancora: 'v4',
+      after: [
+        { type: 'cert', id: 'ckad', name: 'CKAD · Kubernetes Application Developer', text: 'por volta do mês 24' },
+        { type: 'gate', name: 'Pronto para pleno', text: 'system design + 3 casos de impacto medidos', req: PHASES }
+      ] }
+  ];
+  var EXAMS = [
+    { id: 'dva', name: 'AWS Developer – Associate', code: 'DVA-C03', when: 'por volta do mês 16', price: 'US$ 150' },
+    { id: 'saa', name: 'AWS Solutions Architect – Associate', code: 'SAA-C03', when: 'por volta do mês 19', price: 'US$ 150' },
+    { id: 'ckad', name: 'CKAD — Kubernetes Application Developer', code: 'CKAD', when: 'por volta do mês 24', price: 'US$ 445' },
+    { id: 'ai200', name: 'Azure AI Cloud Developer Associate', code: 'AI-200', when: 'opcional, depois da DVA', price: 'preço varia por país', optional: true }
+  ];
+
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function norm(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+
+  /* ---------------- state ---------------- */
+  function fresh() { return { checks: {}, done: {}, current: null, notes: {}, exams: {}, theme: 'auto', hideDone: false }; }
+  var state = fresh();
+  var storageOk = true;
+  try {
+    var raw = window.localStorage.getItem(KEY);
+    if (raw) state = Object.assign(fresh(), JSON.parse(raw));
+  } catch (e) { storageOk = false; }
+  function save() {
+    try { window.localStorage.setItem(KEY, JSON.stringify(state)); storageOk = true; }
+    catch (e) { storageOk = false; }
+    $('#storageWarn').hidden = storageOk;
+  }
+
+  /* ---------------- index ---------------- */
+  var boxes = $$('input.chk');
+  var bySec = {};
+  boxes.forEach(function (b) {
+    var sec = b.closest('article').dataset.id;
+    (bySec[sec] = bySec[sec] || []).push(b);
+  });
+  function stats(id) {
+    var list = bySec[id] || [];
+    var done = list.filter(function (b) { return b.checked; }).length;
+    return { done: done, total: list.length, pct: list.length ? Math.round(done * 100 / list.length) : 0 };
+  }
+  function overall() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    return { done: done, total: boxes.length, pct: boxes.length ? Math.round(done * 100 / boxes.length) : 0 };
+  }
+  function currentPhase() {
+    if (state.current && BY_ID[state.current]) return state.current;
+    for (var i = 0; i < ORDER.length; i++) if (!state.done[ORDER[i]]) return ORDER[i];
+    return ORDER[ORDER.length - 1];
+  }
+
+  /* ---------------- one-time decorations ---------------- */
+  function applyChecks() {
+    boxes.forEach(function (b) {
+      var on = !!state.checks[b.dataset.id];
+      b.checked = on;
+      b.closest('li').classList.toggle('done', on);
+    });
+  }
+  $$('p[data-exit]').forEach(function (p) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn exit-btn'; b.dataset.act = 'exit'; b.dataset.id = p.dataset.exit;
+    p.appendChild(b);
+  });
+  $$('.prose pre').forEach(function (pre) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'copy'; b.textContent = 'Copiar';
+    b.addEventListener('click', function () {
+      var code = pre.querySelector('code');
+      var txt = code ? code.textContent : pre.textContent;
+      var done = function (msg) { b.textContent = msg; setTimeout(function () { b.textContent = 'Copiar'; }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(function () { done('Copiado'); }, function () { done('Selecione e copie'); });
+      } else { done('Selecione e copie'); }
+    });
+    pre.appendChild(b);
+  });
+  $$('.notes').forEach(function (el) {
+    var id = el.dataset.for;
+    el.innerHTML = '<label class="notes-label" for="n-' + id + '">Minhas anotações</label>' +
+      '<textarea id="n-' + id + '" placeholder="O que aprendi, dúvidas, links, ideias para o registro de impacto…"></textarea>' +
+      '<span class="notes-status" aria-live="polite"></span>';
+    var ta = el.querySelector('textarea');
+    var status = el.querySelector('.notes-status');
+    var t;
+    ta.addEventListener('input', function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        if (ta.value.trim()) state.notes[id] = ta.value; else delete state.notes[id];
+        save();
+        status.textContent = storageOk ? 'Salvo' : 'Não foi possível salvar neste navegador';
+        setTimeout(function () { status.textContent = ''; }, 1500);
+      }, 400);
+    });
+  });
+  function applyNotes() {
+    $$('.notes textarea').forEach(function (ta) { ta.value = state.notes[ta.id.slice(2)] || ''; });
+  }
+  var certSec = $('#sec-certificacoes .prose');
+  if (certSec) {
+    var wrap = document.createElement('div');
+    wrap.innerHTML = '<h4 class="sub">Minhas provas</h4><div class="exams" data-exams></div>';
+    var firstP = certSec.querySelector(':scope > p');
+    certSec.insertBefore(wrap, firstP ? firstP.nextSibling : certSec.firstChild);
+  }
+  $('#homeLead').innerHTML = META.home.lead;
+  $('#homeReading').innerHTML = META.home.reading;
+
+  /* ---------------- nav ---------------- */
+  function renderNav() {
+    var groups = [], map = {};
+    SECS.forEach(function (s) {
+      if (!map[s.group]) { map[s.group] = []; groups.push(s.group); }
+      map[s.group].push(s);
+    });
+    var html = '<a class="nav-home" href="#/" data-id="home">Visão geral</a>';
+    groups.forEach(function (g) {
+      html += '<div class="nav-group"><p class="nav-title">' + esc(g) + '</p>';
+      map[g].forEach(function (s) {
+        html += '<a class="nav-item" href="#/' + s.id + '" data-id="' + s.id + '"><span class="nav-label">' + esc(s.nav) + '</span><span class="nav-meta"></span></a>';
+      });
+      html += '</div>';
+    });
+    $('#nav').innerHTML = html;
+  }
+  function updateNav() {
+    var cur = currentPhase();
+    $$('#nav .nav-item').forEach(function (a) {
+      var id = a.dataset.id, st = stats(id);
+      a.classList.toggle('is-current', id === cur);
+      a.classList.toggle('is-done', !!state.done[id]);
+      a.querySelector('.nav-meta').innerHTML = st.total
+        ? '<span class="mini"><i style="width:' + st.pct + '%"></i></span><span class="count">' + st.done + '/' + st.total + '</span>'
+        : '';
+    });
+  }
+
+  /* ---------------- home ---------------- */
+  function phaseCard(id) {
+    var s = BY_ID[id], st = stats(id), done = !!state.done[id], cur = currentPhase() === id;
+    var badge = done ? '<span class="badge good">Concluída</span>' : (cur ? '<span class="badge accent">Você está aqui</span>' : '');
+    return '<a class="pcard' + (done ? ' done' : '') + (cur && !done ? ' current' : '') + '" href="#/' + id + '">' +
+      '<span class="pcard-top"><span>Fase ' + s.phase + '</span>' + badge + '</span>' +
+      '<span class="pcard-name">' + esc(s.short) + '</span>' +
+      '<span class="pcard-dur">' + esc(DUR[id] || '') + '</span>' +
+      '<span class="bar sm"><i style="width:' + st.pct + '%"></i></span>' +
+      '<span class="pcard-count">' + st.done + '/' + st.total + ' tópicos</span></a>';
+  }
+  function band(b) {
+    if (b.type === 'gate') {
+      var reached = b.req.every(function (id) { return state.done[id]; });
+      return '<a class="band gate' + (reached ? ' reached' : '') + '" href="#/marcos"><span class="band-icon diamond"></span><strong>' + esc(b.name) + '</strong><span class="band-text">' + (reached ? 'Marco atingido ✓' : esc(b.text)) + '</span></a>';
+    }
+    var ex = state.exams[b.id] || {};
+    var text = ex.passed ? 'Aprovado ✓' : (ex.date ? fmtDate(ex.date) + ' · ' + countdown(ex.date) : b.text);
+    return '<a class="band cert' + (ex.passed ? ' passed' : '') + '" href="#/certificacoes"><span class="band-icon circle"></span><strong>' + esc(b.name) + '</strong><span class="band-text">' + esc(text) + '</span></a>';
+  }
+  function renderMap() {
+    var h = '';
+    STAGES.forEach(function (st) {
+      h += '<div class="stage"><div class="stage-label"><strong>' + esc(st.name) + '</strong><span>' + esc(st.months) + '</span>' +
+        (st.ancora ? '<a class="anchor-chip" href="#/ancora" title="Versão do projeto âncora nesta etapa">Âncora ' + st.ancora + '</a>' : '') +
+        '</div><div class="stage-phases n' + st.phases.length + '">' + st.phases.map(phaseCard).join('') + '</div></div>';
+      (st.after || []).forEach(function (b) { h += band(b); });
+    });
+    $('#map').innerHTML = h;
+    $('#parallel').innerHTML = phaseCard('fase-2') +
+      '<a class="pcard" href="#/profissional"><span class="pcard-top"><span>Trilho paralelo</span></span><span class="pcard-name">Profissional estratégico</span><span class="pcard-dur">trade-offs, ADRs, impacto, se vender</span></a>' +
+      '<a class="pcard" href="#/ancora"><span class="pcard-top"><span>Portfólio</span></span><span class="pcard-name">Projeto âncora</span><span class="pcard-dur">uma versão por etapa, da v0 à v5</span></a>';
+  }
+  function renderContinue() {
+    var id = currentPhase(), s = BY_ID[id], st = stats(id);
+    var next = (bySec[id] || []).filter(function (b) { return !b.checked; })[0];
+    var nextText = next ? next.nextElementSibling.textContent.replace(/\s+/g, ' ').trim() : '';
+    $('#continue').innerHTML = '<div class="continue-body"><p class="eyebrow">' + (state.current ? 'Sua fase atual' : 'Próxima fase a concluir') + '</p>' +
+      '<h2>Fase ' + s.phase + ' · ' + esc(s.short) + '</h2>' +
+      '<p class="muted">' + esc(DUR[id] || '') + ' · ' + st.done + ' de ' + st.total + ' tópicos</p>' +
+      '<span class="bar"><i style="width:' + st.pct + '%"></i></span>' +
+      (next ? '<p class="next"><span>Próximo tópico:</span> ' + esc(nextText) + '</p>' : '') +
+      '</div><a class="btn primary" href="#/' + id + (next ? '?item=' + next.dataset.id : '') + '">Continuar</a>';
+  }
+  function renderStats() {
+    var o = overall();
+    var phasesDone = PHASES.filter(function (id) { return state.done[id]; }).length;
+    var examsDone = ['dva', 'saa', 'ckad'].filter(function (id) { return state.exams[id] && state.exams[id].passed; }).length;
+    $('#statPct').textContent = o.pct + '%';
+    $('#statBar').style.width = o.pct + '%';
+    $('#statItems').textContent = o.done;
+    $('#statItemsLabel').textContent = 'de ' + o.total + ' tópicos dominados';
+    $('#statPhases').textContent = phasesDone + '/' + PHASES.length;
+    $('#statExams').textContent = examsDone + '/3';
+    $('#sidePct').textContent = o.pct + '%';
+    $('#sideBar').style.width = o.pct + '%';
+    $('#sideCount').textContent = o.done + ' de ' + o.total + ' tópicos';
+    $('#topPct').textContent = o.pct + '%';
+  }
+
+  /* ---------------- exams ---------------- */
+  function fmtDate(d) { var p = d.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+  function countdown(date) {
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var p = date.split('-').map(Number);
+    var diff = Math.round((new Date(p[0], p[1] - 1, p[2]) - today) / 86400000);
+    if (diff > 1) return 'faltam ' + diff + ' dias';
+    if (diff === 1) return 'é amanhã';
+    if (diff === 0) return 'é hoje';
+    return 'foi há ' + (-diff) + (diff === -1 ? ' dia' : ' dias');
+  }
+  function examStatus(e) {
+    var ex = state.exams[e.id] || {};
+    if (ex.passed) return 'Aprovado. Registre no LinkedIn e no seu registro de impacto.';
+    if (ex.date) return 'Prova em ' + fmtDate(ex.date) + ': ' + countdown(ex.date) + '.';
+    return e.optional ? 'Opcional: só se mirar empresas com stack Microsoft.' : 'Sem data. Agende ao começar a preparação, cerca de 6 semanas antes.';
+  }
+  function renderExams() {
+    $$('[data-exams]').forEach(function (c) {
+      c.innerHTML = EXAMS.map(function (e) {
+        return '<div class="exam' + (e.optional ? ' optional' : '') + '" data-exam="' + e.id + '">' +
+          '<div class="exam-head"><span class="band-icon circle"></span><div><strong>' + esc(e.name) + '</strong><span class="muted">' + esc(e.code + ' · ' + e.when + ' · ' + e.price) + '</span></div></div>' +
+          '<div class="exam-fields"><label class="date-field"><span>Data da prova</span><input type="date" data-exam-date="' + e.id + '"></label>' +
+          '<label><input type="checkbox" data-exam-pass="' + e.id + '"> Aprovado</label></div>' +
+          '<p class="exam-status" data-exam-status="' + e.id + '"></p></div>';
+      }).join('');
+    });
+  }
+  function syncExams() {
+    EXAMS.forEach(function (e) {
+      var ex = state.exams[e.id] || {};
+      $$('[data-exam-date="' + e.id + '"]').forEach(function (i) { if (document.activeElement !== i) i.value = ex.date || ''; });
+      $$('[data-exam-pass="' + e.id + '"]').forEach(function (i) { i.checked = !!ex.passed; });
+      $$('[data-exam-status="' + e.id + '"]').forEach(function (p) { p.textContent = examStatus(e); });
+      $$('[data-exam="' + e.id + '"]').forEach(function (d) { d.classList.toggle('passed', !!ex.passed); });
+    });
+  }
+
+  /* ---------------- section tools ---------------- */
+  function updateSecTools() {
+    $$('.sec-tools').forEach(function (el) {
+      var id = el.dataset.for, s = BY_ID[id], st = stats(id), h = '';
+      if (st.total) h += '<div class="sec-progress"><span class="bar"><i style="width:' + st.pct + '%"></i></span><span class="count">' + st.done + ' de ' + st.total + ' tópicos · ' + st.pct + '%</span></div>';
+      if (s.phase !== null) {
+        var cur = state.current === id;
+        h += '<div class="sec-actions"><button type="button" class="btn' + (cur ? ' active' : '') + '" data-act="current" data-id="' + id + '" aria-pressed="' + cur + '">' + (cur ? '★ Fase atual' : '☆ Marcar como fase atual') + '</button>' +
+          (state.done[id] ? '<span class="badge good">Fase concluída</span>' : '') + '</div>';
+      }
+      el.innerHTML = h;
+    });
+    $$('.exit-btn').forEach(function (b) {
+      var on = !!state.done[b.dataset.id];
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on);
+      b.textContent = on ? '✓ Critério cumprido · fase concluída' : 'Marcar critério como cumprido';
+    });
+  }
+
+  function updateAll() {
+    renderStats(); updateNav(); updateSecTools(); renderMap(); renderContinue(); syncExams();
+  }
+
+  /* ---------------- routing ---------------- */
+  var pendingFocus = null;
+  function showView(id) {
+    $('#view-home').hidden = id !== 'home';
+    $('#view-search').hidden = id !== 'search';
+    $$('article.section').forEach(function (a) { a.hidden = a.dataset.id !== id; });
+    $$('#nav a').forEach(function (a) {
+      if (a.dataset.id === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    renderPager(id);
+    document.title = (id === 'home' || id === 'search') ? 'Roadmap Backend' : BY_ID[id].nav + ' · Roadmap Backend';
+  }
+  function renderPager(id) {
+    var p = $('#pager');
+    if (id === 'home' || id === 'search') { p.innerHTML = ''; return; }
+    var i = SECS.findIndex(function (s) { return s.id === id; });
+    var prev = SECS[i - 1], next = SECS[i + 1];
+    p.innerHTML = (prev ? '<a class="pager-link prev" href="#/' + prev.id + '"><span>Anterior</span>' + esc(prev.nav) + '</a>' : '<a class="pager-link prev" href="#/"><span>Anterior</span>Visão geral</a>') +
+      (next ? '<a class="pager-link next" href="#/' + next.id + '"><span>Próxima</span>' + esc(next.nav) + '</a>' : '<span></span>');
+  }
+  function route() {
+    var m = location.hash.match(/^#\/([^?]*)(?:\?item=([\w-]+))?/);
+    var id = m && m[1] && BY_ID[m[1]] ? m[1] : 'home';
+    $('#search').value = '';
+    showView(id);
+    if (m && m[2]) {
+      var b = document.getElementById('c-' + m[2]);
+      if (b) pendingFocus = b.closest('li');
+    }
+    if (pendingFocus) {
+      var el = pendingFocus; pendingFocus = null;
+      requestAnimationFrame(function () {
+        el.scrollIntoView({ block: 'center' });
+        el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+      });
+    } else {
+      window.scrollTo(0, 0);
+    }
+    closeMenu();
+  }
+
+  /* ---------------- search ---------------- */
+  var searchIndex = [];
+  $$('article.section').forEach(function (art) {
+    var id = art.dataset.id;
+    $$('.prose li, .prose h3, .prose h4, .prose td:first-child, .prose > p', art).forEach(function (el) {
+      var text = el.textContent.replace(/\s+/g, ' ').replace(/Copiar$/, '').trim();
+      if (text.length > 2) searchIndex.push({ id: id, el: el, text: text, low: norm(text) });
+    });
+  });
+  function highlight(text, q) {
+    var low = norm(text);
+    var i = low.indexOf(q);
+    if (i < 0 || low.length !== text.length) return esc(text);
+    return esc(text.slice(0, i)) + '<mark>' + esc(text.slice(i, i + q.length)) + '</mark>' + esc(text.slice(i + q.length));
+  }
+  function runSearch(q) {
+    var nq = norm(q.trim());
+    if (nq.length < 2) { route(); return; }
+    var hits = [];
+    for (var i = 0; i < searchIndex.length && hits.length < 80; i++) if (searchIndex[i].low.indexOf(nq) >= 0) hits.push(i);
+    showView('search');
+    var html = '<header class="sec-head"><p class="eyebrow">Busca</p><h1>' +
+      (hits.length ? hits.length + (hits.length === 80 ? '+' : '') + (hits.length === 1 ? ' resultado' : ' resultados') : 'Nada encontrado') +
+      ' para “' + esc(q.trim()) + '”</h1></header>';
+    html += hits.map(function (idx) {
+      var x = searchIndex[idx];
+      return '<button type="button" class="hit" data-hit="' + idx + '"><span class="hit-sec">' + esc(BY_ID[x.id].nav) + '</span>' + highlight(x.text.length > 220 ? x.text.slice(0, 220) + '…' : x.text, nq) + '</button>';
+    }).join('');
+    $('#view-search').innerHTML = html;
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------------- menu, theme ---------------- */
+  function closeMenu() { document.body.classList.remove('menu-open'); $('#scrim').hidden = true; $('#menuBtn').setAttribute('aria-expanded', 'false'); }
+  function openMenu() {
+    if (window.innerWidth > 960) return;
+    document.body.classList.add('menu-open'); $('#scrim').hidden = false; $('#menuBtn').setAttribute('aria-expanded', 'true');
+  }
+  var THEMES = ['auto', 'light', 'dark'];
+  var THEME_LABEL = { auto: 'Tema: automático', light: 'Tema: claro', dark: 'Tema: escuro' };
+  function applyTheme() {
+    if (state.theme === 'auto') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', state.theme);
+    $('#themeBtn').textContent = THEME_LABEL[state.theme] || THEME_LABEL.auto;
+  }
+  function applyHide() {
+    document.body.classList.toggle('hide-done', !!state.hideDone);
+    $('#hideDone').checked = !!state.hideDone;
+  }
+  function applyAll() { applyChecks(); applyNotes(); applyTheme(); applyHide(); updateAll(); }
+
+  /* ---------------- events ---------------- */
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.matches('input.chk')) {
+      if (t.checked) state.checks[t.dataset.id] = true; else delete state.checks[t.dataset.id];
+      t.closest('li').classList.toggle('done', t.checked);
+      save(); updateAll();
+    } else if (t.matches('[data-exam-date]')) {
+      var id = t.dataset.examDate;
+      state.exams[id] = Object.assign({}, state.exams[id], { date: t.value || '' });
+      save(); syncExams(); renderMap();
+    } else if (t.matches('[data-exam-pass]')) {
+      var id2 = t.dataset.examPass;
+      state.exams[id2] = Object.assign({}, state.exams[id2], { passed: t.checked });
+      save(); updateAll();
+    } else if (t.id === 'hideDone') {
+      state.hideDone = t.checked; save(); applyHide();
+    } else if (t.id === 'importFile' && t.files && t.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        try {
+          var data = JSON.parse(reader.result);
+          if (!data || typeof data !== 'object' || !data.checks) throw new Error('formato');
+          state = Object.assign(fresh(), data);
+          save(); applyAll();
+          alert('Progresso importado.');
+        } catch (err) { alert('Arquivo inválido. Use um arquivo gerado pelo botão Exportar.'); }
+        t.value = '';
+      };
+      reader.readAsText(t.files[0]);
+    }
+  });
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('button, a');
+    if (!t) return;
+    if (t.dataset.act === 'current') {
+      state.current = state.current === t.dataset.id ? null : t.dataset.id;
+      save(); updateAll();
+    } else if (t.dataset.act === 'exit') {
+      var id = t.dataset.id;
+      if (state.done[id]) delete state.done[id]; else state.done[id] = true;
+      if (state.done[id] && state.current === id) state.current = null;
+      save(); updateAll();
+    } else if (t.dataset.hit !== undefined) {
+      var x = searchIndex[Number(t.dataset.hit)];
+      pendingFocus = x.el.closest('li') || x.el;
+      $('#search').value = '';
+      if (location.hash === '#/' + x.id) route(); else location.hash = '#/' + x.id;
+    } else if (t.tagName === 'A' && t.getAttribute('href') && t.getAttribute('href').indexOf('#/') === 0) {
+      if (t.getAttribute('href') === location.hash || (t.getAttribute('href') === '#/' && (location.hash === '' || location.hash === '#/'))) {
+        e.preventDefault(); route();
+      }
+    } else if (t.id === 'menuBtn') {
+      if (document.body.classList.contains('menu-open')) closeMenu(); else openMenu();
+    } else if (t.id === 'themeBtn') {
+      state.theme = THEMES[(THEMES.indexOf(state.theme) + 1) % THEMES.length];
+      save(); applyTheme();
+    } else if (t.id === 'exportBtn') {
+      var blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'roadmap-progresso-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    } else if (t.id === 'importBtn') {
+      $('#importFile').click();
+    } else if (t.id === 'resetBtn') {
+      if (confirm('Zerar todo o progresso, anotações e datas de prova? Exporte antes se quiser guardar uma cópia.')) {
+        var theme = state.theme;
+        state = fresh(); state.theme = theme;
+        save(); applyAll();
+      }
+    }
+  });
+  $('#scrim').addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      e.preventDefault(); openMenu(); $('#search').focus();
+    }
+  });
+  var searchTimer;
+  $('#search').addEventListener('input', function (e) {
+    clearTimeout(searchTimer);
+    var q = e.target.value;
+    searchTimer = setTimeout(function () { runSearch(q); }, 180);
+  });
+  $('#search').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); runSearch(e.target.value); closeMenu(); }
+  });
+  window.addEventListener('hashchange', route);
+
+  /* ---------------- init ---------------- */
+  renderNav();
+  renderExams();
+  applyAll();
+  $('#storageWarn').hidden = storageOk;
+  route();
+})();
+</script>
+</body>
+</html>
