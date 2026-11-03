@@ -10,7 +10,7 @@
   --bg:#f6f6f3;--surface:#ffffff;--surface-2:#efefea;--text:#1d1e20;--muted:#5b5f66;
   --border:#e1e1db;--border-strong:#cbcbc3;
   --accent:#3451d1;--accent-soft:rgba(52,81,209,.09);--accent-ink:#ffffff;
-  --cert:#c8520e;--cert-soft:rgba(200,82,14,.09);
+  --cert:#c8520e;--cert-soft:rgba(200,82,14,.09);--cert-ink:#ffffff;
   --good:#21783a;--good-soft:rgba(33,120,58,.10);
   --code-bg:#f0f0ea;--side:296px;
   color-scheme:light;
@@ -20,7 +20,7 @@
     --bg:#111214;--surface:#18191c;--surface-2:#202226;--text:#e9eaec;--muted:#a3a7ae;
     --border:#2b2e33;--border-strong:#3c4047;
     --accent:#8a9eff;--accent-soft:rgba(138,158,255,.14);--accent-ink:#0c0f1f;
-    --cert:#ff9455;--cert-soft:rgba(255,148,85,.12);
+    --cert:#ff9455;--cert-soft:rgba(255,148,85,.12);--cert-ink:#111214;
     --good:#62d37f;--good-soft:rgba(98,211,127,.12);
     --code-bg:#1e2024;color-scheme:dark;
   }
@@ -29,7 +29,7 @@
   --bg:#111214;--surface:#18191c;--surface-2:#202226;--text:#e9eaec;--muted:#a3a7ae;
   --border:#2b2e33;--border-strong:#3c4047;
   --accent:#8a9eff;--accent-soft:rgba(138,158,255,.14);--accent-ink:#0c0f1f;
-  --cert:#ff9455;--cert-soft:rgba(255,148,85,.12);
+  --cert:#ff9455;--cert-soft:rgba(255,148,85,.12);--cert-ink:#111214;
   --good:#62d37f;--good-soft:rgba(98,211,127,.12);
   --code-bg:#1e2024;color-scheme:dark;
 }
@@ -218,6 +218,57 @@ mark{background:var(--accent-soft);color:inherit;border-radius:3px;padding:0 2px
 .pager-link.next{text-align:right}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
 
+/* ---------- diário de impacto ---------- */
+.btn.sm{padding:6px 11px;font-size:13px}
+.btn.link{border:0;background:none;color:var(--muted);text-decoration:underline;padding:6px 4px}
+.brag-alert{border:1px solid var(--cert);background:var(--cert-soft);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.brag-alert.is-friday{border-width:2px;padding:11px 13px}
+.brag-alert.ok{border-color:var(--good);background:var(--good-soft)}
+.brag-alert-title{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;margin:0;line-height:1.35}
+.brag-alert-title::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:var(--cert)}
+.brag-alert.is-friday .brag-alert-title::before{animation:pulse 1.8s ease-in-out infinite}
+.brag-alert.ok .brag-alert-title::before{background:var(--good)}
+.brag-alert p{margin:0}
+.brag-alert-text{font-size:13px;color:var(--muted);line-height:1.45}
+.brag-alert-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:4px}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--cert-soft)}50%{box-shadow:0 0 0 6px var(--cert-soft)}}
+@media (prefers-reduced-motion: reduce){.brag-alert.is-friday .brag-alert-title::before{animation:none}}
+.brag-pill{font-size:12px;font-weight:700;background:var(--cert);color:var(--cert-ink);border-radius:99px;padding:4px 10px;text-decoration:none;white-space:nowrap}
+#menuBtn{position:relative}
+#menuBtn.has-alert::after{content:"";position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--cert);border:2px solid var(--surface)}
+.nav-item.has-alert .nav-label::after{content:"sexta";font-size:10.5px;font-weight:700;background:var(--cert);color:var(--cert-ink);border-radius:99px;padding:0 6px;margin-left:auto}
+.sec-lead{font-size:16px;color:var(--muted);margin:0}
+.brag-questions{margin-top:16px}
+.brag-questions ol{margin:8px 0 0;padding-left:20px;font-size:14.5px}
+.brag-questions li{margin:3px 0}
+.brag-form{display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+.brag-form.editing{border:2px solid var(--accent);padding:17px}
+.brag-form label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+.brag-form label small{font-weight:400;color:var(--muted);font-size:13px}
+.brag-form input,.brag-form textarea,.brag-form select{font:inherit;font-size:14px;font-weight:400;line-height:1.5;padding:9px 12px;border:1px solid var(--border-strong);border-radius:8px;background:var(--bg);color:var(--text);width:100%}
+.brag-form textarea{resize:vertical;min-height:62px}
+.brag-form input:focus,.brag-form textarea:focus,.brag-form select:focus{outline:none;border-color:var(--accent)}
+.form-row.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.form-status{font-size:13px;color:var(--good)}
+.form-status.error{color:var(--cert)}
+.brag-tools{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-top:44px}
+.brag-tools .h2{margin:0}
+.brag-tools-btns{display:flex;gap:8px;flex-wrap:wrap}
+.brag-tools-status{font-size:13px;min-height:20px;margin:6px 0 0}
+.month-head{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;margin:22px 0 6px}
+.entry{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:10px 0}
+.entry header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.entry h3{margin:2px 0 10px;font-size:17px;line-height:1.3}
+.entry-date{font-size:12.5px;color:var(--muted);margin:0}
+.entry-actions{display:flex;gap:6px;flex:none}
+.entry dl{display:grid;grid-template-columns:120px 1fr;gap:6px 14px;margin:0;font-size:14px}
+.entry dt{color:var(--muted);font-weight:600}
+.entry dd{margin:0;overflow-wrap:anywhere}
+.empty{color:var(--muted);padding:22px;border:1px dashed var(--border-strong);border-radius:12px;text-align:center;font-size:14px;margin:12px 0}
+.brag-open{display:flex;width:max-content;margin-top:10px}
+#bragStats{grid-template-columns:repeat(3,minmax(0,1fr))}
+
 /* ---------- responsive ---------- */
 @media (max-width: 960px){
   .topbar{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px}
@@ -239,6 +290,13 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-
   .band-text{margin-left:0;width:100%}
   .pager{grid-template-columns:1fr}
   .pager-link.next{text-align:left}
+  .form-row.two{grid-template-columns:1fr}
+  #bragStats{gap:8px}
+  #bragStats .stat{padding:12px}
+  #bragStats .stat-num{font-size:22px}
+  .entry header{flex-direction:column}
+  .entry dl{grid-template-columns:1fr;gap:2px}
+  .entry dd{margin-bottom:8px}
 }
 @media print{
   #sidebar,.topbar,.pager,.notes,.sec-tools,.exit-btn,.copy{display:none!important}
@@ -253,6 +311,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
   </button>
   <span class="topbar-title">Roadmap Backend</span>
+  <a id="bragPill" class="brag-pill" href="#/diario" hidden>Sexta: diário</a>
   <span id="topPct">0%</span>
 </header>
 
@@ -266,6 +325,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-
     <span class="bar"><i id="sideBar"></i></span>
     <div class="overall-count" id="sideCount"></div>
   </div>
+  <div id="bragAlert" class="brag-alert" role="status" hidden></div>
   <label class="search">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     <input id="search" type="search" placeholder="Buscar tópico, ferramenta, livro…" autocomplete="off" aria-label="Buscar no roadmap">
@@ -313,6 +373,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-
   </section>
 
   <section id="view-search" class="view" hidden></section>
+  <section id="view-diario" class="view" hidden></section>
 
   <div id="sections">
 <article class="section" id="sec-como-usar" data-id="como-usar" hidden><header class="sec-head"><p class="eyebrow">Comece aqui</p><h1>Como usar este roadmap</h1><div class="sec-tools" data-for="como-usar"></div></header><div class="prose"><p>Este roadmap leva você de iniciante a engenheiro backend com visão de produto em cerca de 2 anos, passando por três certificações: AWS Developer, AWS Solutions Architect e CKAD. Você avança por competência comprovada, não por calendário: cada fase tem um critério de saída.</p>
@@ -1577,7 +1638,7 @@ O que pode dar errado e como desfazer.
   function norm(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
 
   /* ---------------- state ---------------- */
-  function fresh() { return { checks: {}, done: {}, current: null, notes: {}, exams: {}, theme: 'auto', hideDone: false }; }
+  function fresh() { return { checks: {}, done: {}, current: null, notes: {}, exams: {}, theme: 'auto', hideDone: false, brag: [], bragSkip: {}, bragSince: null, bragDraft: {} }; }
   var state = fresh();
   var storageOk = true;
   try {
@@ -1681,6 +1742,7 @@ O que pode dar errado e como desfazer.
       html += '<div class="nav-group"><p class="nav-title">' + esc(g) + '</p>';
       map[g].forEach(function (s) {
         html += '<a class="nav-item" href="#/' + s.id + '" data-id="' + s.id + '"><span class="nav-label">' + esc(s.nav) + '</span><span class="nav-meta"></span></a>';
+        if (s.id === 'profissional') html += '<a class="nav-item" href="#/diario" data-id="diario"><span class="nav-label">Diário de impacto</span><span class="nav-meta"></span></a>';
       });
       html += '</div>';
     });
@@ -1690,6 +1752,12 @@ O que pode dar errado e como desfazer.
     var cur = currentPhase();
     $$('#nav .nav-item').forEach(function (a) {
       var id = a.dataset.id, st = stats(id);
+      if (id === 'diario') {
+        var n = state.brag.length;
+        a.classList.toggle('has-alert', bragStatus().pending);
+        a.querySelector('.nav-meta').innerHTML = '<span class="count">' + (n ? n + (n === 1 ? ' entrada' : ' entradas') : 'toda sexta') + '</span>';
+        return;
+      }
       a.classList.toggle('is-current', id === cur);
       a.classList.toggle('is-done', !!state.done[id]);
       a.querySelector('.nav-meta').innerHTML = st.total
@@ -1796,6 +1864,244 @@ O que pode dar errado e como desfazer.
     });
   }
 
+  /* ---------------- diário de impacto (brag document) ---------------- */
+  var MONTHS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  var BRAG_KEYS = ['date', 'phase', 'title', 'problem', 'action', 'result', 'evidence', 'learned'];
+  var BRAG_FIELDS = [
+    { k: 'problem', label: 'Problema' }, { k: 'action', label: 'O que fiz' }, { k: 'result', label: 'Resultado' },
+    { k: 'evidence', label: 'Evidência' }, { k: 'learned', label: 'O que aprendi' }
+  ];
+  var editingId = null;
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function ymd(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function parseYmd(s) { var p = String(s).split('-').map(Number); return new Date(p[0], (p[1] || 1) - 1, p[2] || 1); }
+  function lastFriday(d) {
+    var x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    x.setDate(x.getDate() - ((x.getDay() - 5 + 7) % 7));
+    return x;
+  }
+  function weekKey(s) { return ymd(lastFriday(parseYmd(s))); }
+  function bragStatus() {
+    var today = new Date(), lf = ymd(lastFriday(today));
+    var done = state.brag.some(function (e) { return e.date >= lf; });
+    var skipped = !!state.bragSkip[lf];
+    var started = !state.bragSince || lf >= state.bragSince;
+    return { lf: lf, isFri: today.getDay() === 5, done: done, pending: started && !done && !skipped };
+  }
+  function bragStreak() {
+    var keys = {};
+    state.brag.forEach(function (e) { keys[weekKey(e.date)] = true; });
+    var k = lastFriday(new Date());
+    if (!keys[ymd(k)]) k.setDate(k.getDate() - 7);
+    var n = 0;
+    while (keys[ymd(k)]) { n++; k.setDate(k.getDate() - 7); }
+    return n;
+  }
+  function sortedBrag() {
+    return state.brag.map(function (e, i) { return { e: e, i: i }; }).sort(function (a, b) {
+      if (a.e.date !== b.e.date) return a.e.date < b.e.date ? 1 : -1;
+      return ((b.e.created || 0) - (a.e.created || 0)) || (b.i - a.i);
+    }).map(function (x) { return x.e; });
+  }
+  function phaseLabel(v) { if (!v) return ''; if (v === 'trabalho') return 'Trabalho'; return BY_ID[v] ? BY_ID[v].nav : ''; }
+  function monthLabel(s) { var d = parseYmd(s); return MONTHS[d.getMonth()] + ' de ' + d.getFullYear(); }
+  function nl(s) { return esc(s).replace(/\n/g, '<br>'); }
+  function linkify(s) {
+    var v = s.trim();
+    return /^https?:\/\/\S+$/.test(v) ? '<a href="' + esc(v) + '" target="_blank" rel="noopener noreferrer">' + esc(v) + '</a>' : nl(s);
+  }
+
+  function renderBragAlert() {
+    var st = bragStatus(), el = $('#bragAlert'), pill = $('#bragPill');
+    var show = st.pending || (st.isFri && st.done);
+    el.hidden = !show;
+    pill.hidden = !st.pending;
+    pill.textContent = st.isFri ? 'Sexta: diário' : 'Diário pendente';
+    $('#menuBtn').classList.toggle('has-alert', st.pending);
+    if (!show) { el.innerHTML = ''; return; }
+    if (st.pending) {
+      el.className = 'brag-alert' + (st.isFri ? ' is-friday' : '');
+      el.innerHTML = '<p class="brag-alert-title">' + (st.isFri ? 'Hoje é sexta: registre sua semana' : 'Registro da sexta pendente') + '</p>' +
+        '<p class="brag-alert-text">' + (st.isFri
+          ? '10 minutos no seu registro de impacto: o que entregou, qual número mudou, o que aprendeu.'
+          : 'A semana da sexta ' + fmtDate(st.lf).slice(0, 5) + ' ainda não tem registro no seu diário de impacto.') + '</p>' +
+        '<div class="brag-alert-actions"><a class="btn sm primary" href="#/diario">Abrir diário</a>' +
+        '<button type="button" class="btn sm link" data-act="brag-skip">Pular esta semana</button></div>';
+    } else {
+      var n = bragStreak();
+      el.className = 'brag-alert ok';
+      el.innerHTML = '<p class="brag-alert-title">Semana registrada</p>' +
+        '<p class="brag-alert-text">' + (n > 1 ? n + ' semanas seguidas no diário de impacto.' : 'Primeira semana do seu diário de impacto.') + '</p>' +
+        '<div class="brag-alert-actions"><a class="btn sm" href="#/diario">Ver diário</a></div>';
+    }
+  }
+
+  function renderDiaryShell() {
+    var opts = '<option value="">Nenhuma</option>' +
+      SECS.filter(function (s) { return s.phase !== null; }).map(function (s) { return '<option value="' + s.id + '">' + esc(s.nav) + '</option>'; }).join('') +
+      '<option value="trabalho">Trabalho (fora do roadmap)</option>';
+    $('#view-diario').innerHTML =
+      '<header class="sec-head"><p class="eyebrow">Trilho paralelo · toda sexta, 10 minutos</p><h1>Diário de impacto</h1>' +
+      '<p class="sec-lead">Seu brag document: o que você entregou, com números e evidências. É daqui que saem a avaliação de desempenho, o pedido de promoção, as linhas do currículo e as histórias STAR das entrevistas.</p></header>' +
+      '<div class="stats" id="bragStats"></div>' +
+      '<div class="callout note brag-questions"><strong>Perguntas da sexta</strong><ol>' +
+      '<li>O que eu entreguei ou destravei esta semana, e para quem?</li>' +
+      '<li>Que número mudou (antes → depois)? Se não medi, como poderia medir?</li>' +
+      '<li>Que decisão tomei e por quê? Ela merece um ADR?</li>' +
+      '<li>Qual evidência guardo: PR, painel ou mensagem de quem se beneficiou?</li>' +
+      '<li>O que aprendi que vale levar para a próxima semana?</li></ol></div>' +
+      '<h2 class="h2" id="bragFormTitle">Nova entrada</h2>' +
+      '<form id="bragForm" class="brag-form" novalidate>' +
+      '<div class="form-row two"><label>Data<input type="date" name="date"></label><label>Fase relacionada<select name="phase">' + opts + '</select></label></div>' +
+      '<label><span>Entrega <small>· o nome curto do que você fez</small></span><input type="text" name="title" maxlength="140" placeholder="Ex.: Índice na listagem de agendamentos"></label>' +
+      '<label><span>Problema <small>· o que doía e para quem</small></span><textarea name="problem" rows="2"></textarea></label>' +
+      '<label><span>O que fiz <small>· ação e decisão principal; link do ADR</small></span><textarea name="action" rows="2"></textarea></label>' +
+      '<label><span>Resultado <small>· número antes → depois</small></span><textarea name="result" rows="2" placeholder="Ex.: p95 da listagem de 4,1 s para 180 ms"></textarea></label>' +
+      '<label><span>Evidência <small>· link do PR, painel ou mensagem de quem se beneficiou</small></span><input type="text" name="evidence" placeholder="https://github.com/…"></label>' +
+      '<label>O que aprendi<textarea name="learned" rows="2"></textarea></label>' +
+      '<div class="form-actions"><button type="submit" class="btn primary" id="bragSubmit">Salvar entrada</button>' +
+      '<button type="button" class="btn" data-act="brag-cancel" hidden>Cancelar edição</button>' +
+      '<span class="form-status" aria-live="polite"></span></div></form>' +
+      '<div class="brag-tools"><h2 class="h2">Minhas entradas</h2><div class="brag-tools-btns">' +
+      '<button type="button" class="btn sm" data-act="brag-copy">Copiar como Markdown</button>' +
+      '<button type="button" class="btn sm" data-act="brag-md">Baixar .md</button></div></div>' +
+      '<p class="brag-tools-status muted" aria-live="polite"></p>' +
+      '<div id="bragList"></div>';
+    var form = $('#bragForm'), draftTimer;
+    form.addEventListener('submit', onBragSubmit);
+    form.addEventListener('input', function () {
+      if (editingId) return;
+      clearTimeout(draftTimer);
+      draftTimer = setTimeout(function () { state.bragDraft = readForm(); save(); }, 400);
+    });
+  }
+  function fld(k) { return $('#bragForm').elements.namedItem(k); }
+  function readForm() { var o = {}; BRAG_KEYS.forEach(function (k) { o[k] = fld(k).value.trim(); }); return o; }
+  function fillForm(data) {
+    data = data || {};
+    fld('date').value = data.date || ymd(new Date());
+    var ph = data.phase !== undefined ? data.phase : currentPhase();
+    fld('phase').value = ph;
+    if (fld('phase').value !== ph) fld('phase').value = '';
+    ['title', 'problem', 'action', 'result', 'evidence', 'learned'].forEach(function (k) { fld(k).value = data[k] || ''; });
+  }
+  function setFormMode(editing) {
+    $('#bragForm').classList.toggle('editing', editing);
+    $('#bragFormTitle').textContent = editing ? 'Editando entrada' : 'Nova entrada';
+    $('#bragSubmit').textContent = editing ? 'Atualizar entrada' : 'Salvar entrada';
+    $('[data-act="brag-cancel"]').hidden = !editing;
+  }
+  function resetForm() {
+    editingId = null;
+    var d = state.bragDraft || {};
+    fillForm(d.title || d.problem || d.action || d.result || d.evidence || d.learned ? d : {});
+    setFormMode(false);
+  }
+  function formStatus(msg, isError) {
+    var s = $('#bragForm .form-status');
+    s.textContent = msg; s.classList.toggle('error', !!isError);
+    clearTimeout(formStatus.t);
+    formStatus.t = setTimeout(function () { s.textContent = ''; }, 2600);
+  }
+  function onBragSubmit(e) {
+    e.preventDefault();
+    var o = readForm();
+    if (!o.title) { fld('title').focus(); formStatus('Dê um nome à entrega antes de salvar.', true); return; }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(o.date)) o.date = ymd(new Date());
+    var wasEditing = !!editingId;
+    if (editingId) {
+      var ent = state.brag.filter(function (x) { return x.id === editingId; })[0];
+      if (ent) { Object.assign(ent, o); ent.updated = Date.now(); }
+    } else {
+      o.id = 'b' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      o.created = Date.now();
+      state.brag.push(o);
+      state.bragDraft = {};
+    }
+    save();
+    resetForm();
+    renderDiary(); renderBragAlert(); updateNav();
+    formStatus(wasEditing ? 'Entrada atualizada.' : (storageOk ? 'Entrada salva no diário.' : 'Entrada criada, mas este navegador não está salvando. Use Exportar.'), !storageOk);
+  }
+  function bragStatCard(num, label) { return '<div class="stat"><span class="stat-num">' + esc(num) + '</span><span class="stat-label">' + esc(label) + '</span></div>'; }
+  function renderDiary() {
+    if (!$('#bragList')) return;
+    var list = sortedBrag(), n = bragStreak();
+    $('#bragStats').innerHTML =
+      bragStatCard(list.length, list.length === 1 ? 'entrada no diário' : 'entradas no diário') +
+      bragStatCard(n, n === 1 ? 'semana seguida' : 'semanas seguidas') +
+      bragStatCard(list.length ? fmtDate(list[0].date).slice(0, 5) : '—', 'último registro');
+    if (!list.length) {
+      $('#bragList').innerHTML = '<p class="empty">Nenhuma entrada ainda. A primeira sexta é a mais difícil: registre algo pequeno, como um conceito que você passou a dominar ou um bug que resolveu.</p>';
+      return;
+    }
+    var h = '', lastMonth = '';
+    list.forEach(function (e) {
+      var mk = monthLabel(e.date);
+      if (mk !== lastMonth) { h += '<p class="month-head">' + esc(mk) + '</p>'; lastMonth = mk; }
+      var meta = fmtDate(e.date) + (e.phase ? ' · ' + phaseLabel(e.phase) : '');
+      var dl = BRAG_FIELDS.filter(function (f) { return e[f.k]; }).map(function (f) {
+        return '<dt>' + f.label + '</dt><dd>' + (f.k === 'evidence' ? linkify(e[f.k]) : nl(e[f.k])) + '</dd>';
+      }).join('');
+      h += '<article class="entry" data-entry="' + esc(e.id) + '"><header><div><p class="entry-date">' + esc(meta) + '</p><h3>' + esc(e.title) + '</h3></div>' +
+        '<div class="entry-actions"><button type="button" class="btn sm" data-act="brag-edit" data-id="' + esc(e.id) + '">Editar</button>' +
+        '<button type="button" class="btn sm danger" data-act="brag-del" data-id="' + esc(e.id) + '">Excluir</button></div></header>' +
+        (dl ? '<dl>' + dl + '</dl>' : '') + '</article>';
+    });
+    $('#bragList').innerHTML = h;
+  }
+  function bragMarkdown() {
+    var out = ['# Registro de impacto (brag document)', ''], lastMonth = '';
+    sortedBrag().forEach(function (e) {
+      var mk = monthLabel(e.date);
+      if (mk !== lastMonth) { out.push('## ' + mk.charAt(0).toUpperCase() + mk.slice(1), ''); lastMonth = mk; }
+      out.push('### ' + fmtDate(e.date) + ' — ' + e.title);
+      if (e.phase) out.push('- **Fase:** ' + phaseLabel(e.phase));
+      BRAG_FIELDS.forEach(function (f) { if (e[f.k]) out.push('- **' + f.label + ':** ' + e[f.k].replace(/\s*\n+\s*/g, ' ')); });
+      out.push('');
+    });
+    return out.join('\n');
+  }
+  function toolsStatus(msg) {
+    var s = $('.brag-tools-status'); s.textContent = msg;
+    clearTimeout(toolsStatus.t); toolsStatus.t = setTimeout(function () { s.textContent = ''; }, 2400);
+  }
+  function download(name, text, type) {
+    var blob = new Blob([text], { type: type });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  }
+  function bragAction(act, id) {
+    if (act === 'brag-skip') {
+      state.bragSkip[bragStatus().lf] = true;
+      save(); renderBragAlert(); updateNav();
+    } else if (act === 'brag-edit') {
+      var ent = state.brag.filter(function (x) { return x.id === id; })[0];
+      if (!ent) return;
+      editingId = id; fillForm(ent); setFormMode(true);
+      $('#bragFormTitle').scrollIntoView({ block: 'start', behavior: 'smooth' });
+      fld('title').focus({ preventScroll: true });
+    } else if (act === 'brag-cancel') {
+      resetForm();
+    } else if (act === 'brag-del') {
+      if (!confirm('Excluir esta entrada do diário? Isso não pode ser desfeito.')) return;
+      state.brag = state.brag.filter(function (x) { return x.id !== id; });
+      if (editingId === id) resetForm();
+      save(); renderDiary(); renderBragAlert(); updateNav();
+    } else if (act === 'brag-md') {
+      if (!state.brag.length) { toolsStatus('Ainda não há entradas para baixar.'); return; }
+      download('brag-document-' + ymd(new Date()) + '.md', bragMarkdown(), 'text/markdown');
+    } else if (act === 'brag-copy') {
+      if (!state.brag.length) { toolsStatus('Ainda não há entradas para copiar.'); return; }
+      var md = bragMarkdown();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(md).then(function () { toolsStatus('Markdown copiado.'); }, function () { toolsStatus('Não foi possível copiar; use Baixar .md.'); });
+      } else { toolsStatus('Não foi possível copiar; use Baixar .md.'); }
+    }
+  }
+
   /* ---------------- section tools ---------------- */
   function updateSecTools() {
     $$('.sec-tools').forEach(function (el) {
@@ -1818,6 +2124,7 @@ O que pode dar errado e como desfazer.
 
   function updateAll() {
     renderStats(); updateNav(); updateSecTools(); renderMap(); renderContinue(); syncExams();
+    renderBragAlert(); renderDiary();
   }
 
   /* ---------------- routing ---------------- */
@@ -1825,16 +2132,19 @@ O que pode dar errado e como desfazer.
   function showView(id) {
     $('#view-home').hidden = id !== 'home';
     $('#view-search').hidden = id !== 'search';
+    $('#view-diario').hidden = id !== 'diario';
     $$('article.section').forEach(function (a) { a.hidden = a.dataset.id !== id; });
     $$('#nav a').forEach(function (a) {
       if (a.dataset.id === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     renderPager(id);
-    document.title = (id === 'home' || id === 'search') ? 'Roadmap Backend' : BY_ID[id].nav + ' · Roadmap Backend';
+    if (id === 'diario') renderDiary();
+    document.title = (id === 'home' || id === 'search') ? 'Roadmap Backend'
+      : (id === 'diario' ? 'Diário de impacto' : BY_ID[id].nav) + ' · Roadmap Backend';
   }
   function renderPager(id) {
     var p = $('#pager');
-    if (id === 'home' || id === 'search') { p.innerHTML = ''; return; }
+    if (id === 'home' || id === 'search' || id === 'diario') { p.innerHTML = ''; return; }
     var i = SECS.findIndex(function (s) { return s.id === id; });
     var prev = SECS[i - 1], next = SECS[i + 1];
     p.innerHTML = (prev ? '<a class="pager-link prev" href="#/' + prev.id + '"><span>Anterior</span>' + esc(prev.nav) + '</a>' : '<a class="pager-link prev" href="#/"><span>Anterior</span>Visão geral</a>') +
@@ -1842,7 +2152,7 @@ O que pode dar errado e como desfazer.
   }
   function route() {
     var m = location.hash.match(/^#\/([^?]*)(?:\?item=([\w-]+))?/);
-    var id = m && m[1] && BY_ID[m[1]] ? m[1] : 'home';
+    var id = m && m[1] && (BY_ID[m[1]] || m[1] === 'diario') ? m[1] : 'home';
     $('#search').value = '';
     showView(id);
     if (m && m[2]) {
@@ -1936,7 +2246,9 @@ O que pode dar errado e como desfazer.
           var data = JSON.parse(reader.result);
           if (!data || typeof data !== 'object' || !data.checks) throw new Error('formato');
           state = Object.assign(fresh(), data);
-          save(); applyAll();
+          if (!Array.isArray(state.brag)) state.brag = [];
+          if (!state.bragSince) state.bragSince = ymd(new Date());
+          save(); applyAll(); resetForm();
           alert('Progresso importado.');
         } catch (err) { alert('Arquivo inválido. Use um arquivo gerado pelo botão Exportar.'); }
         t.value = '';
@@ -1950,6 +2262,8 @@ O que pode dar errado e como desfazer.
     if (t.dataset.act === 'current') {
       state.current = state.current === t.dataset.id ? null : t.dataset.id;
       save(); updateAll();
+    } else if (t.dataset.act && t.dataset.act.indexOf('brag-') === 0) {
+      bragAction(t.dataset.act, t.dataset.id);
     } else if (t.dataset.act === 'exit') {
       var id = t.dataset.id;
       if (state.done[id]) delete state.done[id]; else state.done[id] = true;
@@ -1979,10 +2293,10 @@ O que pode dar errado e como desfazer.
     } else if (t.id === 'importBtn') {
       $('#importFile').click();
     } else if (t.id === 'resetBtn') {
-      if (confirm('Zerar todo o progresso, anotações e datas de prova? Exporte antes se quiser guardar uma cópia.')) {
+      if (confirm('Zerar todo o progresso, anotações, datas de prova e o diário de impacto? Exporte antes se quiser guardar uma cópia.')) {
         var theme = state.theme;
-        state = fresh(); state.theme = theme;
-        save(); applyAll();
+        state = fresh(); state.theme = theme; state.bragSince = ymd(new Date());
+        save(); applyAll(); resetForm();
       }
     }
   });
@@ -2005,11 +2319,25 @@ O que pode dar errado e como desfazer.
   window.addEventListener('hashchange', route);
 
   /* ---------------- init ---------------- */
+  if (!Array.isArray(state.brag)) state.brag = [];
+  if (!state.bragSince) { state.bragSince = ymd(new Date()); save(); }
+  var bragH = $$('#sec-profissional .prose h3').filter(function (h) { return /^5\./.test(h.textContent.trim()); })[0];
+  if (bragH) {
+    var c = document.createElement('p');
+    c.className = 'callout cert';
+    c.innerHTML = '<strong>Seu diário já está aqui:</strong> toda sexta aparece um lembrete no menu lateral. As entradas seguem o modelo abaixo e podem ser baixadas em Markdown para a avaliação de desempenho.' +
+      '<a class="btn sm primary brag-open" href="#/diario">Abrir diário de impacto</a>';
+    bragH.parentNode.insertBefore(c, bragH.nextSibling);
+  }
   renderNav();
   renderExams();
+  renderDiaryShell();
   applyAll();
+  resetForm();
   $('#storageWarn').hidden = storageOk;
   route();
+  setInterval(renderBragAlert, 10 * 60 * 1000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderBragAlert(); updateNav(); } });
 })();
 </script>
 </body>
